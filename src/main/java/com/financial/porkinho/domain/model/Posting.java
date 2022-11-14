@@ -2,6 +2,7 @@ package com.financial.porkinho.domain.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,15 +32,15 @@ public class Posting implements Serializable{
 	@JoinColumn(name = "institution_id")
 	private Institution institution;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "donation_id")
 	private Donation donation;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bank_account_id")
 	private BankAccount bankAccount;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bank_balance_id")
 	private BankBalance bankBalance;
 }

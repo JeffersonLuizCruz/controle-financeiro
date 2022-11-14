@@ -20,9 +20,9 @@ public class BankBalance implements Serializable{
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	private Long id;
+	private String month;
+	private BigDecimal previousMonthBalance;
 	private BigDecimal totalDonation;
 	private BigDecimal totalBankAccount;
 	private BigDecimal totalAvaliable;
-	private BigDecimal previousMonthBalance;
-	private String month;
 }
