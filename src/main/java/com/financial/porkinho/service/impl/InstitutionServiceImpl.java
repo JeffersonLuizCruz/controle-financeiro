@@ -5,15 +5,21 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.financial.porkinho.domain.model.Institution;
+import com.financial.porkinho.repository.InstitutionRepository;
 import com.financial.porkinho.service.InstitutionService;
 
 @Service
 public class InstitutionServiceImpl implements InstitutionService{
 
+	private  InstitutionRepository institutionRepository;
+	
+	public InstitutionServiceImpl(InstitutionRepository institutionRepository) {
+		this.institutionRepository = institutionRepository;
+	}
+	
 	@Override
 	public Institution save(Institution institution) {
-		// TODO Auto-generated method stub
-		return null;
+		return institutionRepository.save(institution);
 	}
 
 	@Override
@@ -30,8 +36,12 @@ public class InstitutionServiceImpl implements InstitutionService{
 
 	@Override
 	public Institution findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return verifyIfExistsInstitution(id);
 	}
 
+	private Institution verifyIfExistsInstitution(Long id) {
+		return institutionRepository.findById(id)
+				.orElseThrow(
+				() -> new RuntimeException("message"));
+	}
 }
