@@ -24,14 +24,15 @@ public class InstitutionServiceImpl implements InstitutionService{
 
 	@Override
 	public Institution update(Long id, Institution institution) {
-		// TODO Auto-generated method stub
-		return null;
+		Institution institutionEntity = verifyIfExistsInstitution(id);
+		institutionEntity.setId(id);
+		
+		return institutionRepository.save(institution);
 	}
 
 	@Override
 	public List<Institution> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return institutionRepository.findAll();
 	}
 
 	@Override
