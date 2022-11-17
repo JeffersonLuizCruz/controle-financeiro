@@ -2,23 +2,18 @@ package com.financial.porkinho.domain.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor @Data
-@Entity
+@Embeddable
 public class Address implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 5326589699480137859L;
 	
 	private String cep;
 	private String street;
@@ -26,5 +21,7 @@ public class Address implements Serializable{
 	private String complement;
 	private String district;
 	
+	@ManyToOne
+	@JoinColumn(name = "city_id")
 	private City city;
 }

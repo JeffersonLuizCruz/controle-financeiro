@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor @Data
 @Entity
 public class State implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -9004431796005647934L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
