@@ -17,7 +17,7 @@ public class KitchenServiceImpl implements KitchenService{
 	}
 
 	@Override
-	public Kitchen update(Kitchen kitchen) {
+	public Kitchen update(Long id, Kitchen kitchen) {
 		// TODO Auto-generated method stub
 		return null;
 	}

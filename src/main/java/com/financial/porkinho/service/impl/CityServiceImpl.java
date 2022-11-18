@@ -10,6 +10,7 @@ import com.financial.porkinho.service.CityService;
 @Service
 public class CityServiceImpl implements CityService{
 
+	
 	@Override
 	public City save(City city) {
 		// TODO Auto-generated method stub
@@ -17,7 +18,7 @@ public class CityServiceImpl implements CityService{
 	}
 
 	@Override
-	public City update(City city) {
+	public City update(Long id, City city) {
 		// TODO Auto-generated method stub
 		return null;
 	}

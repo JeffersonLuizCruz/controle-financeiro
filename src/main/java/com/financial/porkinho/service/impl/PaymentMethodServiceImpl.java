@@ -17,7 +17,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 	}
 
 	@Override
-	public PaymentMethod update(PaymentMethod paymentMethod) {
+	public PaymentMethod update(Long id, PaymentMethod paymentMethod) {
 		// TODO Auto-generated method stub
 		return null;
 	}

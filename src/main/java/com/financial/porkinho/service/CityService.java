@@ -7,7 +7,7 @@ import com.financial.porkinho.domain.model.City;
 public interface CityService {
 
 	City save(City city);
-	City update(City city);
+	City update(Long id, City city);
 	List<City> findAll();
 	City findById(Long id);
 	void delete(Long id);

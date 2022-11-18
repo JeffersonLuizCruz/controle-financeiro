@@ -17,7 +17,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 	}
 
 	@Override
-	public Restaurant update(Restaurant restaurant) {
+	public Restaurant update(Long id, Restaurant restaurant) {
 		// TODO Auto-generated method stub
 		return null;
 	}
