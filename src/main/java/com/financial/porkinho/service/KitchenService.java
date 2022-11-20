@@ -11,4 +11,5 @@ public interface KitchenService {
 	List<Kitchen> findAll();
 	Kitchen findById(Long id);
 	void deleteById(Long id);
+	Kitchen checkIfKitchenExists(Long id);
 }

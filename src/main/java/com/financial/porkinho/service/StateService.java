@@ -10,5 +10,6 @@ public interface StateService {
 	State update(Long id, State state);
 	List<State> findAll();
 	State findById(Long id);
-	void delete(Long id);
+	void deleteById(Long id);
+	State checkIfStateExists(Long id);
 }

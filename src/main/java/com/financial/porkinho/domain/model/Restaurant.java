@@ -37,6 +37,7 @@ public class Restaurant implements Serializable{
 	private LocalDateTime createAt;
 	private LocalDateTime updateAt;
 	
+	@JsonIgnore
 	@Embedded
 	private Address address;
 	

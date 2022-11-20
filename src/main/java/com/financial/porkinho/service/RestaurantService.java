@@ -10,5 +10,6 @@ public interface RestaurantService {
 	Restaurant update(Long id, Restaurant restaurant);
 	List<Restaurant> findAll();
 	Restaurant findById(Long id);
-	void delete(Long id);
+	void deleteById(Long id);
+	Restaurant checkIfRestaurantExists(Long id);
 }

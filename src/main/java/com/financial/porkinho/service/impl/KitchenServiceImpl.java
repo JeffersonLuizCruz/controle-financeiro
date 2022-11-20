@@ -24,7 +24,7 @@ public class KitchenServiceImpl implements KitchenService{
 
 	@Override
 	public Kitchen update(Long id, Kitchen kitchen) {
-		checkIfObjectExists(id);
+		checkIfKitchenExists(id);
 		kitchen.setId(id);
 		
 		return kitchenRepository.save(kitchen);
@@ -37,16 +37,17 @@ public class KitchenServiceImpl implements KitchenService{
 
 	@Override
 	public Kitchen findById(Long id) {
-		return checkIfObjectExists(id);
+		return checkIfKitchenExists(id);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		Kitchen kitchenEntity = checkIfObjectExists(id);
+		Kitchen kitchenEntity = checkIfKitchenExists(id);
 		kitchenRepository.delete(kitchenEntity);
 	}
 	
-	private Kitchen checkIfObjectExists(Long id) {
+	@Override
+	public Kitchen checkIfKitchenExists(Long id) {
 		return kitchenRepository.findById(id).orElseThrow(() -> new RuntimeException("TODO - Implement exception")); 
 	}
 

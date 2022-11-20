@@ -24,7 +24,7 @@ public class StateServiceImpl implements StateService{
 
 	@Override
 	public State update(Long id, State state) {
-		verifyIfExistsState(id);
+		checkIfStateExists(id);
 		state.setId(id);
 		return stateRepository.save(state);
 	}
@@ -36,16 +36,17 @@ public class StateServiceImpl implements StateService{
 
 	@Override
 	public State findById(Long id) {
-		return verifyIfExistsState(id);
+		return checkIfStateExists(id);
 	}
 
 	@Override
-	public void delete(Long id) {
-		State stateEntity = verifyIfExistsState(id);
+	public void deleteById(Long id) {
+		State stateEntity = checkIfStateExists(id);
 		stateRepository.delete(stateEntity);
 	}
 	
-	private State verifyIfExistsState(Long id) {
+	@Override
+	public State checkIfStateExists(Long id) {
 		return stateRepository.findById(id).orElseThrow(() -> new RuntimeException("TODO - implement Exception Handler"));
 	}
 

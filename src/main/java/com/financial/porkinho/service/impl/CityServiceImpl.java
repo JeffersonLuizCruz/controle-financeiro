@@ -23,18 +23,18 @@ public class CityServiceImpl implements CityService{
 
 	@Override
 	public City save(City city) {
-		State stateEntity = stateService.findById(city.getId());
+		State stateEntity = stateService.checkIfStateExists(city.getState().getId());
 		city.setState(stateEntity);
 		return cityRepository.save(city);
 	}
 
 	@Override
 	public City update(Long id, City city) {
-		City cityEntity = checkIfObjectExists(id);
-		State stateEntity = stateService.findById(cityEntity.getId());
+		checkIfCityExists(id);
+		stateService.checkIfStateExists(city.getState().getId());
 		
 		city.setId(id);
-		city.setState(stateEntity);
+		city.setState(city.getState());
 
 		return cityRepository.save(city);
 	}
@@ -46,17 +46,18 @@ public class CityServiceImpl implements CityService{
 
 	@Override
 	public City findById(Long id) {
-		return checkIfObjectExists(id);
+		return checkIfCityExists(id);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		City cityEntity = checkIfObjectExists(id);
+		City cityEntity = checkIfCityExists(id);
 		cityRepository.delete(cityEntity);
 		
 	}
 
-	private City checkIfObjectExists(Long id) {
+	@Override
+	public City checkIfCityExists(Long id) {
 		return cityRepository.findById(id).orElseThrow(() ->
 		new RuntimeException("TODO - Implement exception handler"));
 	}

@@ -11,4 +11,5 @@ public interface CityService {
 	List<City> findAll();
 	City findById(Long id);
 	void deleteById(Long id);
+	City checkIfCityExists(Long id);
 }
