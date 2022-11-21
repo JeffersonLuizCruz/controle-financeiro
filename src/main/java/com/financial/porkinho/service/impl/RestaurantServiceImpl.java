@@ -31,10 +31,11 @@ public class RestaurantServiceImpl implements RestaurantService{
 
 	@Override
 	public Restaurant update(Long id, Restaurant restaurant) {
-		checkIfRestaurantExists(id);
+		Restaurant restaurantEntity = checkIfRestaurantExists(id);
 		kitchenService.checkIfKitchenExists(restaurant.getKitchen().getId());
 		
 		restaurant.setId(id);
+		restaurant.setCreateAt(restaurantEntity.getCreateAt());
 		restaurant.setKitchen(restaurant.getKitchen());
 		
 		return restaurantRepository.save(restaurant);
