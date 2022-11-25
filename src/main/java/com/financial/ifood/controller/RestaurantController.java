@@ -41,6 +41,11 @@ public class RestaurantController {
 		return ResponseEntity.ok(restaurantService.findAll());
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<Restaurant> findById(@PathVariable Long id){
+		return ResponseEntity.ok(restaurantService.findById(id));
+	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		restaurantService.deleteById(id);
