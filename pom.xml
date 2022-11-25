@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.financial</groupId>
-	<artifactId>porkinho</artifactId>
+	<artifactId>ifood</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>porkinho</name>
 	<description>Sistema de Controle Financeiro</description>
