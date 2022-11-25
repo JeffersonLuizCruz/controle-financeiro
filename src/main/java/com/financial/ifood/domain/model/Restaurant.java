@@ -56,7 +56,13 @@ public class Restaurant implements Serializable{
 	private Address address;
 	
 	@JsonIgnore
-	//@JsonIgnoreProperties("hibernateLazyInitializer")
+	/**
+	 * Explicação de uso:
+	 * '@JsonIgnoreProperties("hibernateLazyInitializer")'
+	 * 
+	 * Essa notação só deve ser usada quando o fetch for do tipo Lazy
+	 * e quando a entidade estiver fazendo uso da anotation '@JsonIgnore'
+	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kitchen_id", nullable = false)
 	private Kitchen kitchen;
