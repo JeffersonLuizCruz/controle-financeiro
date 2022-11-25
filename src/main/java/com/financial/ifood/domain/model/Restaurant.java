@@ -53,6 +53,7 @@ public class Restaurant implements Serializable{
 	@Embedded
 	private Address address;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "kitchen_id", nullable = false)
 	private Kitchen kitchen;
