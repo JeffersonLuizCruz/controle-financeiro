@@ -17,19 +17,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor @Data
-@Entity
+@Entity @Table(name = "`restaurant`")
 public class Restaurant implements Serializable{
 	private static final long serialVersionUID = 7205353866673534942L;
 
@@ -69,8 +69,8 @@ public class Restaurant implements Serializable{
 	
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "restaurant_payment_method",
-			joinColumns = @JoinColumn(name = "restaurant_id"),
-			inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
-	private List<PaymentMethod> paymentMethod =  new ArrayList<>();
+	@JoinTable(name = "restaurant_payment_methods",
+			joinColumns = @JoinColumn(name = "restaurants_id"),
+			inverseJoinColumns = @JoinColumn(name = "payment_methods_id"))
+	private List<PaymentMethod> paymentMethods =  new ArrayList<>();
 }
