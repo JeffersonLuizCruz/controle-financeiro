@@ -9,7 +9,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,10 +22,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor @NoArgsConstructor @Data
 @Entity @Table(name = "`restaurant`")
@@ -55,7 +56,6 @@ public class Restaurant implements Serializable{
 	@Embedded
 	private Address address;
 	
-	@JsonIgnore
 	/**
 	 * Explicação de uso:
 	 * '@JsonIgnoreProperties("hibernateLazyInitializer")'
@@ -63,11 +63,13 @@ public class Restaurant implements Serializable{
 	 * Essa notação só deve ser usada quando o fetch for do tipo Lazy
 	 * e quando a entidade estiver fazendo uso da anotation '@JsonIgnore'
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@Getter(onMethod = @__({@JsonIgnore}))
+	//@Setter(onMethod = @__({@JsonProperty}))
+	@ManyToOne//(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kitchen_id", nullable = false)
 	private Kitchen kitchen;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurant_payment_methods",
 			joinColumns = @JoinColumn(name = "restaurants_id"),
