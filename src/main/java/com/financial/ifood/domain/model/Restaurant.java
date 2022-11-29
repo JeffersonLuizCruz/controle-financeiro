@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -16,18 +18,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor @NoArgsConstructor @Data
 @Entity @Table(name = "`restaurant`")
@@ -37,12 +38,14 @@ public class Restaurant implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(nullable = false)
+	private String name;
 	
+	@Column(nullable = false)
 	private BigDecimal freightRate;
-	private Boolean isActive;
-	private Boolean isOpen;
+	private Boolean isActive = Boolean.TRUE;;
+	private Boolean isOpen = Boolean.FALSE;
 	
-	@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime createAt;
@@ -52,27 +55,26 @@ public class Restaurant implements Serializable{
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime updateAt;
 	
-	@JsonIgnore
 	@Embedded
 	private Address address;
 	
-	/**
-	 * Explicação de uso:
-	 * '@JsonIgnoreProperties("hibernateLazyInitializer")'
-	 * 
-	 * Essa notação só deve ser usada quando o fetch for do tipo Lazy
-	 * e quando a entidade estiver fazendo uso da anotation '@JsonIgnore'
-	 */
-	//@Getter(onMethod = @__({@JsonIgnore}))
-	//@Setter(onMethod = @__({@JsonProperty}))
-	@ManyToOne//(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "kitchen_id", nullable = false)
 	private Kitchen kitchen;
 	
-	//@JsonIgnore
+
 	@ManyToMany
 	@JoinTable(name = "restaurant_payment_methods",
 			joinColumns = @JoinColumn(name = "restaurants_id"),
 			inverseJoinColumns = @JoinColumn(name = "payment_methods_id"))
-	private List<PaymentMethod> paymentMethods =  new ArrayList<>();
+	private Set<PaymentMethod> paymentMethods =  new HashSet<>();
+	
+	@ManyToMany
+	@JoinTable(name = "restaurant_user_owner",
+			joinColumns = @JoinColumn(name = "restaurant_id"),
+			inverseJoinColumns = @JoinColumn(name = "owner_id"))
+	private Set<Customer> owner = new HashSet<>();
+	
+	@OneToMany(mappedBy = "restaurant")
+	private List<Product> products = new ArrayList<>();
 }
