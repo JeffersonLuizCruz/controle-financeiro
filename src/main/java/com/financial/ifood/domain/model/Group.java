@@ -25,7 +25,7 @@ public class Group implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nome;
+	private String name;
 	
 	@ManyToMany
 	@JoinTable(name = "group_role",

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,7 @@ public class Product implements Serializable{
 	@Column(nullable = false)
 	private Boolean isActive;
 	
+	@JsonBackReference // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Restaurant restaurant;

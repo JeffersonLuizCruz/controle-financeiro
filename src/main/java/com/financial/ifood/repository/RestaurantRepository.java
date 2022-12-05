@@ -11,7 +11,8 @@ import com.financial.ifood.domain.model.Restaurant;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long>{
 	
-	@Query("FROM Restaurant r JOIN FETCH r.kitchen LEFT JOIN FETCH r.paymentMethods")
+	//@Query("FROM Restaurant r JOIN FETCH r.kitchen LEFT JOIN FETCH r.paymentMethods")
+	@Query("FROM Restaurant r JOIN FETCH r.kitchen")
 	List<Restaurant> findAll();
 
 }

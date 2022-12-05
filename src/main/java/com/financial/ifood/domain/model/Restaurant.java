@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -25,6 +26,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,6 +57,7 @@ public class Restaurant implements Serializable{
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime updateAt;
 	
+	@JsonIgnore
 	@Embedded
 	private Address address;
 	
@@ -75,6 +78,7 @@ public class Restaurant implements Serializable{
 			inverseJoinColumns = @JoinColumn(name = "owner_id"))
 	private Set<Customer> owner = new HashSet<>();
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "restaurant")
 	private List<Product> products = new ArrayList<>();
 }
