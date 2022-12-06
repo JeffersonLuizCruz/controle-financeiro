@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Ecommerce" src="https://github.com/JeffersonLuizCruz/receitadespesa/blob/main/src/logo2.png" />
+    <img alt="Ecommerce" src="https://github.com/JeffersonLuizCruz/ifood/blob/main/src/main/resources/templates/ifood.svg" />
 </h1>
 
 <h3 align="center">
