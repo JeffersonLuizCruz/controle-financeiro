@@ -9,6 +9,7 @@ import com.financial.ifood.domain.model.State;
 import com.financial.ifood.repository.CityRepository;
 import com.financial.ifood.service.CityService;
 import com.financial.ifood.service.StateService;
+import com.financial.ifood.service.exception.CityNotFoundException;
 
 @Service
 public class CityServiceImpl implements CityService{
@@ -59,6 +60,6 @@ public class CityServiceImpl implements CityService{
 	@Override
 	public City checkIfCityExists(Long id) {
 		return cityRepository.findById(id).orElseThrow(() ->
-		new RuntimeException("TODO - Implement exception handler"));
+		new CityNotFoundException("Cidade não encontrada id " + id));
 	}
 }
