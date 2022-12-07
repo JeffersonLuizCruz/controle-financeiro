@@ -3,6 +3,7 @@ package com.financial.ifood.controller.exceptionhandler;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -14,15 +15,30 @@ import com.financial.ifood.service.exception.CityNotFoundException;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(CityNotFoundException.class)
-	public ResponseEntity<?> handlerCityNotFoundException(CityNotFoundException ex, WebRequest request) {
+	public ResponseEntity<ApiError> handlerCityNotFoundException(CityNotFoundException ex, WebRequest request) {
 		
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		TypeError typeError = TypeError.ENTITY_NOT_FOUND;
-		String detail = ex.getMessage();
+		ApiError apiError = ApiError.builder()
+		.status(HttpStatus.NOT_FOUND.value())
+		.type(TypeError.ENTITY_NOT_FOUND.getUri())
+		.title(TypeError.ENTITY_NOT_FOUND.getTitle())
+		.detail(ex.getMessage())
+		.build();
 		
-		ApiError apiError = createProblemBuilder(status, typeError, detail).build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+	}
+	
+	@Override
+	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		
-		return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
+		ApiError apiError = ApiError.builder()
+		.status(status.value())
+		.type(TypeError.BAD_REQUEST_BODY_MESSAGE.getUri())
+		.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
+		.detail("Corpo da requisição inválido. Verifique erro de sintaxe.")
+		.build();
+		
+		return ResponseEntity.status(status).body(apiError);
 	}
 
 	@Override
@@ -42,14 +58,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				 		.build();	 
 		 }
 		return super.handleExceptionInternal(ex, body, headers, status, request);
-	}
-
-	private ApiError.ApiErrorBuilder createProblemBuilder(HttpStatus status, TypeError typeError, String detail) {
-
-		return ApiError.builder()
-				.status(status.value())
-				.type(typeError.getUri())
-				.title(typeError.getTitle())
-				.detail(detail);
 	}
 }
