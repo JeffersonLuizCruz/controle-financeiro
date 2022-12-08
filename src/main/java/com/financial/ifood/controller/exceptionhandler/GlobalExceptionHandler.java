@@ -1,6 +1,5 @@
 package com.financial.ifood.controller.exceptionhandler;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -14,6 +13,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.financial.ifood.service.exception.CityNotFoundException;
 
 @ControllerAdvice
@@ -42,6 +43,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 			return handleInvalidFormatException((InvalidFormatException) rootCause, headers, status, request);
 		}
 		
+		if (rootCause instanceof PropertyBindingException) {
+			return handleInvalidFormatException((UnrecognizedPropertyException) rootCause, headers, status, request);
+		}
 		ApiError apiError = ApiError.builder()
 		.status(status.value())
 		.type(TypeError.BAD_REQUEST_BODY_MESSAGE.getUri())
@@ -52,10 +56,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(status).body(apiError);
 	}
 
+	private ResponseEntity<Object> handleInvalidFormatException(UnrecognizedPropertyException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		
+		String path = ex.getPath().stream()
+				.map(ref -> ref.getFieldName())
+				.findFirst().get();
+		
+		String detail = String.format("A propriedade '%s' é de um tipo inválido ou não existe. "
+				+ "Corrija e informe um valor compatível com o tipo certo.",path);
+		
+		ApiError apiError = ApiError.builder()
+							.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
+							.status(status.value())
+							.detail(detail)
+							.build();
+
+		
+		return handleExceptionInternal(ex, apiError, headers, status, request);
+	}
+
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
-		 //TODO debugar pra saber o que é o Object body
 		 
 		 if(body == null) {
 			 body = ApiError.builder()
