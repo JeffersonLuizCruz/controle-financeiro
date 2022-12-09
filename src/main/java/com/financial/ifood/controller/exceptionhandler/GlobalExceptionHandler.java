@@ -73,7 +73,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 							.build();
 
 		
-		return handleExceptionInternal(ex, apiError, headers, status, request);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 	}
 
 	@Override
