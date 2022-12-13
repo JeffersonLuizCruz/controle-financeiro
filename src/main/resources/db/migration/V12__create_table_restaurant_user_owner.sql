@@ -1,6 +1,6 @@
-CREATE TABLE ifood_v2.dbo.restaurant_user_owner (
-	restaurant_id bigint NOT NULL,
-	owner_id bigint NOT NULL,
-	CONSTRAINT fk_restaurant_id FOREIGN KEY (restaurant_id) REFERENCES ifood_v2.dbo.restaurant(id),
-	CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES ifood_v2.dbo.customer(id)
-);
+create table restaurant_user_owner (
+	restaurant_id bigint not null,
+	owner_id bigint not null,
+	constraint fk_restaurant_id foreign key(restaurant_id) references restaurant(id),
+	constraint fk_owner_id foreign key(owner_id) references customer(id)
+) engine=InnoDB default charset=utf8;
