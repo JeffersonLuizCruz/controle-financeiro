@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -28,8 +29,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 		ApiError apiError = ApiError.builder()
 				.status(HttpStatus.NOT_FOUND.value())
-				.type(TypeError.ENTITY_NOT_FOUND.getUri())
-				.title(TypeError.ENTITY_NOT_FOUND.getTitle())
+				.type(TypeError.RESOURCE_NOT_FOUND.getUri())
+				.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
 				.detail(ex.getMessage())
 				.build();
 
@@ -40,8 +41,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		
 		ApiError apiError = ApiError.builder()
 		.status(HttpStatus.NOT_FOUND.value())
-		.type(TypeError.ENTITY_NOT_FOUND.getUri())
-		.title(TypeError.ENTITY_NOT_FOUND.getTitle())
+		.type(TypeError.RESOURCE_NOT_FOUND.getUri())
+		.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
 		.detail(ex.getMessage())
 		.build();
 		
@@ -72,26 +73,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(status).body(apiError);
 	}
 
-	private ResponseEntity<Object> handleInvalidFormat(UnrecognizedPropertyException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		
-		String path = ex.getPath().stream()
-				.map(ref -> ref.getFieldName())
-				.findFirst().get();
-		
-		String detail = String.format("A propriedade '%s' é de um tipo inválido ou não existe. "
-				+ "Corrija e informe um valor compatível com o tipo certo.",path);
-		
-		ApiError apiError = ApiError.builder()
-							.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
-							.status(status.value())
-							.detail(detail)
-							.build();
-
-		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
-	}
-
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
@@ -119,6 +100,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		}
 
 		return super.handleTypeMismatch(ex, headers, status, request);
+	}
+
+	/**
+	 * add in the ' aplication.properties:
+	 * spring.mvc.throw-exception-if-no-handler-found=true
+	 * spring.web.resources.add-mappings=false '
+	 * */
+	@Override
+	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		String detail = String.format("O recurso '%s', que você tentou acessar, é inexistente.", ex.getRequestURL());
+		ApiError apiError = ApiError.builder()
+				.type(TypeError.RESOURCE_NOT_FOUND.getUri())
+				.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
+				.detail(detail)
+				.build();
+
+		return ResponseEntity.status(status.value()).body(apiError);
 	}
 
 	private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
@@ -157,5 +156,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.build();
 
 		return handleExceptionInternal(ex, apiError, headers, status, request);
+	}
+
+	private ResponseEntity<Object> handleInvalidFormat(UnrecognizedPropertyException ex,
+													   HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		String path = ex.getPath().stream()
+				.map(ref -> ref.getFieldName())
+				.findFirst().get();
+
+		String detail = String.format("A propriedade '%s' é de um tipo inválido ou não existe. "
+				+ "Corrija e informe um valor compatível com o tipo certo.",path);
+
+		ApiError apiError = ApiError.builder()
+				.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
+				.status(status.value())
+				.detail(detail)
+				.build();
+
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 	}
 }
