@@ -1,5 +1,6 @@
 package com.financial.ifood.controller.exceptionhandler;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 import com.financial.ifood.service.exception.StateNotFoundException;
@@ -24,6 +25,32 @@ import com.financial.ifood.service.exception.CityNotFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
+	/**
+	 * TODO
+	 * Remover ex.printStackTrace(); na fase de produção
+	 * ex.printStackTrace();
+	 * */
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ApiError> handleUncaught(Exception ex) {
+
+		String detail = "Ocorreu um erro interno inesperado no sistema. "
+				+ "Tente novamente e se o problema persistir, entre em contato "
+				+ "com o administrador do sistema.";
+
+		ex.printStackTrace();
+
+		ApiError apiError = ApiError.builder()
+				.status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+				.type(TypeError.INTERNAL_SERVER_ERROR.getUri())
+				.title(TypeError.INTERNAL_SERVER_ERROR.getTitle())
+				.detail(ex.getMessage())
+				.timestamp(LocalDateTime.now())
+				.build();
+
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
+	}
+
+
 	@ExceptionHandler(StateNotFoundException.class)
 	public ResponseEntity<ApiError> handlerStateNotFoundException(StateNotFoundException ex) {
 
@@ -32,6 +59,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.type(TypeError.RESOURCE_NOT_FOUND.getUri())
 				.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
 				.detail(ex.getMessage())
+				.timestamp(LocalDateTime.now())
 				.build();
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
@@ -44,6 +72,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		.type(TypeError.RESOURCE_NOT_FOUND.getUri())
 		.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
 		.detail(ex.getMessage())
+				.timestamp(LocalDateTime.now())
 		.build();
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
@@ -68,6 +97,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		.type(TypeError.BAD_REQUEST_BODY_MESSAGE.getUri())
 		.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
 		.detail("Corpo da requisição inválido. Verifique erro de sintaxe.")
+				.timestamp(LocalDateTime.now())
 		.build();
 		
 		return ResponseEntity.status(status).body(apiError);
@@ -81,11 +111,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 			 body = ApiError.builder()
 					 		.title(status.getReasonPhrase())
 					 		.status(status.value())
+					 		.timestamp(LocalDateTime.now())
 					 		.build();
 		 }else if(body instanceof String) {
 			 body = ApiError.builder()
 				 		.title((String) body)
 				 		.status(status.value())
+					 .timestamp(LocalDateTime.now())
 				 		.build();	 
 		 }
 		return super.handleExceptionInternal(ex, body, headers, status, request);
@@ -115,6 +147,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.type(TypeError.RESOURCE_NOT_FOUND.getUri())
 				.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
 				.detail(detail)
+				.timestamp(LocalDateTime.now())
 				.build();
 
 		return ResponseEntity.status(status.value()).body(apiError);
@@ -132,6 +165,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.title(TypeError.BAD_REQUEST_INVALID_PARAMETER.getTitle())
 				.status(status.value())
 				.detail(detail)
+				.timestamp(LocalDateTime.now())
 				.build();
 
 
@@ -153,6 +187,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.type(TypeError.BAD_REQUEST_BODY_MESSAGE.getUri())
 				.status(status.value())
 				.detail(detail)
+				.timestamp(LocalDateTime.now())
 				.build();
 
 		return handleExceptionInternal(ex, apiError, headers, status, request);
@@ -172,6 +207,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
 				.status(status.value())
 				.detail(detail)
+				.timestamp(LocalDateTime.now())
 				.build();
 
 
