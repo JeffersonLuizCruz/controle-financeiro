@@ -2,6 +2,7 @@ package com.financial.ifood.service.impl;
 
 import java.util.List;
 
+import com.financial.ifood.service.exception.StateNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.financial.ifood.domain.model.State;
@@ -47,7 +48,7 @@ public class StateServiceImpl implements StateService{
 	
 	@Override
 	public State checkIfStateExists(Long id) {
-		return stateRepository.findById(id).orElseThrow(() -> new RuntimeException("TODO - implement Exception Handler"));
+		return stateRepository.findById(id).orElseThrow(() -> new StateNotFoundException("Estado de id " + id +" não encontrado"));
 	}
 
 }
