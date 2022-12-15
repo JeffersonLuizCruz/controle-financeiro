@@ -3,7 +3,8 @@ package com.financial.ifood.controller.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
-import com.financial.ifood.service.exception.StateNotFoundException;
+import com.financial.ifood.service.exception.ConstraintViolationService;
+import com.financial.ifood.service.exception.NotFoundExceptionService;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +21,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import com.financial.ifood.service.exception.CityNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
@@ -50,9 +50,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
 	}
 
+	@ExceptionHandler(ConstraintViolationService.class)
+	public ResponseEntity<ApiError> handlerConstraintViolation(ConstraintViolationService ex) {
 
-	@ExceptionHandler(StateNotFoundException.class)
-	public ResponseEntity<ApiError> handlerStateNotFoundException(StateNotFoundException ex) {
+		ApiError apiError = ApiError.builder()
+				.status(HttpStatus.CONFLICT.value())
+				.title(TypeError.CONSTRAINT_VIOLATION.getTitle())
+				.detail(ex.getMessage())
+				.timestamp(LocalDateTime.now())
+				.build();
+
+		return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(apiError);
+	}
+	@ExceptionHandler(NotFoundExceptionService.class)
+	public ResponseEntity<ApiError> handlerNotFoundException(NotFoundExceptionService ex) {
 
 		ApiError apiError = ApiError.builder()
 				.status(HttpStatus.NOT_FOUND.value())
@@ -64,20 +75,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
 	}
-	@ExceptionHandler(CityNotFoundException.class)
-	public ResponseEntity<ApiError> handlerCityNotFoundException(CityNotFoundException ex) {
-		
-		ApiError apiError = ApiError.builder()
-		.status(HttpStatus.NOT_FOUND.value())
-		.type(TypeError.RESOURCE_NOT_FOUND.getUri())
-		.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
-		.detail(ex.getMessage())
-				.timestamp(LocalDateTime.now())
-		.build();
-		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
-	}
-	
+
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {

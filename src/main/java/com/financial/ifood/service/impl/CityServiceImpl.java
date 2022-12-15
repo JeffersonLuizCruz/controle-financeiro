@@ -2,6 +2,9 @@ package com.financial.ifood.service.impl;
 
 import java.util.List;
 
+import com.financial.ifood.service.exception.ConstraintViolationService;
+import com.financial.ifood.service.exception.NotFoundExceptionService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.financial.ifood.domain.model.City;
@@ -9,7 +12,6 @@ import com.financial.ifood.domain.model.State;
 import com.financial.ifood.repository.CityRepository;
 import com.financial.ifood.service.CityService;
 import com.financial.ifood.service.StateService;
-import com.financial.ifood.service.exception.CityNotFoundException;
 
 @Service
 public class CityServiceImpl implements CityService{
@@ -21,6 +23,9 @@ public class CityServiceImpl implements CityService{
 		this.cityRepository = cityRepository;
 		this.stateService = stateService;
 	}
+
+	private final String CONSTRAINT_VALIDATION_MESSAGE = "Cidade de código '%d' não pode ser removida, pois está em uso";
+	private final String NOT_FOUND_MESSAGE = "Cidade de código '%d' não encontrado.";
 
 	@Override
 	public City save(City city) {
@@ -50,14 +55,19 @@ public class CityServiceImpl implements CityService{
 
 	@Override
 	public void deleteById(Long id) {
-		City cityEntity = checkIfCityExists(id);
-		cityRepository.delete(cityEntity);
-		
+
+		try {
+			City cityEntity = checkIfCityExists(id);
+			cityRepository.delete(cityEntity);
+		}catch (DataIntegrityViolationException e){
+			throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, id));
+
+		}
 	}
 
 	@Override
 	public City checkIfCityExists(Long id) {
 		return cityRepository.findById(id).orElseThrow(() ->
-		new CityNotFoundException("Cidade não encontrada id " + id));
+				new NotFoundExceptionService(String.format(NOT_FOUND_MESSAGE, id)));
 	}
 }

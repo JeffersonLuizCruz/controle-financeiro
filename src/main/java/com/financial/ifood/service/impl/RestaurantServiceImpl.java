@@ -2,6 +2,9 @@ package com.financial.ifood.service.impl;
 
 import java.util.List;
 
+import com.financial.ifood.service.exception.ConstraintViolationService;
+import com.financial.ifood.service.exception.NotFoundExceptionService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 
 import com.financial.ifood.domain.model.Kitchen;
@@ -54,12 +57,18 @@ public class RestaurantServiceImpl implements RestaurantService{
 	@Override
 	public void deleteById(Long id) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
-		restaurantRepository.delete(restaurantEntity);
+
+		try {
+			restaurantRepository.delete(restaurantEntity);
+		}catch (ConstraintViolationException e) {
+			throw new ConstraintViolationService(String.format("TODO - Falta implementar"));
+		}
 	}
 	
 	@Override
 	public Restaurant checkIfRestaurantExists(Long id) {
-		return restaurantRepository.findById(id).orElseThrow(() -> new RuntimeException("TODO - Implement exception Handler"));
+		return restaurantRepository.findById(id).orElseThrow(() -> new NotFoundExceptionService("") {
+		});
 	}
 
 }
