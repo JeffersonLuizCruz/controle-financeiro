@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financial.ifood.domain.model.State;
 import com.financial.ifood.service.StateService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("states")
 public class StateController {
@@ -27,7 +29,7 @@ public class StateController {
 	}
 
 	@PostMapping
-	public ResponseEntity<State> save(@RequestBody State state){
+	public ResponseEntity<State> save(@RequestBody @Valid State state){
 		return ResponseEntity.status(HttpStatus.CREATED).body(stateService.save(state));
 	}
 	

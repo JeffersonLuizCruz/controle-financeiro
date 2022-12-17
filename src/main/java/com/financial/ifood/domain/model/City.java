@@ -9,10 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
+import com.financial.ifood.core.validation.Groups;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.pool.TypePool;
 
 @AllArgsConstructor @NoArgsConstructor @Data
 @Entity
@@ -25,7 +30,9 @@ public class City implements Serializable{
 	
 	@Column(nullable = false)
 	private String name;
-	
+
+	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.StateId.class)
 	@ManyToOne
 	@JoinColumn(name = "state_id", nullable = false)
 	private State state;

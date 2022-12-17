@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financial.ifood.domain.model.City;
 import com.financial.ifood.service.CityService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("cities")
 public class CityController {
@@ -27,7 +29,7 @@ public class CityController {
 	}
 
 	@PostMapping
-	public ResponseEntity<City> save (@RequestBody City city){
+	public ResponseEntity<City> save (@RequestBody @Valid City city){
 		return ResponseEntity.status(HttpStatus.CREATED).body(cityService.save(city));
 	}
 	

@@ -1,6 +1,7 @@
 package com.financial.ifood.controller.exceptionhandler;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.financial.ifood.service.exception.ConstraintViolationService;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -23,7 +25,7 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
+public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 	/**
 	 * TODO
@@ -149,6 +151,33 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.build();
 
 		return ResponseEntity.status(status.value()).body(apiError);
+	}
+
+	// ToDo
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+																  HttpHeaders headers, HttpStatus status, WebRequest request) {
+		List<ApiErrorList> fieldErros = ex.getBindingResult()
+				.getFieldErrors()
+				.stream()
+				.map(fieldErro -> ApiErrorList.builder()
+						.message(fieldErro.getDefaultMessage())
+						.field(fieldErro.getField())
+						.parameter(fieldErro.getRejectedValue())
+						.build()
+				).collect(Collectors.toList());
+
+		ApiError apiErro = ApiError.builder()
+				.timestamp(LocalDateTime.now())
+				.status(status.value())
+				.type(status.getReasonPhrase())
+				.title(TypeError.ARGUMENT_NOT_VALID_EXCEPTION.getTitle())
+				.detail(ex.getBindingResult().getObjectName())
+				.errors(fieldErros)
+				.build();
+
+
+		return ResponseEntity.status(status.value()).body(apiErro);
 	}
 
 	private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,

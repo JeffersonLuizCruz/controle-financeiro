@@ -2,6 +2,8 @@ package com.financial.ifood.controller.exceptionhandler;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -20,5 +22,7 @@ public class ApiError implements Serializable{
 	private String title;
 	private String detail;
 	private LocalDateTime timestamp;
+
+	List<ApiErrorList> errors = new ArrayList<>();
 
 }

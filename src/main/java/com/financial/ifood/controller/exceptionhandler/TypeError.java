@@ -9,7 +9,8 @@ public enum TypeError {
 	BAD_REQUEST_BODY_MESSAGE("/corpo-da-requisicao-invalido", "Corpo da requisição inválido"),
 	BAD_REQUEST_INVALID_PARAMETER("/parametro-invalido", "Parâmetro de requisição inválido"),
 	INTERNAL_SERVER_ERROR("/server-error", "Erro interno do servidor"),
-	CONSTRAINT_VIOLATION("/entidade-existente", "Entidade em uso");
+	CONSTRAINT_VIOLATION("/entidade-existente", "Entidade em uso"),
+	ARGUMENT_NOT_VALID_EXCEPTION ("/atributo-invalido", "Campo inválido!");
 
 	private String uri;
 	private String title;
