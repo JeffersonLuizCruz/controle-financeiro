@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financial.ifood.domain.model.Restaurant;
 import com.financial.ifood.service.RestaurantService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/restaurants")
 public class RestaurantController {
@@ -27,7 +29,7 @@ public class RestaurantController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Restaurant> save(@RequestBody Restaurant restaurant){
+	public ResponseEntity<Restaurant> save(@RequestBody @Valid Restaurant restaurant){
 		return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.save(restaurant));
 	}
 	

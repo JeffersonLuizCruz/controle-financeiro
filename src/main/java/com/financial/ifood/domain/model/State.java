@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class State implements Serializable{
 	private static final long serialVersionUID = -9004431796005647934L;
 
-	@NotNull(groups = Groups.StateId.class)
+	@NotNull(groups = Groups.StateId.class, message = "Campo não pode ser nullo ou vazio!")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

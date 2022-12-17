@@ -10,9 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.financial.ifood.core.validation.Groups;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +39,9 @@ public class Product implements Serializable{
 	private BigDecimal price;
 	@Column(nullable = false)
 	private Boolean isActive;
-	
+	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.RestaurantId.class)
+	@NotNull(message = "Entidade restaurant é obrigatório!")
 	@JsonBackReference // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
 	@ManyToOne
 	@JoinColumn(nullable = false)

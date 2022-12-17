@@ -20,7 +20,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
+import com.financial.ifood.core.validation.Groups;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -36,12 +42,12 @@ import lombok.NoArgsConstructor;
 public class Restaurant implements Serializable{
 	private static final long serialVersionUID = 7205353866673534942L;
 
+	@NotNull(groups = Groups.RestaurantId.class,message = "Campo não pode ser nullo ou vazio!")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false)
 	private String name;
-	
 	@Column(nullable = false)
 	private BigDecimal freightRate;
 	private Boolean isActive = Boolean.TRUE;;
@@ -59,7 +65,10 @@ public class Restaurant implements Serializable{
 	@JsonIgnore
 	@Embedded
 	private Address address;
-	
+
+	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.KitchenId.class)
+	@NotNull(message = "Entidade kitchen é obrigatório!")
 	@ManyToOne
 	@JoinColumn(name = "kitchen_id", nullable = false)
 	private Kitchen kitchen;
