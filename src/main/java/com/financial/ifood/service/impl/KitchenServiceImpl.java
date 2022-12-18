@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.financial.ifood.domain.model.Kitchen;
 import com.financial.ifood.repository.KitchenRepository;
 import com.financial.ifood.service.KitchenService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class KitchenServiceImpl implements KitchenService{
@@ -22,12 +23,12 @@ public class KitchenServiceImpl implements KitchenService{
 
 	private final String CONSTRAINT_VALIDATION_MESSAGE = "Cozinha de código '%d' não pode ser removida, pois está em uso";
 	private final String NOT_FOUND_MESSAGE = "Cozinha de código '%d' não encontrado.";
-
+	@Transactional
 	@Override
 	public Kitchen save(Kitchen kitchen) {
 		return kitchenRepository.save(kitchen);
 	}
-
+	@Transactional
 	@Override
 	public Kitchen update(Long id, Kitchen kitchen) {
 		checkIfKitchenExists(id);
@@ -46,6 +47,7 @@ public class KitchenServiceImpl implements KitchenService{
 		return checkIfKitchenExists(id);
 	}
 
+	@Transactional
 	@Override
 	public void deleteById(Long id) {
 

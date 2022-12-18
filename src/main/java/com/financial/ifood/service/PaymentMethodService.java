@@ -3,6 +3,7 @@ package com.financial.ifood.service;
 import java.util.List;
 
 import com.financial.ifood.domain.model.PaymentMethod;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface PaymentMethodService {
 	
@@ -10,5 +11,5 @@ public interface PaymentMethodService {
 	PaymentMethod update(Long id, PaymentMethod paymentMethod);
 	List<PaymentMethod> findAll();
 	PaymentMethod findById(Long id);
-	void delete(Long id);
+    void deleteById(Long id);
 }

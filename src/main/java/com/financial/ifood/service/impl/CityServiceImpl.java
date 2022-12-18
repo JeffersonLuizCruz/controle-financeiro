@@ -12,6 +12,7 @@ import com.financial.ifood.domain.model.State;
 import com.financial.ifood.repository.CityRepository;
 import com.financial.ifood.service.CityService;
 import com.financial.ifood.service.StateService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CityServiceImpl implements CityService{
@@ -27,13 +28,14 @@ public class CityServiceImpl implements CityService{
 	private final String CONSTRAINT_VALIDATION_MESSAGE = "Cidade de código '%d' não pode ser removida, pois está em uso";
 	private final String NOT_FOUND_MESSAGE = "Cidade de código '%d' não encontrado.";
 
+	@Transactional
 	@Override
 	public City save(City city) {
 		State stateEntity = stateService.checkIfStateExists(city.getState().getId());
 		city.setState(stateEntity);
 		return cityRepository.save(city);
 	}
-
+	@Transactional
 	@Override
 	public City update(Long id, City city) {
 		checkIfCityExists(id);
@@ -48,11 +50,13 @@ public class CityServiceImpl implements CityService{
 		return cityRepository.findAll();
 	}
 
+	@Transactional
 	@Override
 	public City findById(Long id) {
 		return checkIfCityExists(id);
 	}
 
+	@Transactional
 	@Override
 	public void deleteById(Long id) {
 
