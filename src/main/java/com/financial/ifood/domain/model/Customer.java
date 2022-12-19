@@ -2,6 +2,7 @@ package com.financial.ifood.domain.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class Customer implements Serializable{
 	
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
-	private LocalDateTime createAt;
+	private OffsetDateTime createAt;
 	
 	@ManyToMany
 	@JoinTable(name = "customer_group", joinColumns = @JoinColumn(name = "customer_id"),

@@ -2,6 +2,7 @@ package com.financial.ifood.controller.exceptionhandler;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ApiError implements Serializable{
 	private String type;
 	private String title;
 	private String detail;
-	private LocalDateTime timestamp;
+	private OffsetDateTime timestamp;
 
 	List<ApiErrorList> errors = new ArrayList<>();
 

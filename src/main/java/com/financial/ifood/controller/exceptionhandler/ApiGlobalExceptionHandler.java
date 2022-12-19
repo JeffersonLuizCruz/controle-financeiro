@@ -1,6 +1,7 @@
 package com.financial.ifood.controller.exceptionhandler;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import com.financial.ifood.service.exception.ConstraintViolationService;
 import com.financial.ifood.service.exception.NotFoundExceptionService;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 @ControllerAdvice
 public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
@@ -46,7 +50,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.type(TypeError.INTERNAL_SERVER_ERROR.getUri())
 				.title(TypeError.INTERNAL_SERVER_ERROR.getTitle())
 				.detail(ex.getMessage())
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 				.build();
 
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
@@ -59,7 +63,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.status(HttpStatus.CONFLICT.value())
 				.title(TypeError.CONSTRAINT_VIOLATION.getTitle())
 				.detail(ex.getMessage())
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 				.build();
 
 		return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(apiError);
@@ -72,7 +76,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.type(TypeError.RESOURCE_NOT_FOUND.getUri())
 				.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
 				.detail(ex.getMessage())
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 				.build();
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
@@ -89,7 +93,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		}
 		
 		if (rootCause instanceof PropertyBindingException) {
-			return handleInvalidFormat((UnrecognizedPropertyException) rootCause, headers, status, request);
+			return handlePropertyBinding((UnrecognizedPropertyException) rootCause, headers, status, request);
 		}
 
 		ApiError apiError = ApiError.builder()
@@ -97,7 +101,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		.type(TypeError.BAD_REQUEST_BODY_MESSAGE.getUri())
 		.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
 		.detail("Corpo da requisição inválido. Verifique erro de sintaxe.")
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 		.build();
 		
 		return ResponseEntity.status(status).body(apiError);
@@ -111,13 +115,13 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 			 body = ApiError.builder()
 					 		.title(status.getReasonPhrase())
 					 		.status(status.value())
-					 		.timestamp(LocalDateTime.now())
+					 		.timestamp(OffsetDateTime.now())
 					 		.build();
 		 }else if(body instanceof String) {
 			 body = ApiError.builder()
 				 		.title((String) body)
 				 		.status(status.value())
-					 .timestamp(LocalDateTime.now())
+					 .timestamp(OffsetDateTime.now())
 				 		.build();	 
 		 }
 		return super.handleExceptionInternal(ex, body, headers, status, request);
@@ -147,7 +151,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.type(TypeError.RESOURCE_NOT_FOUND.getUri())
 				.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
 				.detail(detail)
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 				.build();
 
 		return ResponseEntity.status(status.value()).body(apiError);
@@ -168,7 +172,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				).collect(Collectors.toList());
 
 		ApiError apiErro = ApiError.builder()
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 				.status(status.value())
 				.type(status.getReasonPhrase())
 				.title(TypeError.ARGUMENT_NOT_VALID_EXCEPTION.getTitle())
@@ -179,7 +183,6 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 		return ResponseEntity.status(status.value()).body(apiErro);
 	}
-
 	private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
 																	HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -192,7 +195,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.title(TypeError.BAD_REQUEST_INVALID_PARAMETER.getTitle())
 				.status(status.value())
 				.detail(detail)
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 				.build();
 
 
@@ -214,18 +217,17 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.type(TypeError.BAD_REQUEST_BODY_MESSAGE.getUri())
 				.status(status.value())
 				.detail(detail)
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 				.build();
 
 		return handleExceptionInternal(ex, apiError, headers, status, request);
 	}
 
-	private ResponseEntity<Object> handleInvalidFormat(UnrecognizedPropertyException ex,
+	private ResponseEntity<Object> handlePropertyBinding(UnrecognizedPropertyException ex,
 													   HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		String path = ex.getPath().stream()
-				.map(ref -> ref.getFieldName())
-				.findFirst().get();
+				.map(ref -> ref.getFieldName()).collect(Collectors.joining("."));
 
 		String detail = String.format("A propriedade '%s' é de um tipo inválido ou não existe. "
 				+ "Corrija e informe um valor compatível com o tipo certo.",path);
@@ -234,7 +236,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
 				.status(status.value())
 				.detail(detail)
-				.timestamp(LocalDateTime.now())
+				.timestamp(OffsetDateTime.now())
 				.build();
 
 
