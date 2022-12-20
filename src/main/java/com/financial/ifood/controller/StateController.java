@@ -40,7 +40,6 @@ public class StateController {
 	@PutMapping("/{id}")
 	public ResponseEntity<State> update(@PathVariable Long id, @RequestBody @Valid StateDTO dto){
 		State state = stateMapper.toModel(dto);
-		
 		return ResponseEntity.ok(stateService.update(id, state));
 	}
 	
