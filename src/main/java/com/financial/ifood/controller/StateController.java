@@ -44,7 +44,6 @@ public class StateController {
 	
 	@GetMapping
 	public ResponseEntity<List<State>> findAll(){
-		
 		return ResponseEntity.ok(stateService.findAll());
 	}
 	
