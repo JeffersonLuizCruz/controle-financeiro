@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Getter @Setter
 public class ApiErrorList implements Serializable {
 
-    private final String message;
-    private final String field;
-    private final Object parameter;
+    private String message;
+    private String field;
+    private Object parameter;
 }

@@ -9,12 +9,15 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @JsonInclude(Include.NON_NULL)
-@Getter
 @Builder
+@AllArgsConstructor
+@Getter @Setter
 public class ApiError implements Serializable{
 	private static final long serialVersionUID = 6965291767201826269L;
 	

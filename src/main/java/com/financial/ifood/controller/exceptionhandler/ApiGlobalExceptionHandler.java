@@ -1,6 +1,5 @@
 package com.financial.ifood.controller.exceptionhandler;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +8,6 @@ import com.financial.ifood.service.exception.ConstraintViolationService;
 import com.financial.ifood.service.exception.NotFoundExceptionService;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +24,8 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
-import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
+import static com.financial.ifood.controller.exceptionhandler.ApiError.*;
+
 
 @ControllerAdvice
 public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
@@ -35,7 +34,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	 * TODO
 	 * Remover ex.printStackTrace(); na fase de produção
 	 * ex.printStackTrace();
-	 * */
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ApiError> handleUncaught(Exception ex) {
 
@@ -45,7 +44,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 		ex.printStackTrace();
 
-		ApiError apiError = ApiError.builder()
+		ApiError apiError = builder()
 				.status(HttpStatus.INTERNAL_SERVER_ERROR.value())
 				.type(TypeError.INTERNAL_SERVER_ERROR.getUri())
 				.title(TypeError.INTERNAL_SERVER_ERROR.getTitle())
@@ -55,11 +54,11 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
 	}
-
+	 * */
 	@ExceptionHandler(ConstraintViolationService.class)
 	public ResponseEntity<ApiError> handlerConstraintViolation(ConstraintViolationService ex) {
 
-		ApiError apiError = ApiError.builder()
+		ApiError apiError = builder()
 				.status(HttpStatus.CONFLICT.value())
 				.title(TypeError.CONSTRAINT_VIOLATION.getTitle())
 				.detail(ex.getMessage())
@@ -71,7 +70,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(NotFoundExceptionService.class)
 	public ResponseEntity<ApiError> handlerNotFoundException(NotFoundExceptionService ex) {
 
-		ApiError apiError = ApiError.builder()
+		ApiError apiError = builder()
 				.status(HttpStatus.NOT_FOUND.value())
 				.type(TypeError.RESOURCE_NOT_FOUND.getUri())
 				.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
@@ -96,7 +95,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 			return handlePropertyBinding((UnrecognizedPropertyException) rootCause, headers, status, request);
 		}
 
-		ApiError apiError = ApiError.builder()
+		ApiError apiError = builder()
 		.status(status.value())
 		.type(TypeError.BAD_REQUEST_BODY_MESSAGE.getUri())
 		.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
@@ -112,13 +111,13 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 			HttpStatus status, WebRequest request) {
 
 		 if(body == null) {
-			 body = ApiError.builder()
+			 body = builder()
 					 		.title(status.getReasonPhrase())
 					 		.status(status.value())
 					 		.timestamp(OffsetDateTime.now())
 					 		.build();
 		 }else if(body instanceof String) {
-			 body = ApiError.builder()
+			 body = builder()
 				 		.title((String) body)
 				 		.status(status.value())
 					 .timestamp(OffsetDateTime.now())
@@ -147,7 +146,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		String detail = String.format("O recurso '%s', que você tentou acessar, é inexistente.", ex.getRequestURL());
-		ApiError apiError = ApiError.builder()
+		ApiError apiError = builder()
 				.type(TypeError.RESOURCE_NOT_FOUND.getUri())
 				.title(TypeError.RESOURCE_NOT_FOUND.getTitle())
 				.detail(detail)
@@ -171,7 +170,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 						.build()
 				).collect(Collectors.toList());
 
-		ApiError apiErro = ApiError.builder()
+		ApiError apiErro = builder()
 				.timestamp(OffsetDateTime.now())
 				.status(status.value())
 				.type(status.getReasonPhrase())
@@ -190,7 +189,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		String detail = String.format("O parâmetro de URL '%s' recebeu o valor '%s', que é de um tipo" +
 				" inválido. Corrija e informe um valor compatível com  o tipo %s", ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName());
 
-		ApiError apiError = ApiError.builder()
+		ApiError apiError = builder()
 				.type(TypeError.BAD_REQUEST_INVALID_PARAMETER.getUri())
 				.title(TypeError.BAD_REQUEST_INVALID_PARAMETER.getTitle())
 				.status(status.value())
@@ -212,7 +211,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 						+ "que é de um tipo inválido. Corrija e informe um valor compatível com o tipo %s.",
 				path, ex.getValue(), ex.getTargetType().getSimpleName());
 
-		ApiError apiError = ApiError.builder()
+		ApiError apiError = builder()
 				.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
 				.type(TypeError.BAD_REQUEST_BODY_MESSAGE.getUri())
 				.status(status.value())
@@ -232,7 +231,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		String detail = String.format("A propriedade '%s' é de um tipo inválido ou não existe. "
 				+ "Corrija e informe um valor compatível com o tipo certo.",path);
 
-		ApiError apiError = ApiError.builder()
+		ApiError apiError = builder()
 				.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
 				.status(status.value())
 				.detail(detail)

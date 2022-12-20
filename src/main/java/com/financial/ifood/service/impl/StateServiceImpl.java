@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.financial.ifood.service.exception.ConstraintViolationService;
 import com.financial.ifood.service.exception.NotFoundExceptionService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +13,14 @@ import com.financial.ifood.domain.model.State;
 import com.financial.ifood.repository.StateRepository;
 import com.financial.ifood.service.StateService;
 
-@Service
+@Service @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class StateServiceImpl implements StateService {
 
-    private StateRepository stateRepository;
-
-    public StateServiceImpl(StateRepository stateRepository) {
-        this.stateRepository = stateRepository;
-    }
+    private final StateRepository stateRepository;
 
     private final String CONSTRAINT_VALIDATION_MESSAGE = "Estado de código '%d' não pode ser removida, pois está em uso";
     private final String NOT_FOUND_MESSAGE = "Estado de código '%d' não encontrado.";
-
+    
     @Override
     public State save(State state) {
         return stateRepository.save(state);
