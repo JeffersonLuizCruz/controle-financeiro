@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum TypeError {
 	
-	RESOURCE_NOT_FOUND("/recurso-nao-encontrada", "Recurso não encontrada"),
+	RESOURCE_NOT_FOUND("/recurso-nao-encontrado", "Recurso não encontrada"),
 	BAD_REQUEST_BODY_MESSAGE("/corpo-da-requisicao-invalido", "Corpo da requisição inválido"),
 	BAD_REQUEST_INVALID_PARAMETER("/parametro-invalido", "Parâmetro de requisição inválido"),
 	INTERNAL_SERVER_ERROR("/server-error", "Erro interno do servidor"),

@@ -39,8 +39,9 @@ public class CityServiceImpl implements CityService{
 	@Override
 	public City update(Long id, City city) {
 		checkIfCityExists(id);
+		State stateEntity = stateService.checkIfStateExists(city.getState().getId());
 		city.setId(id);
-		city.setState(city.getState());
+		city.setState(stateEntity);
 
 		return cityRepository.save(city);
 	}

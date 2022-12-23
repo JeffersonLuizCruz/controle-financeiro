@@ -3,7 +3,7 @@ package com.financial.ifood.controller;
 import java.util.List;
 
 import com.financial.ifood.controller.mapper.StateMapper;
-import com.financial.ifood.controller.mapper.dto.request.StateDTO;
+import com.financial.ifood.controller.mapper.dto.request.StateRequestDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,13 +32,13 @@ public class StateController {
 		this.stateMapper = stateMapper;
 	}
 	@PostMapping
-	public ResponseEntity<State> save(@RequestBody @Valid StateDTO dto){
+	public ResponseEntity<State> save(@RequestBody @Valid StateRequestDTO dto){
 		State state = stateMapper.toModel(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(stateService.save(state));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<State> update(@PathVariable Long id, @RequestBody @Valid StateDTO dto){
+	public ResponseEntity<State> update(@PathVariable Long id, @RequestBody @Valid StateRequestDTO dto){
 		State state = stateMapper.toModel(dto);
 		return ResponseEntity.ok(stateService.update(id, state));
 	}
