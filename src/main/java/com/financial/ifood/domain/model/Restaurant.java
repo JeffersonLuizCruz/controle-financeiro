@@ -8,31 +8,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 
-import com.financial.ifood.core.validation.Groups;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,7 +35,6 @@ import lombok.NoArgsConstructor;
 public class Restaurant implements Serializable{
 	private static final long serialVersionUID = 7205353866673534942L;
 
-	@NotNull(groups = Groups.RestaurantId.class,message = "Campo não pode ser nullo ou vazio!")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -50,29 +42,24 @@ public class Restaurant implements Serializable{
 	private String name;
 	@Column(nullable = false)
 	private BigDecimal freightRate;
-	private Boolean isActive = Boolean.TRUE;;
+	private Boolean isActive = Boolean.TRUE;
 	private Boolean isOpen = Boolean.FALSE;
 	
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime createAt;
 	
-	@JsonIgnore
+
 	@UpdateTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime updateAt;
-	
-	@JsonIgnore
+
 	@Embedded
 	private Address address;
 
-	@Valid
-	@ConvertGroup(from = Default.class, to = Groups.KitchenId.class)
-	@NotNull(message = "Entidade kitchen é obrigatório!")
 	@ManyToOne
 	@JoinColumn(name = "kitchen_id", nullable = false)
 	private Kitchen kitchen;
-	
 
 	@ManyToMany
 	@JoinTable(name = "restaurant_payment_methods",

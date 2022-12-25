@@ -10,6 +10,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -83,7 +84,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
+			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		
 		Throwable rootCause = ExceptionUtils.getRootCause(ex);
 
@@ -108,11 +109,11 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-			HttpStatus status, WebRequest request) {
+			HttpStatusCode status, WebRequest request) {
 
 		 if(body == null) {
 			 body = builder()
-					 		.title(status.getReasonPhrase())
+					 		.title(HttpStatus.valueOf(status.value()).getReasonPhrase())
 					 		.status(status.value())
 					 		.timestamp(OffsetDateTime.now())
 					 		.build();
@@ -128,7 +129,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@Override
 	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex,
-														HttpHeaders headers, HttpStatus status, WebRequest request) {
+														HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
 		if(ex instanceof TypeMismatchException){
 			return handleMethodArgumentTypeMismatch((MethodArgumentTypeMismatchException) ex, headers, status, request);
@@ -143,7 +144,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	 * spring.web.resources.add-mappings=false '
 	 * */
 	@Override
-	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
 		String detail = String.format("O recurso '%s', que você tentou acessar, é inexistente.", ex.getRequestURL());
 		ApiError apiError = builder()
@@ -159,7 +160,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	// ToDo
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-																  HttpHeaders headers, HttpStatus status, WebRequest request) {
+																  HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		List<ApiErrorList> fieldErros = ex.getBindingResult()
 				.getFieldErrors()
 				.stream()
@@ -173,7 +174,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		ApiError apiErro = builder()
 				.timestamp(OffsetDateTime.now())
 				.status(status.value())
-				.type(status.getReasonPhrase())
+				.type(HttpStatus.valueOf(status.value()).getReasonPhrase())
 				.title(TypeError.ARGUMENT_NOT_VALID_EXCEPTION.getTitle())
 				.detail(ex.getBindingResult().getObjectName())
 				.errors(fieldErros)
@@ -183,7 +184,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(status.value()).body(apiErro);
 	}
 	private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
-																	HttpHeaders headers, HttpStatus status, WebRequest request) {
+																	HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
 
 		String detail = String.format("O parâmetro de URL '%s' recebeu o valor '%s', que é de um tipo" +
@@ -201,7 +202,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 	}
 	private ResponseEntity<Object> handleInvalidFormat(InvalidFormatException ex,
-																HttpHeaders headers, HttpStatus status, WebRequest request) {
+																HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
 		String path = ex.getPath().stream()
 				.map(ref -> ref.getFieldName())
@@ -223,7 +224,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	}
 
 	private ResponseEntity<Object> handlePropertyBinding(UnrecognizedPropertyException ex,
-													   HttpHeaders headers, HttpStatus status, WebRequest request) {
+													   HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
 		String path = ex.getPath().stream()
 				.map(ref -> ref.getFieldName()).collect(Collectors.joining("."));

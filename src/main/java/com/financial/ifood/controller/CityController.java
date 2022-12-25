@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financial.ifood.domain.model.City;
 import com.financial.ifood.service.CityService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("cities")

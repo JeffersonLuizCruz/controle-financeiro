@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financial.ifood.domain.model.State;
 import com.financial.ifood.service.StateService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("states")

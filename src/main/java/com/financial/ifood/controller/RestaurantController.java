@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financial.ifood.domain.model.Restaurant;
 import com.financial.ifood.service.RestaurantService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/restaurants")
