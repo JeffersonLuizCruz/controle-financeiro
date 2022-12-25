@@ -1,4 +1,4 @@
-package com.financial.ifood;
+package com.project.ifood;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

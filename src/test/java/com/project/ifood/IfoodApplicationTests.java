@@ -1,4 +1,4 @@
-package com.financial.porkinho;
+package com.project.ifood;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
