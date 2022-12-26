@@ -2,6 +2,8 @@ package com.financial.ifood.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financial.ifood.domain.model.Restaurant;
 import com.financial.ifood.service.RestaurantService;
 
-import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/restaurants")

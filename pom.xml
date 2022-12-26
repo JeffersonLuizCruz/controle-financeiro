@@ -5,19 +5,16 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.1</version>
+		<version>2.6.13</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.financial</groupId>
 	<artifactId>ifood</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ifood</name>
+	<name>porkinho</name>
 	<description>Sistema de Controle Financeiro</description>
 	<properties>
-		<java.version>17</java.version>
-		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
-		<org.projectlombok.version>1.18.20</org.projectlombok.version>
-		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -73,53 +70,10 @@
    			 <scope>runtime</scope>
 		</dependency>
 		-->
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>${org.mapstruct.version}</version>
-		</dependency>
-		<dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${org.mapstruct.version}</version>
-            <scope>provided</scope>
-        </dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${org.projectlombok.version}</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 
 <build>
 <plugins>
-	<plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-compiler-plugin</artifactId>
-		<version>3.8.1</version>
-		<configuration>
-			<source>17</source> <!-- depending on your project -->
-			<target>17</target> <!-- depending on your project -->
-			<annotationProcessorPaths>
-				<path>
-					<groupId>org.mapstruct</groupId>
-					<artifactId>mapstruct-processor</artifactId>
-					<version>${org.mapstruct.version}</version>
-				</path>
-				<path>
-					<groupId>org.projectlombok</groupId>
-					<artifactId>lombok</artifactId>
-					<version>${org.projectlombok.version}</version>
-				</path>
-				<path>
-					<groupId>org.projectlombok</groupId>
-					<artifactId>lombok-mapstruct-binding</artifactId>
-					<version>${lombok-mapstruct-binding.version}</version>
-				</path>
-			</annotationProcessorPaths>
-		</configuration>
-	</plugin>
     <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -134,5 +88,4 @@
     </plugin>
 </plugins>
 </build>
-
 </project>

@@ -2,8 +2,8 @@ package com.financial.ifood.controller;
 
 import java.util.List;
 
-import com.financial.ifood.controller.mapper.StateMapper;
-import com.financial.ifood.controller.mapper.dto.request.StateRequestDTO;
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.financial.ifood.controller.mapper.StateMapper;
+import com.financial.ifood.controller.mapper.dto.request.StateRequestDTO;
 import com.financial.ifood.domain.model.State;
 import com.financial.ifood.service.StateService;
 
-import jakarta.validation.Valid;
+
 
 
 @RestController
