@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.ifood.controller.mapper.StateMapper;
+import com.project.ifood.controller.mapper.dto.request.StateRequestDTO;
 import com.project.ifood.domain.model.State;
 import com.project.ifood.service.StateService;
 

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.project.ifood.domain.model.State;
 import com.project.ifood.repository.StateRepository;
 import com.project.ifood.service.StateService;
+import com.project.ifood.service.exception.ConstraintViolationService;
+import com.project.ifood.service.exception.NotFoundExceptionService;
 
 import lombok.AllArgsConstructor;
 
@@ -49,7 +51,7 @@ public class StateServiceImpl implements StateService {
 			State stateEntity = checkIfStateExists(id);
 			stateRepository.delete(stateEntity);
 		}catch (DataIntegrityViolationException e){
-			//throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, id));
+			throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, id));
 		}
     }
 
