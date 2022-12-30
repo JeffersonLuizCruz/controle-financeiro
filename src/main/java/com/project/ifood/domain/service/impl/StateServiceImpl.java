@@ -2,6 +2,7 @@ package com.project.ifood.domain.service.impl;
 
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,8 @@ public class StateServiceImpl implements StateService {
 		try {
 			State stateEntity = checkIfStateExists(id);
 			stateRepository.delete(stateEntity);
-		}catch (DataIntegrityViolationException e){
+			stateRepository.flush();
+		}catch (DataIntegrityViolationException | ConstraintViolationException e){
 			throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, id));
 		}
     }

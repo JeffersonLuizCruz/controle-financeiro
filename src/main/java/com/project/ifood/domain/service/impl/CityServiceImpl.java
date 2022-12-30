@@ -2,6 +2,7 @@ package com.project.ifood.domain.service.impl;
 
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +65,8 @@ public class CityServiceImpl implements CityService{
 		try {
 			City cityEntity = checkIfCityExists(id);
 			cityRepository.delete(cityEntity);
-		}catch (DataIntegrityViolationException e){
+			cityRepository.flush();
+		}catch (DataIntegrityViolationException | ConstraintViolationException e){
 			throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, id));
 
 		}

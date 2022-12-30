@@ -2,6 +2,7 @@ package com.project.ifood.domain.service.impl;
 
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +55,8 @@ public class KitchenServiceImpl implements KitchenService{
 		try {
 			Kitchen kitchenEntity = checkIfKitchenExists(id);
 			kitchenRepository.delete(kitchenEntity);
-		} catch (DataIntegrityViolationException e) {
+			kitchenRepository.flush();
+		} catch (DataIntegrityViolationException | ConstraintViolationException e) {
 			throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, id));
 		}
 	}

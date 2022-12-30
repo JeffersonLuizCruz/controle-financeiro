@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.project.ifood.domain.model.Kitchen;
@@ -65,7 +66,8 @@ public class RestaurantServiceImpl implements RestaurantService{
 		try {
 			Restaurant restaurantEntity = checkIfRestaurantExists(id);
 			restaurantRepository.delete(restaurantEntity);
-		}catch (ConstraintViolationException e) {
+			restaurantRepository.flush();
+		}catch (DataIntegrityViolationException | ConstraintViolationException e) {
 			throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, id));
 		}
 	}
