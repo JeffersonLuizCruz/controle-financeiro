@@ -12,4 +12,6 @@ public interface RestaurantService {
 	Restaurant findById(Long id);
 	void deleteById(Long id);
 	Restaurant checkIfRestaurantExists(Long id);
+	void isActive(Long id);
+	void isDisable(Long id);
 }

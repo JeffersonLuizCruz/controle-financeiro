@@ -6,6 +6,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.ifood.domain.model.Kitchen;
 import com.project.ifood.domain.model.Restaurant;
@@ -77,5 +78,24 @@ public class RestaurantServiceImpl implements RestaurantService{
 		return restaurantRepository.findById(id).orElseThrow(() ->
 				new NotFoundExceptionService(String.format(NOT_FOUND_MESSAGE, id)));
 	}
+
+	@Override
+	public void isActive(Long id) {
+		Restaurant restaurantEntity = checkIfRestaurantExists(id);
+		restaurantEntity.setIsActive(true);
+		restaurantRepository.save(restaurantEntity);
+		
+	}
+
+	@Transactional
+	@Override
+	public void isDisable(Long id) {
+		Restaurant restaurantEntity = checkIfRestaurantExists(id);
+		restaurantEntity.setIsActive(false);
+		restaurantRepository.save(restaurantEntity);
+		
+	}
+	
+	
 
 }

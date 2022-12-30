@@ -24,7 +24,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -56,24 +56,28 @@ public class Restaurant implements Serializable{
 
 	@Embedded
 	private Address address;
-
+	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "kitchen_id", nullable = false)
 	private Kitchen kitchen;
 
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurant_payment_methods",
 			joinColumns = @JoinColumn(name = "restaurants_id"),
 			inverseJoinColumns = @JoinColumn(name = "payment_methods_id"))
 	private Set<PaymentMethod> paymentMethods =  new HashSet<>();
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurant_user_owner",
 			joinColumns = @JoinColumn(name = "restaurant_id"),
 			inverseJoinColumns = @JoinColumn(name = "owner_id"))
 	private Set<Customer> owner = new HashSet<>();
 	
-	@JsonManagedReference
+	@JsonIgnore
+	//@JsonManagedReference
 	@OneToMany(mappedBy = "restaurant")
 	private List<Product> products = new ArrayList<>();
 }

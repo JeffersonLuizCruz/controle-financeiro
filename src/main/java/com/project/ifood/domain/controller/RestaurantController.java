@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.domain.model.Restaurant;
@@ -38,6 +39,7 @@ public class RestaurantController {
 		return ResponseEntity.ok(restaurantService.update(id, restaurant));
 	}
 	
+	// TODO resolver problema N+1
 	@GetMapping
 	public ResponseEntity<List<Restaurant>> findAll(){
 		return ResponseEntity.ok(restaurantService.findAll());
@@ -52,6 +54,18 @@ public class RestaurantController {
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		restaurantService.deleteById(id);
 		return ResponseEntity.notFound().build();
+	}
+	
+	@PutMapping("/{restaurantId}/active")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void active(@PathVariable Long restaurantId) {
+		restaurantService.isActive(restaurantId);
+	}
+	
+	@DeleteMapping("/{restaurantId}/disable")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void disable(@PathVariable Long restaurantId) {
+		restaurantService.isDisable(restaurantId);
 	}
  
 }

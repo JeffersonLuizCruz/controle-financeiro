@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,9 +36,11 @@ public class Product implements Serializable{
 	private BigDecimal price;
 	@Column(nullable = false)
 	private Boolean isActive;
+	
+	@JsonIgnore
 	@Valid
 	@NotNull(message = "Entidade restaurant é obrigatório!")
-	@JsonBackReference // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
+	//@JsonBackReference // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Restaurant restaurant;
