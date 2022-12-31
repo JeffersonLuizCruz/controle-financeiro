@@ -27,11 +27,11 @@ import com.project.ifood.domain.service.RestaurantService;
 public class RestaurantController {
 	
 	private final RestaurantService restaurantService;
-	private final RestaurantMapper mapperRestaurantMapper;
+	private final RestaurantMapper restaurantMapper;
 
-	public RestaurantController(RestaurantService restaurantService, RestaurantMapper mapperRestaurantMapper) {
+	public RestaurantController(RestaurantService restaurantService, RestaurantMapper restaurantMapper) {
 		this.restaurantService = restaurantService;
-		this.mapperRestaurantMapper = mapperRestaurantMapper;
+		this.restaurantMapper = restaurantMapper;
 	}
 	
 	@PostMapping
@@ -44,12 +44,11 @@ public class RestaurantController {
 		return ResponseEntity.ok(restaurantService.update(id, restaurant));
 	}
 	
-	// TODO resolver problema N+1
 	@GetMapping
 	public ResponseEntity<List<RestaurantRequestDTO>> findAll(){
 		return ResponseEntity.ok(restaurantService.findAll()
 				.stream()
-				.map(restaurant -> mapperRestaurantMapper.toDTO(restaurant))
+				.map(restaurant -> restaurantMapper.toDTO(restaurant))
 				.collect(Collectors.toList()));
 	}
 	
