@@ -53,8 +53,9 @@ public class RestaurantController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Restaurant> findById(@PathVariable Long id){
-		return ResponseEntity.ok(restaurantService.findById(id));
+	public ResponseEntity<RestaurantRequestDTO> findById(@PathVariable Long id){
+		Restaurant restaurantEntity = restaurantService.findById(id);
+		return ResponseEntity.ok(restaurantMapper.toDTO(restaurantEntity));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -69,9 +70,9 @@ public class RestaurantController {
 		restaurantService.isActive(restaurantId);
 	}
 	
-	@DeleteMapping("/{restaurantId}/disable")
+	@DeleteMapping("/{restaurantId}/inactive")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void disable(@PathVariable Long restaurantId) {
+	public void inactive(@PathVariable Long restaurantId) {
 		restaurantService.isDisable(restaurantId);
 	}
  

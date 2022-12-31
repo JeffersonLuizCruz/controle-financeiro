@@ -18,7 +18,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long>{
 	List<Restaurant> findAll();
 	
 	
-	@Query("FROM Restaurant r JOIN FETCH r.kitchen LEFT JOIN FETCH r.paymentMethods LEFT JOIN FETCH r.owner LEFT JOIN FETCH r.products WHERE r.id = :id")
+	//@Query("FROM Restaurant r JOIN FETCH r.kitchen LEFT JOIN FETCH r.paymentMethods LEFT JOIN FETCH r.owner LEFT JOIN FETCH r.products WHERE r.id = :id")
+	@Query("FROM Restaurant r JOIN FETCH r.kitchen WHERE r.id = :id")
 	Optional<Restaurant> findById(@Param("id") Long id);
 
 }

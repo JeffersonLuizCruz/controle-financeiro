@@ -20,6 +20,7 @@ public class RestaurantRequestDTO {
     @NotBlank(message = "Frete é obrigatório!")
     @PositiveOrZero
     private BigDecimal freightRate;
+    private Boolean isActive;
     @Valid
     @NotNull(message = "A inserção da Cozinha(object='kitchen') é obrigatório!")
     private InputKitchenId kitchen;
