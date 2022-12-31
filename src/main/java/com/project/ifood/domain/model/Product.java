@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,7 +35,6 @@ public class Product implements Serializable{
 	@Column(nullable = false)
 	private Boolean isActive;
 	
-	@JsonIgnore
 	@Valid
 	@NotNull(message = "Entidade restaurant é obrigatório!")
 	//@JsonBackReference // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion

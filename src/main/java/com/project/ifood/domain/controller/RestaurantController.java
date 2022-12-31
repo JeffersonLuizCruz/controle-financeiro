@@ -1,6 +1,7 @@
 package com.project.ifood.domain.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.ifood.domain.controller.mapper.RestaurantMapper;
+import com.project.ifood.domain.controller.mapper.dto.request.RestaurantRequestDTO;
 import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.service.RestaurantService;
 
@@ -24,9 +27,11 @@ import com.project.ifood.domain.service.RestaurantService;
 public class RestaurantController {
 	
 	private final RestaurantService restaurantService;
+	private final RestaurantMapper mapperRestaurantMapper;
 
-	public RestaurantController(RestaurantService restaurantService) {
+	public RestaurantController(RestaurantService restaurantService, RestaurantMapper mapperRestaurantMapper) {
 		this.restaurantService = restaurantService;
+		this.mapperRestaurantMapper = mapperRestaurantMapper;
 	}
 	
 	@PostMapping
@@ -41,8 +46,11 @@ public class RestaurantController {
 	
 	// TODO resolver problema N+1
 	@GetMapping
-	public ResponseEntity<List<Restaurant>> findAll(){
-		return ResponseEntity.ok(restaurantService.findAll());
+	public ResponseEntity<List<RestaurantRequestDTO>> findAll(){
+		return ResponseEntity.ok(restaurantService.findAll()
+				.stream()
+				.map(restaurant -> mapperRestaurantMapper.toDTO(restaurant))
+				.collect(Collectors.toList()));
 	}
 	
 	@GetMapping("/{id}")

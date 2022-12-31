@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor @Data
 public class RestaurantRequestDTO {
 
+	private Long id;
     @NotBlank(message = "Nome é obrigatório!")
     private String name;
     @NotBlank(message = "Frete é obrigatório!")
@@ -22,4 +23,5 @@ public class RestaurantRequestDTO {
     @Valid
     @NotNull(message = "A inserção da Cozinha(object='kitchen') é obrigatório!")
     private InputKitchenId kitchen;
+    private AddressRequestDTO address;
 }
