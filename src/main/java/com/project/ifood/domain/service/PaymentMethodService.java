@@ -11,4 +11,5 @@ public interface PaymentMethodService {
 	List<PaymentMethod> findAll();
 	PaymentMethod findById(Long id);
     void deleteById(Long id);
+    PaymentMethod checkIfStateExists(Long id);
 }
