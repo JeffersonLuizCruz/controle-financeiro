@@ -36,8 +36,9 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 	@Transactional
 	@Override
 	public PaymentMethod update(Long id, PaymentMethod paymentMethod) {
-		PaymentMethod paymentMethodEntity = checkIfStateExists(id);
-		return paymentMethodRespository.save(paymentMethodEntity);
+		checkIfStateExists(id);
+		paymentMethod.setId(id);
+		return paymentMethodRespository.save(paymentMethod);
 	}
 
 	@Override
