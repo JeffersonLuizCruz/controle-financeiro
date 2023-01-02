@@ -1,9 +1,9 @@
-package com.project.ifood.domain.controller.mapper;
+package com.project.ifood.api.controller.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.project.ifood.domain.controller.mapper.dto.RestaurantDTO;
+import com.project.ifood.api.controller.mapper.dto.RestaurantDTO;
 import com.project.ifood.domain.model.Restaurant;
 
 @Mapper(componentModel = "spring")

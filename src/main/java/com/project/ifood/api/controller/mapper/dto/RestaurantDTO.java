@@ -1,4 +1,4 @@
-package com.project.ifood.domain.controller.mapper.dto;
+package com.project.ifood.api.controller.mapper.dto;
 
 import java.math.BigDecimal;
 

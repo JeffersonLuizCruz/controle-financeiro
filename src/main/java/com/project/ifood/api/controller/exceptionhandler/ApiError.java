@@ -1,4 +1,4 @@
-package com.project.ifood.domain.controller.exceptionhandler;
+package com.project.ifood.api.controller.exceptionhandler;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;

@@ -1,4 +1,4 @@
-package com.project.ifood.domain.controller;
+package com.project.ifood.api.controller;
 
 import java.util.List;
 

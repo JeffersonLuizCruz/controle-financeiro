@@ -1,4 +1,4 @@
-package com.project.ifood.domain.controller;
+package com.project.ifood.api.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.ifood.domain.controller.mapper.RestaurantMapper;
-import com.project.ifood.domain.controller.mapper.dto.RestaurantDTO;
+import com.project.ifood.api.controller.mapper.RestaurantMapper;
+import com.project.ifood.api.controller.mapper.dto.RestaurantDTO;
 import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.service.RestaurantService;
 
