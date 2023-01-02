@@ -22,6 +22,7 @@ public class RestaurantDTO {
     @PositiveOrZero
     private BigDecimal freightRate;
     private Boolean isActive;
+    private Boolean isOpen;
     
 
     @NotNull(message = "A inserção da Cozinha(object='kitchen') é obrigatório!")

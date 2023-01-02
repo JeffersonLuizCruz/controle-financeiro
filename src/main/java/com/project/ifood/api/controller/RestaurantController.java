@@ -79,7 +79,19 @@ public class RestaurantController {
 	@DeleteMapping("/{restaurantId}/inactive")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void inactive(@PathVariable Long restaurantId) {
-		restaurantService.isDisable(restaurantId);
+		restaurantService.isInactive(restaurantId);
+	}
+	
+	@PutMapping("/{restaurantId}/open")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void isOpen(@PathVariable Long restaurantId) {
+		restaurantService.isOpen(restaurantId);
+	}
+	
+	@DeleteMapping("/{restaurantId}/closed")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void isClosed(@PathVariable Long restaurantId) {
+		restaurantService.isClosed(restaurantId);
 	}
  
 }
