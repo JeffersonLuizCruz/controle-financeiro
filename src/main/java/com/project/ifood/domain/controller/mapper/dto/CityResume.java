@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor @Data
 public class CityResume {
 
-	@NotNull
+	 @NotNull(message = "A inserção da Cidade(object='city') é obrigatório!")
 	private Long id;
 
 	private String name;
