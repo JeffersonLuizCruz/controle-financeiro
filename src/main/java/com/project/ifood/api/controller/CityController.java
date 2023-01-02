@@ -23,7 +23,7 @@ import com.project.ifood.domain.service.CityService;
 import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
-@RequestMapping("cities")
+@RequestMapping("/cities")
 public class CityController {
 
 	private final CityService cityService;

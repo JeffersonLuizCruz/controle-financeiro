@@ -23,7 +23,7 @@ import com.project.ifood.domain.service.StateService;
 import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
-@RequestMapping("states")
+@RequestMapping("/states")
 public class StateController {
 
 	private final StateService stateService;

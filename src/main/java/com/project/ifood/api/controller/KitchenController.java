@@ -19,7 +19,7 @@ import com.project.ifood.domain.service.KitchenService;
 import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
-@RequestMapping("kitchens")
+@RequestMapping("/kitchens")
 public class KitchenController {
 	
 	private final KitchenService kitchenService;
