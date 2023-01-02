@@ -50,10 +50,12 @@ public class RestaurantServiceImpl implements RestaurantService{
 	public Restaurant update(Long id, Restaurant restaurant) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
 		kitchenService.checkIfKitchenExists(restaurant.getKitchen().getId());
+		City cityEntity = cityService.checkIfCityExists(restaurant.getAddress().getCity().getId());
 		
 		restaurant.setId(id);
 		restaurant.setCreateAt(restaurantEntity.getCreateAt());
 		restaurant.setKitchen(restaurant.getKitchen());
+		restaurant.getAddress().setCity(cityEntity);
 		
 		return restaurantRepository.save(restaurant);
 	}

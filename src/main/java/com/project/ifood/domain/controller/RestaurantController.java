@@ -44,8 +44,12 @@ public class RestaurantController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Restaurant> update(@PathVariable Long id, @RequestBody Restaurant restaurant){
-		return ResponseEntity.ok(restaurantService.update(id, restaurant));
+	public ResponseEntity<RestaurantDTO> update(@PathVariable Long id, @RequestBody RestaurantDTO dto){
+		Restaurant restaurant = restaurantMapper.toModel(dto);
+		restaurantService.update(id, restaurant);
+		
+		RestaurantDTO restaurantDTO = restaurantMapper.toDTO(restaurant);
+		return ResponseEntity.ok(restaurantDTO);
 	}
 	
 	@GetMapping
