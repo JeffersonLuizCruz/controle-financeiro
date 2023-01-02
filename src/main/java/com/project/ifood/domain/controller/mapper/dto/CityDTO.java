@@ -1,6 +1,7 @@
-package com.project.ifood.domain.controller.mapper.dto.request;
+package com.project.ifood.domain.controller.mapper.dto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -8,12 +9,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class CityRequestDTO{
+public class CityDTO{
 
-    /**
-     * É permitido inserção de String vazia. Mas não valor nulo.
-     * */
-    @NotNull
+
+	@NotBlank(message = "Campo nome obrigatório!")
     private String name;
 
     @Valid

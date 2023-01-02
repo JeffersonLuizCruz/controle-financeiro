@@ -1,4 +1,4 @@
-package com.project.ifood.domain.controller.mapper.dto.request;
+package com.project.ifood.domain.controller.mapper.dto;
 
 import javax.validation.constraints.NotNull;
 

@@ -8,9 +8,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.ifood.domain.model.City;
 import com.project.ifood.domain.model.Kitchen;
 import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.repositoy.RestaurantRepository;
+import com.project.ifood.domain.service.CityService;
 import com.project.ifood.domain.service.KitchenService;
 import com.project.ifood.domain.service.RestaurantService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
@@ -21,10 +23,12 @@ public class RestaurantServiceImpl implements RestaurantService{
 
 	private final RestaurantRepository restaurantRepository;
 	private final KitchenService kitchenService;
+	private final CityService cityService;
 	
-	public RestaurantServiceImpl(RestaurantRepository restaurantRepository, KitchenService kitchenService) {
+	public RestaurantServiceImpl(RestaurantRepository restaurantRepository, KitchenService kitchenService, CityService cityService) {
 		this.restaurantRepository = restaurantRepository;
 		this.kitchenService = kitchenService;
+		this.cityService = cityService;
 	}
 
 
@@ -33,8 +37,11 @@ public class RestaurantServiceImpl implements RestaurantService{
 
 	@Override
 	public Restaurant save(Restaurant restaurant) {
-		Kitchen kitchenEntity = kitchenService.findById(restaurant.getKitchen().getId());
+		Kitchen kitchenEntity = kitchenService.checkIfKitchenExists(restaurant.getKitchen().getId());
+		City cityEntity = cityService.checkIfCityExists(restaurant.getAddress().getCity().getId());
+
 		restaurant.setKitchen(kitchenEntity);
+		restaurant.getAddress().setCity(cityEntity);
 		
 		return restaurantRepository.save(restaurant);
 	}

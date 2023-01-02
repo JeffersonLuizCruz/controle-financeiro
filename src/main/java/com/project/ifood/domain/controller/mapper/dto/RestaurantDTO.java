@@ -1,28 +1,33 @@
-package com.project.ifood.domain.controller.mapper.dto.request;
+package com.project.ifood.domain.controller.mapper.dto;
 
 import java.math.BigDecimal;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class RestaurantRequestDTO {
+public class RestaurantDTO {
 
 	private Long id;
     @NotBlank(message = "Nome é obrigatório!")
+	@Size(message = "Máximo permitido 20 caractere - size", max = 20)
     private String name;
-    @NotBlank(message = "Frete é obrigatório!")
+    
     @PositiveOrZero
     private BigDecimal freightRate;
     private Boolean isActive;
-    @Valid
+    
+
     @NotNull(message = "A inserção da Cozinha(object='kitchen') é obrigatório!")
     private InputKitchenId kitchen;
-    private AddressRequestDTO address;
+    
+
+    @NotNull(message = "A inserção de Endereco(object='address') é obrigatório!")
+    private AddressDTO address;
 }

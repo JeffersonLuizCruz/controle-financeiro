@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.domain.controller.mapper.CityMapper;
-import com.project.ifood.domain.controller.mapper.dto.request.CityRequestDTO;
+import com.project.ifood.domain.controller.mapper.dto.CityDTO;
 import com.project.ifood.domain.model.City;
 import com.project.ifood.domain.service.CityService;
 
@@ -33,13 +33,13 @@ public class CityController {
 	}
 
 	@PostMapping
-	public ResponseEntity<City> save (@RequestBody @Valid CityRequestDTO dto){
+	public ResponseEntity<City> save (@RequestBody @Valid CityDTO dto){
 		City city = cityMapper.toModel(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(cityService.save(city));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<City> update (@PathVariable Long id, @RequestBody @Valid CityRequestDTO dto){
+	public ResponseEntity<City> update (@PathVariable Long id, @RequestBody @Valid CityDTO dto){
 		City city = cityMapper.toModel(dto);
 		return ResponseEntity.ok(cityService.update(id, city));
 	}

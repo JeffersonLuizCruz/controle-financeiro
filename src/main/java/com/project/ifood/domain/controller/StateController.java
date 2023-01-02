@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.domain.controller.mapper.StateMapper;
-import com.project.ifood.domain.controller.mapper.dto.request.StateRequestDTO;
+import com.project.ifood.domain.controller.mapper.dto.StateDTO;
 import com.project.ifood.domain.model.State;
 import com.project.ifood.domain.service.StateService;
 
@@ -32,13 +32,13 @@ public class StateController {
 		this.stateMapper = stateMapper;
 	}
 	@PostMapping
-	public ResponseEntity<State> save(@RequestBody @Valid StateRequestDTO dto){
+	public ResponseEntity<State> save(@RequestBody @Valid StateDTO dto){
 		State state = stateMapper.toModel(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(stateService.save(state));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<State> update(@PathVariable Long id, @RequestBody @Valid StateRequestDTO dto){
+	public ResponseEntity<State> update(@PathVariable Long id, @RequestBody @Valid StateDTO dto){
 		State state = stateMapper.toModel(dto);
 		return ResponseEntity.ok(stateService.update(id, state));
 	}

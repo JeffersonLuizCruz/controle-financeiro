@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.domain.controller.mapper.RestaurantMapper;
-import com.project.ifood.domain.controller.mapper.dto.request.RestaurantRequestDTO;
+import com.project.ifood.domain.controller.mapper.dto.RestaurantDTO;
 import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.service.RestaurantService;
 
@@ -35,8 +35,12 @@ public class RestaurantController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Restaurant> save(@RequestBody @Valid Restaurant restaurant){
-		return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.save(restaurant));
+	public ResponseEntity<RestaurantDTO> save(@RequestBody @Valid RestaurantDTO dto){
+		Restaurant restaurant = restaurantMapper.toModel(dto);
+		restaurantService.save(restaurant);
+		
+		RestaurantDTO restaurantDTO = restaurantMapper.toDTO(restaurant);
+		return ResponseEntity.status(HttpStatus.CREATED).body(restaurantDTO);
 	}
 	
 	@PutMapping("/{id}")
@@ -45,7 +49,7 @@ public class RestaurantController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<RestaurantRequestDTO>> findAll(){
+	public ResponseEntity<List<RestaurantDTO>> findAll(){
 		return ResponseEntity.ok(restaurantService.findAll()
 				.stream()
 				.map(restaurant -> restaurantMapper.toDTO(restaurant))
@@ -53,7 +57,7 @@ public class RestaurantController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<RestaurantRequestDTO> findById(@PathVariable Long id){
+	public ResponseEntity<RestaurantDTO> findById(@PathVariable Long id){
 		Restaurant restaurantEntity = restaurantService.findById(id);
 		return ResponseEntity.ok(restaurantMapper.toDTO(restaurantEntity));
 	}
