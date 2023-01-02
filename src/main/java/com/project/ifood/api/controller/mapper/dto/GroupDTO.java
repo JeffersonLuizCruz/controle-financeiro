@@ -11,9 +11,4 @@ public class GroupDTO {
 	
 	@NotBlank(message = "O nome do group é obrigatório!")
 	private String name;
-
-	// TODO
-	/**
-	 * implementar o atributo role ??
-	 * */
 }

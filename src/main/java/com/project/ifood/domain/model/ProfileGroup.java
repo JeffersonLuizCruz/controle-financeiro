@@ -17,8 +17,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-@Entity(name = "`group`")
-public class Group implements Serializable{
+@Entity
+public class ProfileGroup implements Serializable{
 	private static final long serialVersionUID = 7898832144327621719L;
 
 	@Id

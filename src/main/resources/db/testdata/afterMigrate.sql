@@ -4,7 +4,7 @@ delete from state;
 delete from city;
 delete from customer;
 delete from customer_group;
-delete from ifood_v1.group;
+delete from ifood_v1.profile_group;
 delete from group_role;
 delete from kitchen;
 delete from payment_method;
@@ -18,7 +18,7 @@ set foreign_key_checks = 1;
 
 alter table city auto_increment = 1;
 alter table customer auto_increment = 1;
-alter table ifood_v1.group auto_increment = 1;
+alter table ifood_v1.profile_group auto_increment = 1;
 alter table kitchen auto_increment = 1;
 alter table payment_method auto_increment = 1;
 alter table product auto_increment = 1;
@@ -38,9 +38,9 @@ INSERT INTO ifood_v1.role (id, description, name) values (1, 'admin', 'admin');
 INSERT INTO ifood_v1.role (id, description, name) values (2, 'simple', 'simple');
 INSERT INTO ifood_v1.role (id, description, name) values (3, 'basic', 'basic');
 
-INSERT INTO ifood_v1.group (id, name) values (1, 'group admin');
-INSERT INTO ifood_v1.group (id, name) values (2, 'group simple');
-INSERT INTO ifood_v1.group (id, name) values (3, 'group basic');
+INSERT INTO ifood_v1.profile_group (id, name) values (1, 'group admin');
+INSERT INTO ifood_v1.profile_group (id, name) values (2, 'group simple');
+INSERT INTO ifood_v1.profile_group (id, name) values (3, 'group basic');
 
 INSERT INTO group_role (groups_id, roles_id) values (1, 1);
 INSERT INTO group_role (groups_id, roles_id) values (1, 2);

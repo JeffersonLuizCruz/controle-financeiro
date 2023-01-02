@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.api.controller.mapper.GroupMapper;
 import com.project.ifood.api.controller.mapper.dto.GroupDTO;
-import com.project.ifood.domain.model.Group;
+import com.project.ifood.domain.model.ProfileGroup;
 import com.project.ifood.domain.service.GroupService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,25 +30,24 @@ public class GroupController {
 	private final GroupMapper groupMapper;
 	
 	@PostMapping
-	public ResponseEntity<Group> save(@RequestBody @Valid GroupDTO dto){
-		Group group = groupMapper.toModel(dto);
+	public ResponseEntity<ProfileGroup> save(@RequestBody @Valid GroupDTO dto){
+		ProfileGroup group = groupMapper.toModel(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(groupService.save(group));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Group> update(@PathVariable Long id, @Valid @RequestBody GroupDTO dto){
-		Group group = groupMapper.toModel(dto);
+	public ResponseEntity<ProfileGroup> update(@PathVariable Long id, @Valid @RequestBody GroupDTO dto){
+		ProfileGroup group = groupMapper.toModel(dto);
 		return ResponseEntity.ok(groupService.update(id, group));
 	}
 	
-	// TODO hotFix
 	@GetMapping
-	public ResponseEntity<List<Group>> findAll(){
+	public ResponseEntity<List<ProfileGroup>> findAll(){
 		return ResponseEntity.ok(groupService.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Group> findById(@PathVariable Long id){
+	public ResponseEntity<ProfileGroup> findById(@PathVariable Long id){
 		return ResponseEntity.ok(groupService.findById(id));
 	}
 

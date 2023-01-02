@@ -2,14 +2,14 @@ package com.project.ifood.domain.service;
 
 import java.util.List;
 
-import com.project.ifood.domain.model.Group;
+import com.project.ifood.domain.model.ProfileGroup;
 
 public interface GroupService {
 
-	Group save(Group group);
-	Group update(Long id, Group group);
-	List<Group> findAll();
-	Group findById(Long id);
+	ProfileGroup save(ProfileGroup group);
+	ProfileGroup update(Long id, ProfileGroup group);
+	List<ProfileGroup> findAll();
+	ProfileGroup findById(Long id);
 	void deleteById(Long id);
-	Group checkIfGroupExists(Long id);
+	ProfileGroup checkIfGroupExists(Long id);
 }
