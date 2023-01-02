@@ -7,5 +7,5 @@ import com.project.ifood.domain.model.Group;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long>{
-
+	
 }

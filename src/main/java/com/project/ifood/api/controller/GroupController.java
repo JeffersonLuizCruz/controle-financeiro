@@ -2,6 +2,8 @@ package com.project.ifood.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,17 +30,18 @@ public class GroupController {
 	private final GroupMapper groupMapper;
 	
 	@PostMapping
-	public ResponseEntity<Group> save(@RequestBody GroupDTO dto){
+	public ResponseEntity<Group> save(@RequestBody @Valid GroupDTO dto){
 		Group group = groupMapper.toModel(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(groupService.save(group));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Group> update(@PathVariable Long id,  @RequestBody GroupDTO dto){
+	public ResponseEntity<Group> update(@PathVariable Long id, @Valid @RequestBody GroupDTO dto){
 		Group group = groupMapper.toModel(dto);
 		return ResponseEntity.ok(groupService.update(id, group));
 	}
 	
+	// TODO hotFix
 	@GetMapping
 	public ResponseEntity<List<Group>> findAll(){
 		return ResponseEntity.ok(groupService.findAll());
