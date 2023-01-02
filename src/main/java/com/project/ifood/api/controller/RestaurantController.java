@@ -22,17 +22,15 @@ import com.project.ifood.api.controller.mapper.dto.RestaurantDTO;
 import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.service.RestaurantService;
 
-@RestController
+import lombok.RequiredArgsConstructor;
+
+@RestController @RequiredArgsConstructor
 @RequestMapping("/restaurants")
 public class RestaurantController {
 	
 	private final RestaurantService restaurantService;
 	private final RestaurantMapper restaurantMapper;
 
-	public RestaurantController(RestaurantService restaurantService, RestaurantMapper restaurantMapper) {
-		this.restaurantService = restaurantService;
-		this.restaurantMapper = restaurantMapper;
-	}
 	
 	@PostMapping
 	public ResponseEntity<RestaurantDTO> save(@RequestBody @Valid RestaurantDTO dto){

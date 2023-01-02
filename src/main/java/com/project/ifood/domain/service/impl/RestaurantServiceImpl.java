@@ -18,18 +18,14 @@ import com.project.ifood.domain.service.RestaurantService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
 import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 
-@Service
+import lombok.RequiredArgsConstructor;
+
+@Service @RequiredArgsConstructor
 public class RestaurantServiceImpl implements RestaurantService{
 
 	private final RestaurantRepository restaurantRepository;
 	private final KitchenService kitchenService;
 	private final CityService cityService;
-	
-	public RestaurantServiceImpl(RestaurantRepository restaurantRepository, KitchenService kitchenService, CityService cityService) {
-		this.restaurantRepository = restaurantRepository;
-		this.kitchenService = kitchenService;
-		this.cityService = cityService;
-	}
 
 
 	private final String CONSTRAINT_VALIDATION_MESSAGE = "Restaurante de código '%d' não pode ser removida, pois está em uso";

@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.ifood.domain.model.Kitchen;
 import com.project.ifood.domain.service.KitchenService;
 
-@RestController
+import lombok.RequiredArgsConstructor;
+
+@RestController @RequiredArgsConstructor
 @RequestMapping("kitchens")
 public class KitchenController {
 	
 	private final KitchenService kitchenService;
 	
-	public KitchenController(KitchenService kitchenService) {
-		this.kitchenService = kitchenService;
-	}
 
 	@PostMapping
 	public ResponseEntity<Kitchen> save(@RequestBody Kitchen kitchen) {

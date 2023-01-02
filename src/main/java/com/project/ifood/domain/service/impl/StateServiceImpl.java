@@ -3,7 +3,6 @@ package com.project.ifood.domain.service.impl;
 import java.util.List;
 
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +12,9 @@ import com.project.ifood.domain.service.StateService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
 import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@Service @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Service @RequiredArgsConstructor
 public class StateServiceImpl implements StateService {
 
     private final StateRepository stateRepository;

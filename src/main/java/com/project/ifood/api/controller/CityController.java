@@ -20,17 +20,15 @@ import com.project.ifood.api.controller.mapper.dto.CityDTO;
 import com.project.ifood.domain.model.City;
 import com.project.ifood.domain.service.CityService;
 
-@RestController
+import lombok.RequiredArgsConstructor;
+
+@RestController @RequiredArgsConstructor
 @RequestMapping("cities")
 public class CityController {
 
 	private final CityService cityService;
 	private final CityMapper cityMapper;
 	
-	public CityController(CityService cityService, CityMapper cityMapper) {
-		this.cityService = cityService;
-		this.cityMapper = cityMapper;
-	}
 
 	@PostMapping
 	public ResponseEntity<City> save (@RequestBody @Valid CityDTO dto){

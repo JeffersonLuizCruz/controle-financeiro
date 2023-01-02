@@ -15,16 +15,13 @@ import com.project.ifood.domain.service.StateService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
 import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 
-@Service
+import lombok.RequiredArgsConstructor;
+
+@Service @RequiredArgsConstructor
 public class CityServiceImpl implements CityService{
 
 	private final CityRepository cityRepository;
 	private final StateService stateService;
-	
-	public CityServiceImpl(CityRepository cityRepository, StateService stateService) {
-		this.cityRepository = cityRepository;
-		this.stateService = stateService;
-	}
 
 	private final String CONSTRAINT_VALIDATION_MESSAGE = "Cidade de código '%d' não pode ser removida, pois está em uso";
 	private final String NOT_FOUND_MESSAGE = "Cidade de código '%d' não encontrado.";

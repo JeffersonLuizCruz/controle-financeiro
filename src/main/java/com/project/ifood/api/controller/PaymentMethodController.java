@@ -17,15 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.ifood.domain.model.PaymentMethod;
 import com.project.ifood.domain.service.PaymentMethodService;
 
-@RestController
+import lombok.RequiredArgsConstructor;
+
+@RestController @RequiredArgsConstructor
 @RequestMapping("/payment-methods")
 public class PaymentMethodController {
 
 	private final PaymentMethodService paymentMethodService;
 
-	public PaymentMethodController(PaymentMethodService paymentMethodService) {
-		this.paymentMethodService = paymentMethodService;
-	}
 	
 	@PostMapping
 	public ResponseEntity<PaymentMethod> save(@RequestBody PaymentMethod paymentMethod){

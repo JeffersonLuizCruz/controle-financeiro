@@ -13,14 +13,13 @@ import com.project.ifood.domain.service.PaymentMethodService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
 import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 
-@Service
+import lombok.RequiredArgsConstructor;
+
+@Service @RequiredArgsConstructor
 public class PaymentMethodServiceImpl implements PaymentMethodService{
 
 	private final PaymentMethodRespository paymentMethodRespository;
 	
-	public PaymentMethodServiceImpl(PaymentMethodRespository paymentMethodRespository) {
-		this.paymentMethodRespository = paymentMethodRespository;
-	}
 	
     private final String NOT_FOUND_MESSAGE = "O tipo de pagamento de código '%d' não encontrado.";
     private final String CONSTRAINT_VALIDATION_MESSAGE = "O tipo de pagamento de código '%d' não pode ser removido, pois está em uso";

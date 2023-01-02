@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,9 +33,6 @@ public class Product implements Serializable{
 	@Column(nullable = false)
 	private Boolean isActive;
 	
-	@Valid
-	@NotNull(message = "Entidade restaurant é obrigatório!")
-	//@JsonBackReference // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Restaurant restaurant;

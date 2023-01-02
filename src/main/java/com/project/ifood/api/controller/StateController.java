@@ -20,17 +20,16 @@ import com.project.ifood.api.controller.mapper.dto.StateDTO;
 import com.project.ifood.domain.model.State;
 import com.project.ifood.domain.service.StateService;
 
-@RestController
+import lombok.RequiredArgsConstructor;
+
+@RestController @RequiredArgsConstructor
 @RequestMapping("states")
 public class StateController {
 
 	private final StateService stateService;
 	private final StateMapper stateMapper;
 
-	public StateController(StateService stateService, StateMapper stateMapper){
-		this.stateService = stateService;
-		this.stateMapper = stateMapper;
-	}
+
 	@PostMapping
 	public ResponseEntity<State> save(@RequestBody @Valid StateDTO dto){
 		State state = stateMapper.toModel(dto);
