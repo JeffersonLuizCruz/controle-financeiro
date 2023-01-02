@@ -11,5 +11,5 @@ public interface GroupService {
 	List<Group> findAll();
 	Group findById(Long id);
 	void deleteById(Long id);
-	Group checkIfStateExists(Long id);
+	Group checkIfGroupExists(Long id);
 }
