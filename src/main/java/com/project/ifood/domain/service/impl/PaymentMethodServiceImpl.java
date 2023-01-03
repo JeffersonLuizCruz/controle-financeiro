@@ -35,7 +35,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 	@Transactional
 	@Override
 	public PaymentMethod update(Long id, PaymentMethod paymentMethod) {
-		checkIfStateExists(id);
+		checkIfPaymentMethodExists(id);
 		paymentMethod.setId(id);
 		return paymentMethodRespository.save(paymentMethod);
 	}
@@ -47,7 +47,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 
 	@Override
 	public PaymentMethod findById(Long id) {
-		return checkIfStateExists(id);
+		return checkIfPaymentMethodExists(id);
 	}
 
 	@Transactional
@@ -55,7 +55,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 	public void deleteById(Long id) {
 
 		try {
-			PaymentMethod paymentMethodEntity = checkIfStateExists(id);
+			PaymentMethod paymentMethodEntity = checkIfPaymentMethodExists(id);
 			paymentMethodRespository.delete(paymentMethodEntity);
 			paymentMethodRespository.flush();
 		} catch (DataIntegrityViolationException | ConstraintViolationException e) {
@@ -65,7 +65,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 		
 
 	@Override
-	public PaymentMethod checkIfStateExists(Long id) {
+	public PaymentMethod checkIfPaymentMethodExists(Long id) {
 		return paymentMethodRespository.findById(id)
 				.orElseThrow(() -> new NotFoundExceptionService(String.format(NOT_FOUND_MESSAGE, id)));
 	}

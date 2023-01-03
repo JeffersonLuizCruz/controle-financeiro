@@ -24,7 +24,6 @@ public class CustomerServiceImpl implements CustomerService {
 	private final String CONSTRAINT_VALIDATION_MESSAGE = "Usuário de código '%d' não pode ser removida, pois está em uso";
 	private final String NOT_FOUND_MESSAGE = "Usuário de código '%d' não encontrado.";
 	private final String USER_EXIST_MESSAGE = "Usuário com email '%s' já existe.";
-	private final String EMAIL_EXIST_MESSAGE = "Email não encontrado: %s";
 	
 	@Transactional
 	@Override
@@ -82,7 +81,8 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepository.findById(id)
 				.orElseThrow(() -> new NotFoundExceptionService(String.format(NOT_FOUND_MESSAGE, id)));
 	}
-
+	
+	@Transactional
 	@Override
 	public void updatePassword(Long id, String currentPassword, String newPassword) {
 		// TODO Auto-generated method stub

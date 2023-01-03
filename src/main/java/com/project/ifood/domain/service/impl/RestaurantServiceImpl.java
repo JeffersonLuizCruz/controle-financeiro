@@ -112,7 +112,5 @@ public class RestaurantServiceImpl implements RestaurantService{
 		restaurantEntity.setIsOpen(false);
 		restaurantRepository.save(restaurantEntity);	
 	}
-	
-	
 
 }
