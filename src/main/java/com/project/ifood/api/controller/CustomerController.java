@@ -21,6 +21,7 @@ import com.project.ifood.api.controller.mapper.CustomerMapper;
 import com.project.ifood.api.controller.mapper.dto.CustomerDTO;
 import com.project.ifood.api.controller.mapper.dto.CustomerResponseDTO;
 import com.project.ifood.api.controller.mapper.dto.CustomerResume;
+import com.project.ifood.api.controller.mapper.dto.InputCustomerPassword;
 import com.project.ifood.domain.model.Customer;
 import com.project.ifood.domain.service.CustomerService;
 
@@ -69,5 +70,12 @@ public class CustomerController {
 	@DeleteMapping("/{id}") @ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void deleteById(@PathVariable Long id) {
 		customerService.deleteById(id);		
+	}
+	
+	// TODO implementação de serviço faltando
+	@PutMapping("/{id}/senha")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void alterarSenha(@PathVariable Long id, @RequestBody @Valid InputCustomerPassword password) {
+		customerService.updatePassword(id, password.getCurrentPassword(), password.getCurrentPassword());
 	}
 }

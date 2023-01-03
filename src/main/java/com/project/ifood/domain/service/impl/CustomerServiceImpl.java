@@ -83,4 +83,10 @@ public class CustomerServiceImpl implements CustomerService {
 				.orElseThrow(() -> new NotFoundExceptionService(String.format(NOT_FOUND_MESSAGE, id)));
 	}
 
+	@Override
+	public void updatePassword(Long id, String currentPassword, String newPassword) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

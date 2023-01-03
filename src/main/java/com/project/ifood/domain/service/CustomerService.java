@@ -12,5 +12,6 @@ public interface CustomerService {
 	Customer findById(Long id);
 	void deleteById(Long id);
 	Customer checkIfCustomerExists(Long id);
+	void updatePassword(Long id, String currentPassword, String newPassword);
 
 }
