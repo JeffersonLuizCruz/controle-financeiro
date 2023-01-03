@@ -3,14 +3,18 @@ package com.project.ifood.api.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.api.controller.mapper.CustomerMapper;
@@ -31,14 +35,14 @@ public class CustomerController {
 	
 	
 	@PostMapping
-	public ResponseEntity<CustomerResponseDTO> save(@RequestBody CustomerResume resume){
+	public ResponseEntity<CustomerResponseDTO> save(@RequestBody @Valid CustomerResume resume){
 		Customer modelCustomer = customerMapper.toModel(resume);
 		Customer customerEntity = customerService.save(modelCustomer);
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerMapper.toDTO(customerEntity));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id,@RequestBody CustomerDTO dto){
+	public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id, @RequestBody @Valid CustomerDTO dto){
 		Customer modelCustomer = customerMapper.toModel(dto);
 		
 		Customer customerEntity = customerService.update(id, modelCustomer);
@@ -60,5 +64,10 @@ public class CustomerController {
 	public ResponseEntity<CustomerResponseDTO> findById(@PathVariable Long id){
 		Customer customerEntity = customerService.findById(id);
 		return ResponseEntity.ok(customerMapper.toDTO(customerEntity));
+	}
+	
+	@DeleteMapping("/{id}") @ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void deleteById(@PathVariable Long id) {
+		customerService.deleteById(id);		
 	}
 }
