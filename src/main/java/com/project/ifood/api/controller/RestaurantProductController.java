@@ -1,6 +1,7 @@
 package com.project.ifood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -21,8 +22,10 @@ import com.project.ifood.api.controller.mapper.dto.ProductResponseDTO;
 import com.project.ifood.api.controller.mapper.dto.ProductResume;
 import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.Restaurant;
+import com.project.ifood.domain.repositoy.ProductRepository;
 import com.project.ifood.domain.service.ProductService;
 import com.project.ifood.domain.service.RestaurantService;
+import com.project.ifood.domain.service.exception.ConstraintViolationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +35,7 @@ public class RestaurantProductController {
 
 	private final RestaurantService restaurantService;
 	private final ProductService productService;
+	private final ProductRepository productRepository;
 	private final ProductMapper productMapper;
 
 	@PostMapping
@@ -49,7 +53,7 @@ public class RestaurantProductController {
 		
 		Product modelProduct = productMapper.toModel(productResume);
 		Product productEntity = productService.update(productId, modelProduct);
-		
+		//TODO comparar o update com o save. O save não usa injeção de dependencia
 		return ResponseEntity.ok(productMapper.toDTO(productEntity));
 	}
 	
@@ -66,25 +70,32 @@ public class RestaurantProductController {
 	
 	@GetMapping("/{productId}")
 	public ResponseEntity<ProductResponseDTO> findByProduct(@PathVariable Long restaurantId, @PathVariable Long productId) {
-		restaurantService.checkIfRestaurantExists(restaurantId);
-		Product productEntity = productService.checkIfProductExists(productId);
 		
-		return ResponseEntity.ok(productMapper.toDTO(productEntity));
+		/***
+		 * Exemplo simplificado de implementação do método:
+		 * 
+		 * 	Optional<Product> productOptional = productRepository.findByIdProduct(restaurantId, productId);
+		 *	if(!productOptional.isPresent()) throw new ConstraintViolationService("Objeto não encontrado");
+		 *
+		 *	return ResponseEntity.ok(productMapper.toDTO(productOptional.get()));
+		 *	 
+		 * */
+		
+		Restaurant restaurant = restaurantService.checkIfRestaurantExists(restaurantId);
+		
+		List<ProductResponseDTO> listProductDTO = restaurant.getProducts().stream()
+				.map(product -> productMapper.toDTO(product))
+				.collect(Collectors.toList());
+
+		ProductResponseDTO productDTO = listProductDTO.stream()
+				.filter(p -> p.getId() == productId)
+				.findFirst()
+				.orElseThrow(() -> new ConstraintViolationService(String.format("Não existe um cadastro de produto com código %d para o restaurante de código %d", 
+						restaurantId, productId)));
+		
+		return ResponseEntity.ok(productDTO);
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<List<ProductResponseDTO>> findAll(){
-//		List<ProductResponseDTO> listProductDTO = productService.findAll().stream()
-//		.map(product -> productMapper.toDTO(product))
-//		.collect(Collectors.toList());
-//		return ResponseEntity.ok(listProductDTO);
-//	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id){
-		Product productEntity = productService.findById(id);
-		return ResponseEntity.ok(productMapper.toDTO(productEntity));
-	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
