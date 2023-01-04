@@ -1,7 +1,6 @@
 package com.project.ifood.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -22,7 +21,6 @@ import com.project.ifood.api.controller.mapper.dto.ProductResponseDTO;
 import com.project.ifood.api.controller.mapper.dto.ProductResume;
 import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.Restaurant;
-import com.project.ifood.domain.repositoy.ProductRepository;
 import com.project.ifood.domain.service.ProductService;
 import com.project.ifood.domain.service.RestaurantService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
@@ -35,25 +33,29 @@ public class RestaurantProductController {
 
 	private final RestaurantService restaurantService;
 	private final ProductService productService;
-	private final ProductRepository productRepository;
 	private final ProductMapper productMapper;
 
 	@PostMapping
 	public ResponseEntity<ProductResponseDTO> save(@PathVariable Long restaurantId, @RequestBody @Valid ProductResume productResume){
 		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
+		
 		Product modelProduct = productMapper.toModel(productResume);
 		modelProduct.setRestaurant(restaurantEntity);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(modelProduct));
+		Product productEntity = productService.save(modelProduct);
+
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(productEntity));
 	}
 	
 	@PutMapping("/{productId}")
-	public ResponseEntity<ProductResponseDTO> update(@PathVariable Long restaurantId, Long productId, @RequestBody @Valid ProductResume productResume){
-		restaurantService.checkIfRestaurantExists(restaurantId);
-		
+	public ResponseEntity<ProductResponseDTO> update(@PathVariable Long restaurantId,@PathVariable Long productId, @RequestBody @Valid ProductResume productResume){
+		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
+
 		Product modelProduct = productMapper.toModel(productResume);
+		modelProduct.setRestaurant(restaurantEntity);
+		
 		Product productEntity = productService.update(productId, modelProduct);
-		//TODO comparar o update com o save. O save não usa injeção de dependencia
 		return ResponseEntity.ok(productMapper.toDTO(productEntity));
 	}
 	
