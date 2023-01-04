@@ -71,8 +71,6 @@ public class Restaurant implements Serializable{
 			inverseJoinColumns = @JoinColumn(name = "owner_id"))
 	private Set<Customer> owner = new HashSet<>();
 	
-
-	//@JsonManagedReference
 	@OneToMany(mappedBy = "restaurant")
 	private List<Product> products = new ArrayList<>();
 }
