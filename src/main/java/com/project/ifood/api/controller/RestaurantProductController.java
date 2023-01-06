@@ -44,7 +44,6 @@ public class RestaurantProductController {
 		
 		Product productEntity = productService.save(modelProduct);
 
-		
 		return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(productEntity));
 	}
 	
