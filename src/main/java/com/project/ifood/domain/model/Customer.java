@@ -2,8 +2,8 @@ package com.project.ifood.domain.model;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,5 +45,5 @@ public class Customer implements Serializable{
 	@ManyToMany
 	@JoinTable(name = "customer_group", joinColumns = @JoinColumn(name = "customer_id"),
 			inverseJoinColumns = @JoinColumn(name = "groups_id"))
-	private List<ProfileGroup> groups = new ArrayList<>();
+	private Set<ProfileGroup> groups = new HashSet<>();
 }
