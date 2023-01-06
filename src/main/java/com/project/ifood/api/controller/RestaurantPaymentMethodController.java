@@ -27,7 +27,7 @@ public class RestaurantPaymentMethodController {
 	private final RestaurantPaymentMethodService restaurantPaymentMethodService;
 	
 	@GetMapping
-	public ResponseEntity<Set<PaymentMethod>> findById(@PathVariable Long restaurantId){
+	public ResponseEntity<Set<PaymentMethod>> findByPaymentAll(@PathVariable Long restaurantId){
 		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
 		return ResponseEntity.ok(restaurantEntity.getPaymentMethods());
 	}

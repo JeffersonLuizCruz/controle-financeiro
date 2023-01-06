@@ -1,8 +1,8 @@
 package com.project.ifood.domain.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,5 +31,5 @@ public class ProfileGroup implements Serializable{
 	@JoinTable(name = "group_role",
 			joinColumns = @JoinColumn(name = "groups_id"),
 			inverseJoinColumns = @JoinColumn(name = "roles_id"))
-	private List<Role> roles = new ArrayList<>();
+	private Set<Role> roles = new HashSet<>();
 }
