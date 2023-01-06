@@ -1,28 +1,26 @@
 package com.project.ifood.domain.service.impl;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.ifood.domain.model.Customer;
 import com.project.ifood.domain.model.ProfileGroup;
 import com.project.ifood.domain.service.CustomerService;
-import com.project.ifood.domain.service.GroupRoleService;
+import com.project.ifood.domain.service.GroupCustomerService;
 import com.project.ifood.domain.service.GroupService;
 
 import lombok.RequiredArgsConstructor;
 
 
-@Primary
 @Service @RequiredArgsConstructor
-public class GroupCustomerServiceImp implements GroupRoleService{
+public class GroupCustomerServiceImp implements GroupCustomerService{
 
 	private final CustomerService customerService;
 	private final GroupService groupService;
 	
 	@Transactional
 	@Override
-	public void disassociateRole(Long groupId, Long customer) {
+	public void disassociate(Long groupId, Long customer) {
 		Customer customerEntity = customerService.checkIfCustomerExists(customer);
 		ProfileGroup groupEntity = groupService.checkIfGroupExists(groupId);
 		
@@ -31,7 +29,7 @@ public class GroupCustomerServiceImp implements GroupRoleService{
 
 	@Transactional
 	@Override
-	public void associateRole(Long groupId, Long customer) {
+	public void associate(Long groupId, Long customer) {
 		Customer customerEntity = customerService.checkIfCustomerExists(customer);
 		ProfileGroup groupEntity = groupService.checkIfGroupExists(groupId);
 		
