@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.project.ifood.domain.service.exception.BadRequestExcertpionService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
 import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 
@@ -52,6 +53,21 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
 	}
 	 * */
+	
+	
+	@ExceptionHandler(BadRequestExcertpionService.class)
+	public ResponseEntity<ApiError> handlerConstraintViolation(BadRequestExcertpionService ex) {
+
+		ApiError apiError = ApiError.builder()
+				.status(HttpStatus.BAD_REQUEST.value())
+				.title(TypeError.BAD_REQUEST_BODY_MESSAGE.getTitle())
+				.detail(ex.getMessage())
+				.timestamp(OffsetDateTime.now())
+				.build();
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(apiError);
+	}
+	
 	@ExceptionHandler(ConstraintViolationService.class)
 	public ResponseEntity<ApiError> handlerConstraintViolation(ConstraintViolationService ex) {
 

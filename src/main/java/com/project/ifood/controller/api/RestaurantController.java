@@ -21,6 +21,8 @@ import com.project.ifood.controller.dto.RestaurantDTO;
 import com.project.ifood.controller.mapper.RestaurantMapper;
 import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.service.RestaurantService;
+import com.project.ifood.domain.service.exception.BadRequestExcertpionService;
+import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -92,6 +94,23 @@ public class RestaurantController {
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void isClosed(@PathVariable Long restaurantId) {
 		restaurantService.isClosed(restaurantId);
+	}
+	
+	@DeleteMapping("/inactivations")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void inactiveAll(@RequestBody List<Long> ids) {
+		
+		try {
+			restaurantService.inactiveAll(ids);			
+		} catch (NotFoundExceptionService e) {
+			throw new BadRequestExcertpionService(e.getMessage());
+		}
+	}
+	
+	@PutMapping("/activations")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void activeAll(@RequestBody List<Long> ids) {
+		restaurantService.activeAll(ids);
 	}
  
 }

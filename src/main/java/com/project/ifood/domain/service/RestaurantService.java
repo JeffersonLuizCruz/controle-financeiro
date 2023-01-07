@@ -16,4 +16,6 @@ public interface RestaurantService {
 	void isInactive(Long id);
 	void isOpen(Long id);
 	void isClosed(Long id);
+	void inactiveAll(List<Long> ids);
+	void activeAll(List<Long> ids);
 }

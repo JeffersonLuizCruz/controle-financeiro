@@ -113,4 +113,16 @@ public class RestaurantServiceImpl implements RestaurantService{
 		restaurantRepository.save(restaurantEntity);	
 	}
 
+	@Transactional
+	@Override
+	public void inactiveAll(List<Long> ids) {
+		ids.forEach(id -> isInactive(id));
+	}
+
+	@Transactional
+	@Override
+	public void activeAll(List<Long> ids) {
+		ids.forEach(this::isActive);
+	}
+
 }

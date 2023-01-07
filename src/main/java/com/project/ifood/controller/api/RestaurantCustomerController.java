@@ -22,7 +22,7 @@ import com.project.ifood.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
-@RequestMapping("/restaurants/{restaurantId}/customers")
+@RequestMapping("/restaurants/{restaurantId}/owners")
 public class RestaurantCustomerController {
 
 	private final RestaurantService restaurantService;
