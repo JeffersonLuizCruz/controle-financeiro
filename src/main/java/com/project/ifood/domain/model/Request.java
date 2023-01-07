@@ -6,6 +6,8 @@ import java.time.OffsetDateTime;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.project.ifood.domain.enums.OrderStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,17 +32,17 @@ public class Request implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String codigo;
+	private String code;
 	
 	private BigDecimal subtotal;
-	private BigDecimal taxaFrete;
-	private BigDecimal valorTotal;
+	private BigDecimal freightRate;
+	private BigDecimal totalAmount;
 
 	@Embedded
-	private Address enderecoEntrega;
+	private Address deliveryAddress;
 	
-//	@Enumerated(EnumType.STRING)
-//	private StatusPedido status = StatusPedido.CRIADO;
+	@Enumerated(EnumType.STRING)
+	private OrderStatus status = OrderStatus.CREATED;
 	
 	@CreationTimestamp
 	private OffsetDateTime dataCriacao;
