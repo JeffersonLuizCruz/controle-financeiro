@@ -11,14 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-@Entity
-public class ProfileGroup implements Serializable{
+@Entity @Table(name = "\"group\"")
+public class Group implements Serializable{
 	private static final long serialVersionUID = 7898832144327621719L;
 
 	@Id

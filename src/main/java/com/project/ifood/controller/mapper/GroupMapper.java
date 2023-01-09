@@ -4,11 +4,11 @@ import org.mapstruct.Mapper;
 
 import com.project.ifood.controller.dto.GroupDTO;
 import com.project.ifood.controller.dto.GroupResponseDTO;
-import com.project.ifood.domain.model.ProfileGroup;
+import com.project.ifood.domain.model.Group;
 
 @Mapper(componentModel = "spring")
 public interface GroupMapper {
 	
-	ProfileGroup toModel(GroupDTO dto);
-	GroupResponseDTO toDTO(ProfileGroup group);
+	Group toModel(GroupDTO dto);
+	GroupResponseDTO toDTO(Group group);
 }

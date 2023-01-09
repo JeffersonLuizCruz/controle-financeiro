@@ -6,7 +6,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.project.ifood.domain.model.ProfileGroup;
+import com.project.ifood.domain.model.Group;
 import com.project.ifood.domain.repositoy.GroupRepository;
 import com.project.ifood.domain.service.GroupService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
@@ -23,12 +23,12 @@ public class GroupServiceImpl implements GroupService{
 	private final String NOT_FOUND_MESSAGE = "Grupo de código '%d' não encontrado.";
 	
 	@Override
-	public ProfileGroup save(ProfileGroup group) {
+	public Group save(Group group) {
 		return groupRepository.save(group);
 	}
 
 	@Override
-	public ProfileGroup update(Long id, ProfileGroup group) {
+	public Group update(Long id, Group group) {
 		checkIfGroupExists(id);
 		group.setId(id);
 		
@@ -36,19 +36,19 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public List<ProfileGroup> findAll() {
+	public List<Group> findAll() {
 		return groupRepository.findAll();
 	}
 
 	@Override
-	public ProfileGroup findById(Long id) {
+	public Group findById(Long id) {
 		return checkIfGroupExists(id);
 	}
 
 	@Override
 	public void deleteById(Long id) {
 		try {
-			ProfileGroup groupEntity = checkIfGroupExists(id);
+			Group groupEntity = checkIfGroupExists(id);
 			groupRepository.delete(groupEntity);
 			groupRepository.flush();
 		} catch (DataIntegrityViolationException | ConstraintViolationException e) {
@@ -58,7 +58,7 @@ public class GroupServiceImpl implements GroupService{
 	
 
 	@Override
-	public ProfileGroup checkIfGroupExists(Long id) {
+	public Group checkIfGroupExists(Long id) {
 		return groupRepository.findById(id)
 				.orElseThrow(() -> new NotFoundExceptionService(String.format(NOT_FOUND_MESSAGE, id)));
 	}

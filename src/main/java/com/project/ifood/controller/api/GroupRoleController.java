@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.ifood.domain.model.ProfileGroup;
+import com.project.ifood.domain.model.Group;
 import com.project.ifood.domain.model.Role;
 import com.project.ifood.domain.service.GroupRoleService;
 import com.project.ifood.domain.service.GroupService;
@@ -28,7 +28,7 @@ public class GroupRoleController {
 	
 	@GetMapping
 	public ResponseEntity<Set<Role>> findByRoleAll(@PathVariable Long groupId){
-		ProfileGroup group = groupService.checkIfGroupExists(groupId);
+		Group group = groupService.checkIfGroupExists(groupId);
 		return ResponseEntity.ok(group.getRoles());
 	}
 	

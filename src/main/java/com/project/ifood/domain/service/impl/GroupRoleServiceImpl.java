@@ -3,7 +3,7 @@ package com.project.ifood.domain.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.ifood.domain.model.ProfileGroup;
+import com.project.ifood.domain.model.Group;
 import com.project.ifood.domain.model.Role;
 import com.project.ifood.domain.service.GroupRoleService;
 import com.project.ifood.domain.service.GroupService;
@@ -20,7 +20,7 @@ public class GroupRoleServiceImpl implements GroupRoleService{
 	@Transactional
 	@Override
 	public void disassociateRole(Long groupId, Long roleId) {
-		ProfileGroup groupEntity = groupService.checkIfGroupExists(groupId);
+		Group groupEntity = groupService.checkIfGroupExists(groupId);
 		Role roleEntity = roleService.checkIfRoleExists(roleId);
 		
 		/**
@@ -36,7 +36,7 @@ public class GroupRoleServiceImpl implements GroupRoleService{
 	@Transactional
 	@Override
 	public void associateRole(Long groupId, Long roleId) {
-		ProfileGroup groupEntity = groupService.checkIfGroupExists(groupId);
+		Group groupEntity = groupService.checkIfGroupExists(groupId);
 		Role roleEntity = roleService.checkIfRoleExists(roleId);
 		
 		/**

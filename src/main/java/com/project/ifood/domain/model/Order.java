@@ -3,7 +3,10 @@ package com.project.ifood.domain.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,7 +29,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
 @Entity 
-public class Request implements Serializable{
+public class Order implements Serializable{
 	private static final long serialVersionUID = -4564893146129034049L;
 
 	@Id
@@ -45,11 +49,11 @@ public class Request implements Serializable{
 	private OrderStatus status = OrderStatus.CREATED;
 	
 	@CreationTimestamp
-	private OffsetDateTime dataCriacao;
+	private OffsetDateTime createAt;
 
-	private OffsetDateTime dataConfirmacao;
-	private OffsetDateTime dataCancelamento;
-	private OffsetDateTime dataEntrega;
+	private OffsetDateTime confirmationAt;
+	private OffsetDateTime cancellationAt;
+	private OffsetDateTime deliveryAt;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
@@ -57,12 +61,12 @@ public class Request implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Restaurant restaurante;
+	private Restaurant restaurant;
 	
 	@ManyToOne
-	@JoinColumn(name = "usuario_cliente_id", nullable = false)
+	@JoinColumn(name = "user_client_id", nullable = false)
 	private Customer customer;
 	
-//	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-//	private List<ItemPedido> itens = new ArrayList<>();
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private List<OrderItem> items = new ArrayList<>();
 }

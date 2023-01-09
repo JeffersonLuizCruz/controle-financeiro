@@ -29,7 +29,7 @@ public class OrderItem {
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Request request;
+	private Order order;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
