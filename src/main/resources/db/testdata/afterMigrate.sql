@@ -27,6 +27,7 @@ alter table product auto_increment = 1;
 alter table restaurant auto_increment = 1;
 alter table ifood_v1.role auto_increment = 1;
 alter table ifood_v1.state auto_increment = 1;
+alter table order_item auto_increment = 1;
 alter table ifood_v1.order auto_increment = 1;
 
 INSERT INTO ifood_v1.state (id, name) values (1, 'Pernambuco');
@@ -128,3 +129,23 @@ INSERT INTO ifood_v1.order
 (id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
 status, createAt, confirmationAt, cancellationAt, deliveryAt, payment_method_id, restaurant_id, user_client_id)
 VALUES(6, '123456', 300, 20, 320, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 2, 3, 1);
+
+INSERT INTO ifood_v1.order_item
+(id, unitPrice, priceTotal, quantity, observation, order_id, product_id)
+VALUES(1, 150, 200, 2, '', 1, 1);
+
+INSERT INTO ifood_v1.order_item
+(id, unitPrice, priceTotal, quantity, observation, order_id, product_id)
+VALUES(2, 250, 500, 1, '', 1, 3);
+
+INSERT INTO ifood_v1.order_item
+(id, unitPrice, priceTotal, quantity, observation, order_id, product_id)
+VALUES(3, 52, 10, 3, '', 2, 1);
+
+INSERT INTO ifood_v1.order_item
+(id, unitPrice, priceTotal, quantity, observation, order_id, product_id)
+VALUES(4, 254, 20, 4, '', 3, 1);
+
+INSERT INTO ifood_v1.order_item
+(id, unitPrice, priceTotal, quantity, observation, order_id, product_id)
+VALUES(5, 52, 10, 5, '', 3, 2);
