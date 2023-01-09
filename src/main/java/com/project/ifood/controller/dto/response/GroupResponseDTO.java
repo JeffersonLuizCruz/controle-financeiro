@@ -1,4 +1,4 @@
-package com.project.ifood.controller.dto;
+package com.project.ifood.controller.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

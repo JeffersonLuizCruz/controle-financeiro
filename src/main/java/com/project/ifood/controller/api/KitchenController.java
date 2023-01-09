@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.ifood.controller.dto.KitchenDTO;
+import com.project.ifood.controller.dto.request.KitchenDTO;
 import com.project.ifood.controller.mapper.KitchenMapper;
 import com.project.ifood.domain.model.Kitchen;
 import com.project.ifood.domain.service.KitchenService;

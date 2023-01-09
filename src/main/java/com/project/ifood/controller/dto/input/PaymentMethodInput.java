@@ -1,4 +1,4 @@
-package com.project.ifood.controller.dto;
+package com.project.ifood.controller.dto.input;
 
 import javax.validation.constraints.NotNull;
 
@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class InputStateId {
+public class PaymentMethodInput {
 
-    @NotNull(message = "Id do Estado é obrigatório!")
-    private Long id;
+	@NotNull(message = "Tipo de pagamento é obrigatório!")
+	public Long id;
 }

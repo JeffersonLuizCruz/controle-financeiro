@@ -3,7 +3,7 @@ package com.project.ifood.controller.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.project.ifood.controller.dto.RestaurantDTO;
+import com.project.ifood.controller.dto.request.RestaurantDTO;
 import com.project.ifood.domain.model.Restaurant;
 
 @Mapper(componentModel = "spring")

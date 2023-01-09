@@ -1,8 +1,10 @@
-package com.project.ifood.controller.dto;
+package com.project.ifood.controller.dto.request;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.project.ifood.controller.dto.resume.CityResume;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.ifood.controller.dto.CustomerDTO;
-import com.project.ifood.controller.dto.CustomerResponseDTO;
-import com.project.ifood.controller.dto.CustomerResume;
-import com.project.ifood.controller.dto.InputCustomerPassword;
+import com.project.ifood.controller.dto.input.CustomerPasswordInput;
+import com.project.ifood.controller.dto.request.CustomerDTO;
+import com.project.ifood.controller.dto.response.CustomerResponseDTO;
+import com.project.ifood.controller.dto.resume.CustomerResume;
 import com.project.ifood.controller.mapper.CustomerMapper;
 import com.project.ifood.domain.model.Customer;
 import com.project.ifood.domain.service.CustomerService;
@@ -75,7 +75,7 @@ public class CustomerController {
 	// TODO implementação de serviço faltando
 	@PutMapping("/{id}/senha")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void alterarSenha(@PathVariable Long id, @RequestBody @Valid InputCustomerPassword password) {
+	public void alterarSenha(@PathVariable Long id, @RequestBody @Valid CustomerPasswordInput password) {
 		customerService.updatePassword(id, password.getCurrentPassword(), password.getCurrentPassword());
 	}
 }

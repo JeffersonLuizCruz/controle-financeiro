@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.ifood.controller.dto.ProductResponseDTO;
-import com.project.ifood.controller.dto.ProductResume;
+import com.project.ifood.controller.dto.response.ProductResponseDTO;
+import com.project.ifood.controller.dto.resume.ProductResume;
 import com.project.ifood.controller.mapper.ProductMapper;
 import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.Restaurant;

@@ -1,8 +1,10 @@
-package com.project.ifood.controller.dto;
+package com.project.ifood.controller.dto.request;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.project.ifood.controller.dto.input.StateIdInput;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +19,5 @@ public class CityDTO{
 
     @Valid
     @NotNull(message = "A inserção do Estado(object='state') é obrigatório!")
-    private InputStateId state;
+    private StateIdInput state;
 }

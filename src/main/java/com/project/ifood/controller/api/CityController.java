@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.ifood.controller.dto.CityDTO;
+import com.project.ifood.controller.dto.request.CityDTO;
 import com.project.ifood.controller.mapper.CityMapper;
 import com.project.ifood.domain.model.City;
 import com.project.ifood.domain.service.CityService;

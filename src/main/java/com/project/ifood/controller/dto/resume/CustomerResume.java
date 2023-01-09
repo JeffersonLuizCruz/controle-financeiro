@@ -1,4 +1,4 @@
-package com.project.ifood.controller.dto;
+package com.project.ifood.controller.dto.resume;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

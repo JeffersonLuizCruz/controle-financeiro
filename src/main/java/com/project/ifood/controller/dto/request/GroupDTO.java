@@ -1,4 +1,4 @@
-package com.project.ifood.controller.dto;
+package com.project.ifood.controller.dto.request;
 
 import javax.validation.constraints.NotBlank;
 
@@ -7,9 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class RoleDTO {
-
-	@NotBlank(message = "Nome da permissão obrigatório!")
+public class GroupDTO {
+	
+	@NotBlank(message = "O nome do group é obrigatório!")
 	private String name;
-	private String description;
 }

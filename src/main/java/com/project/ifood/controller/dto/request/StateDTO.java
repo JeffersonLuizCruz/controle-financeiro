@@ -1,4 +1,4 @@
-package com.project.ifood.controller.dto;
+package com.project.ifood.controller.dto.request;
 
 import javax.validation.constraints.NotBlank;
 

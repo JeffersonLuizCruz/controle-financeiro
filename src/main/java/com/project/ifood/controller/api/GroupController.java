@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.ifood.controller.dto.GroupDTO;
+import com.project.ifood.controller.dto.request.GroupDTO;
 import com.project.ifood.controller.mapper.GroupMapper;
 import com.project.ifood.domain.model.Group;
 import com.project.ifood.domain.service.GroupService;
