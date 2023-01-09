@@ -12,6 +12,8 @@ delete from product;
 delete from restaurant;
 delete from restaurant_payment_methods;
 delete from restaurant_user_owner;
+delete from order_item;
+delete from ifood_v1.order;
 delete from role;
 
 set foreign_key_checks = 1;
@@ -25,6 +27,7 @@ alter table product auto_increment = 1;
 alter table restaurant auto_increment = 1;
 alter table ifood_v1.role auto_increment = 1;
 alter table ifood_v1.state auto_increment = 1;
+alter table ifood_v1.order auto_increment = 1;
 
 INSERT INTO ifood_v1.state (id, name) values (1, 'Pernambuco');
 INSERT INTO ifood_v1.state (id, name) values (2, 'São Paulo');
@@ -95,3 +98,33 @@ INSERT INTO restaurant_user_owner (restaurant_id, owner_id) values (3, 2);
 INSERT INTO product (id, description, is_active, name, price, restaurant_id) values (1, 'Comida do Nordeste', 1, 'Mão de vaca', 150, 1);
 INSERT INTO product (id, description, is_active, name, price, restaurant_id) values (2, 'Comida Paulista', 1, 'Pizza', 250, 2);
 INSERT INTO product (id, description, is_active, name, price, restaurant_id) values (3, 'Comida Carioca', 1, 'Feijoada', 350, 3);
+
+INSERT INTO ifood_v1.order
+(id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
+status, createAt, confirmationAt, cancellationAt, deliveryAt, payment_method_id, restaurant_id, user_client_id)
+VALUES(1, '123456', 300, 20, 320, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 1, 1, 1);
+
+INSERT INTO ifood_v1.order
+(id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
+status, createAt, confirmationAt, cancellationAt, deliveryAt, payment_method_id, restaurant_id, user_client_id)
+VALUES(2, '123451', 100.00, 10.00, 110.00, '', '', '', '', '', null, 'CREATED', '2018-01-07 16:11:26', null, null, null, 2, 2, 2);
+
+INSERT INTO ifood_v1.order
+(id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
+status, createAt, confirmationAt, cancellationAt, deliveryAt, payment_method_id, restaurant_id, user_client_id)
+VALUES(3, '123454', 200.00, 25.00, 225.00, '', '', '', '', '', null, 'CONFIRMED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 3, 3, 3);
+
+INSERT INTO ifood_v1.order
+(id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
+status, createAt, confirmationAt, cancellationAt, deliveryAt, payment_method_id, restaurant_id, user_client_id)
+VALUES(4, '123456', 400.00, 25.00, 425.00, '', '', '', '', '', null, 'CANCELLED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, 1, 2, 1);
+
+INSERT INTO ifood_v1.order
+(id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
+status, createAt, confirmationAt, cancellationAt, deliveryAt, payment_method_id, restaurant_id, user_client_id)
+VALUES(5, '123456', 300.00, 20.00, 320.00, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 2, 2, 1);
+
+INSERT INTO ifood_v1.order
+(id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
+status, createAt, confirmationAt, cancellationAt, deliveryAt, payment_method_id, restaurant_id, user_client_id)
+VALUES(6, '123456', 300, 20, 320, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 2, 3, 1);
