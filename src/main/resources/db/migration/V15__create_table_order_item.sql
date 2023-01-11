@@ -8,6 +8,6 @@ create table order_item (
 	product_id bigint not null,
 	
 	primary key(id),
-	constraint fk_order_order_item_id foreign key(order_id) references ifood_v1.order(id),
+	constraint fk_order_order_item_id foreign key(order_id) references tb_order(id),
 	constraint fk_product_order_item_id foreign key(product_id) references product(id)
 )engine=InnoDB default charset=utf8;

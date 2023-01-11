@@ -29,7 +29,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-@Entity @Table(name = "\"order\"")
+@Entity @Table(name = "tb_order")
 public class Order implements Serializable{
 	private static final long serialVersionUID = -4564893146129034049L;
 
@@ -51,7 +51,6 @@ public class Order implements Serializable{
 	
 	@CreationTimestamp
 	private OffsetDateTime createAt;
-
 	private OffsetDateTime confirmationAt;
 	private OffsetDateTime cancellationAt;
 	private OffsetDateTime deliveryAt;

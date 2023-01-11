@@ -1,4 +1,4 @@
-create table ifood_v1.order (
+create table tb_order (
 	id bigint auto_increment not null,
 	code varchar(20) not null,
 	subtotal numeric(19,2) not null,
@@ -11,10 +11,10 @@ create table ifood_v1.order (
 	address_street varchar(20) null,
 	address_city_id bigint null,
 	status varchar(10) not null,
-	createAt datetime null,
-	confirmationAt datetime null,
-	cancellationAt datetime null,
-	deliveryAt datetime null,
+	create_at datetime null,
+	confirmation_at datetime null,
+	cancellation_at datetime null,
+	delivery_at datetime null,
 	payment_method_id bigint not null,
 	restaurant_id bigint not null,
 	user_client_id bigint not null,
