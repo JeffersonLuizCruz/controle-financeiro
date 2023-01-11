@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.controller.dto.input.CustomerPasswordInput;
 import com.project.ifood.controller.dto.request.CustomerDTO;
+import com.project.ifood.controller.dto.request.CustomerRequestDTO;
 import com.project.ifood.controller.dto.response.CustomerResponseDTO;
-import com.project.ifood.controller.dto.resume.CustomerResume;
 import com.project.ifood.controller.mapper.CustomerMapper;
 import com.project.ifood.domain.model.Customer;
 import com.project.ifood.domain.service.CustomerService;
@@ -36,7 +36,7 @@ public class CustomerController {
 	
 	
 	@PostMapping
-	public ResponseEntity<CustomerResponseDTO> save(@RequestBody @Valid CustomerResume resume){
+	public ResponseEntity<CustomerResponseDTO> save(@RequestBody @Valid CustomerRequestDTO resume){
 		Customer modelCustomer = customerMapper.toModel(resume);
 		Customer customerEntity = customerService.save(modelCustomer);
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerMapper.toDTO(customerEntity));

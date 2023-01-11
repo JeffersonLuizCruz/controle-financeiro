@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class CustomerResume {
+public class RestaurantResume {
 
 	private Long id;
 	private String name;
-	private String email;
 }

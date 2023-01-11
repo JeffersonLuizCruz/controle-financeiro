@@ -3,9 +3,9 @@ package com.project.ifood.controller.dto.response;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import com.project.ifood.controller.dto.input.CustomerInput;
-import com.project.ifood.controller.dto.input.PaymentMethodInput;
-import com.project.ifood.controller.dto.input.RestaurantInput;
+import com.project.ifood.controller.dto.resume.CustomerResume;
+import com.project.ifood.controller.dto.resume.PaymentMethodResume;
+import com.project.ifood.controller.dto.resume.RestaurantResume;
 import com.project.ifood.domain.enums.OrderStatus;
 import com.project.ifood.domain.model.Address;
 
@@ -23,10 +23,12 @@ public class OrderResponseDTO {
 	private BigDecimal totalAmount;
 	private Address deliveryAddress;
 	private OrderStatus status = OrderStatus.CREATED;
+	
 	private OffsetDateTime confirmationAt;
 	private OffsetDateTime cancellationAt;
 	private OffsetDateTime deliveryAt;
-	private PaymentMethodInput paymentMethod;
-	private RestaurantInput restaurant;
-	private CustomerInput customer;
+	
+	private PaymentMethodResume paymentMethod;
+	private RestaurantResume restaurant;
+	private CustomerResume customer;
 }
