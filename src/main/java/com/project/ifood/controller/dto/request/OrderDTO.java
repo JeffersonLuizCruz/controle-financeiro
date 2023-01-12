@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import com.project.ifood.controller.dto.input.CustomerInput;
 import com.project.ifood.controller.dto.input.PaymentMethodInput;
 import com.project.ifood.controller.dto.input.RestaurantInput;
-import com.project.ifood.domain.enums.OrderStatus;
 import com.project.ifood.domain.model.Address;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +24,7 @@ public class OrderDTO {
 
 	private Address deliveryAddress;
 	
-	private OrderStatus status;
+	private String status;
 
 	private OffsetDateTime confirmationAt;
 	private OffsetDateTime cancellationAt;
@@ -39,4 +38,6 @@ public class OrderDTO {
 	
 	@Valid
 	private CustomerInput customer;
+	
+	//private List<Ord>
 }
