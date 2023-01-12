@@ -26,7 +26,6 @@ public class RestaurantDTO {
     private Boolean isActive;
     private Boolean isOpen;
     
-
     @NotNull(message = "A inserção da Cozinha(object='kitchen') é obrigatório!")
     private KitchenIdInput kitchen;
     

@@ -3,9 +3,7 @@ package com.project.ifood.controller.dto.request;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import javax.persistence.Embedded;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.validation.Valid;
 
 import com.project.ifood.controller.dto.input.CustomerInput;
 import com.project.ifood.controller.dto.input.PaymentMethodInput;
@@ -25,17 +23,20 @@ public class OrderDTO {
 	private BigDecimal freightRate;
 	private BigDecimal totalAmount;
 
-	@Embedded
 	private Address deliveryAddress;
 	
-	@Enumerated(EnumType.STRING)
-	private OrderStatus status = OrderStatus.CREATED;
+	private OrderStatus status;
 
 	private OffsetDateTime confirmationAt;
 	private OffsetDateTime cancellationAt;
 	private OffsetDateTime deliveryAt;
 	
+	@Valid
 	private PaymentMethodInput paymentMethod;
+	
+	@Valid
 	private RestaurantInput restaurant;
+	
+	@Valid
 	private CustomerInput customer;
 }

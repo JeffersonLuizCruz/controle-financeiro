@@ -6,7 +6,6 @@ import java.time.OffsetDateTime;
 import com.project.ifood.controller.dto.resume.CustomerResume;
 import com.project.ifood.controller.dto.resume.PaymentMethodResume;
 import com.project.ifood.controller.dto.resume.RestaurantResume;
-import com.project.ifood.domain.enums.OrderStatus;
 import com.project.ifood.domain.model.Address;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class OrderResponseDTO {
 	private BigDecimal freightRate;
 	private BigDecimal totalAmount;
 	private Address deliveryAddress;
-	private OrderStatus status = OrderStatus.CREATED;
+	private String status;
 	
 	private OffsetDateTime confirmationAt;
 	private OffsetDateTime cancellationAt;
