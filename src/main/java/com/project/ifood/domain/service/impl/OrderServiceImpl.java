@@ -15,7 +15,9 @@ import com.project.ifood.domain.repositoy.OrderRepository;
 import com.project.ifood.domain.service.CustomerService;
 import com.project.ifood.domain.service.OrderService;
 import com.project.ifood.domain.service.PaymentMethodService;
+import com.project.ifood.domain.service.RestaurantByProductService;
 import com.project.ifood.domain.service.RestaurantService;
+import com.project.ifood.domain.service.exception.BadRequestExcertpionService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
 import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 
@@ -28,6 +30,7 @@ public class OrderServiceImpl implements OrderService{
 	private final PaymentMethodService paymentMethodService;
 	private final RestaurantService restaurantService;
 	private final CustomerService customerService;
+	private final RestaurantByProductService restaurantByProductService;
 	
 	
     private final String CONSTRAINT_VALIDATION_MESSAGE = "Pedido de código '%d' não pode ser removida, pois está em uso";
@@ -39,6 +42,18 @@ public class OrderServiceImpl implements OrderService{
     	PaymentMethod paymentMethodEntity = paymentMethodService.findById(order.getPaymentMethod().getId());
     	Restaurant restaurantEntity = restaurantService.findById(order.getRestaurant().getId());
     	Customer customerEntity = customerService.findById(order.getCustomer().getId());
+    	
+    	if(!restaurantEntity.getPaymentMethods().contains(paymentMethodEntity)) {
+    		throw new BadRequestExcertpionService("Restaurante não tem esse tipo de pagamento.");
+    	}
+    	
+    	if(!restaurantEntity.getOwner().contains(customerEntity)) {
+    		throw new BadRequestExcertpionService("Você não tem pedido no restaurante: " + restaurantEntity.getName());
+    	}
+    	
+    	order.getItems().stream().forEach(item -> {
+    		restaurantByProductService.verifyIfExistRestaurantByProduct(restaurantEntity.getId(), item.getProduct().getId());
+    	});
     	
     	order.setPaymentMethod(paymentMethodEntity);
     	order.setRestaurant(restaurantEntity);

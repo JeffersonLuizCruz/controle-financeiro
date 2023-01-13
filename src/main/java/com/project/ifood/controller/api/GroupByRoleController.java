@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
 @RequestMapping("/groups/{groupId}/roles")
-public class GroupRoleController {
+public class GroupByRoleController {
 	
 	private final GroupRoleService groupRoleService;
 	private final GroupService groupService;

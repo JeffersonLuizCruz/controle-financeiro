@@ -7,7 +7,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.project.ifood.domain.model.OrderItem;
-import com.project.ifood.domain.model.State;
 import com.project.ifood.domain.repositoy.OrderItemRepository;
 import com.project.ifood.domain.service.OrderItemService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;

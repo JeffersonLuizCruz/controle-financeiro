@@ -22,29 +22,35 @@ import com.project.ifood.controller.mapper.ProductMapper;
 import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.service.ProductService;
+import com.project.ifood.domain.service.RestaurantByProductService;
 import com.project.ifood.domain.service.RestaurantService;
-import com.project.ifood.domain.service.exception.ConstraintViolationService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
 @RequestMapping("/restaurants/{restaurantId}/products")
-public class RestaurantProductController {
+public class RestaurantByProductController {
 
 	private final RestaurantService restaurantService;
 	private final ProductService productService;
 	private final ProductMapper productMapper;
+	private final RestaurantByProductService restaurantByProductService;
 
 	@PostMapping
 	public ResponseEntity<ProductResponseDTO> save(@PathVariable Long restaurantId, @RequestBody @Valid ProductResume productResume){
+		Product productEntity = saveRestaurantByProduct(restaurantId, productResume);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(productEntity));
+	}
+
+	private Product saveRestaurantByProduct(Long restaurantId, ProductResume productResume) {
 		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
 		
 		Product modelProduct = productMapper.toModel(productResume);
 		modelProduct.setRestaurant(restaurantEntity);
 		
 		Product productEntity = productService.save(modelProduct);
-
-		return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(productEntity));
+		return productEntity;
 	}
 	
 	@PutMapping("/{productId}")
@@ -82,17 +88,7 @@ public class RestaurantProductController {
 		 *	 
 		 * */
 		
-		Restaurant restaurant = restaurantService.checkIfRestaurantExists(restaurantId);
-		
-		List<ProductResponseDTO> listProductDTO = restaurant.getProducts().stream()
-				.map(product -> productMapper.toDTO(product))
-				.collect(Collectors.toList());
-
-		ProductResponseDTO productDTO = listProductDTO.stream()
-				.filter(p -> p.getId() == productId)
-				.findFirst()
-				.orElseThrow(() -> new ConstraintViolationService(String.format("Não existe um cadastro de produto com código %d para o restaurante de código %d", 
-						restaurantId, productId)));
+		ProductResponseDTO productDTO = restaurantByProductService.verifyIfExistRestaurantByProduct(restaurantId, productId);
 		
 		return ResponseEntity.ok(productDTO);
 	}

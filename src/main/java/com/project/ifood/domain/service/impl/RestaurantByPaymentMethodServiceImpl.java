@@ -12,7 +12,7 @@ import com.project.ifood.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 
 @Service @RequiredArgsConstructor
-public class RestaurantPaymentMethodServiceImpl implements RestaurantPaymentMethodService{
+public class RestaurantByPaymentMethodServiceImpl implements RestaurantPaymentMethodService{
 
 	private final RestaurantService restaurantService;
 	private final PaymentMethodService paymentMethodService;

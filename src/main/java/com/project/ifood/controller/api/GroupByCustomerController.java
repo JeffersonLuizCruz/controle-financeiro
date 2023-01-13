@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
 @RequestMapping("/customers/{customerId}/groups")
-public class GroupCustomerController {
+public class GroupByCustomerController {
 
 	private final GroupRoleService groupRoleService;
 	

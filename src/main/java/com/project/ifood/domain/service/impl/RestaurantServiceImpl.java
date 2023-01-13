@@ -31,6 +31,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 	private final String CONSTRAINT_VALIDATION_MESSAGE = "Restaurante de código '%d' não pode ser removida, pois está em uso";
 	private final String NOT_FOUND_MESSAGE = "Restaurante de código '%d' não encontrado.";
 
+	@Transactional
 	@Override
 	public Restaurant save(Restaurant restaurant) {
 		Kitchen kitchenEntity = kitchenService.checkIfKitchenExists(restaurant.getKitchen().getId());
@@ -42,6 +43,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 		return restaurantRepository.save(restaurant);
 	}
 
+	@Transactional
 	@Override
 	public Restaurant update(Long id, Restaurant restaurant) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
@@ -56,16 +58,19 @@ public class RestaurantServiceImpl implements RestaurantService{
 		return restaurantRepository.save(restaurant);
 	}
 
+	@Transactional
 	@Override
 	public List<Restaurant> findAll() {
 		return restaurantRepository.findAll();
 	}
 
+	@Transactional
 	@Override
 	public Restaurant findById(Long id) {
 		return checkIfRestaurantExists(id);
 	}
 
+	@Transactional
 	@Override
 	public void deleteById(Long id) {
 

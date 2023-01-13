@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 
 @Service @RequiredArgsConstructor
-public class GroupCustomerServiceImp implements GroupCustomerService{
+public class GroupByCustomerServiceImp implements GroupCustomerService{
 
 	private final CustomerService customerService;
 	private final GroupService groupService;

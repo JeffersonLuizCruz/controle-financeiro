@@ -12,7 +12,7 @@ import com.project.ifood.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 
 @Service @RequiredArgsConstructor
-public class RestaurantCustomerServiceImpl implements RestaurantCustomerService{
+public class RestaurantByCustomerServiceImpl implements RestaurantCustomerService{
 
 	private final RestaurantService restaurantService;
 	private final CustomerService customerService;

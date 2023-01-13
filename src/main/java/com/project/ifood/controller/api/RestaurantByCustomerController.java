@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
 @RequestMapping("/restaurants/{restaurantId}/owners")
-public class RestaurantCustomerController {
+public class RestaurantByCustomerController {
 
 	private final RestaurantService restaurantService;
 	private final CustomerMapper customerMappger;

@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
 @RequestMapping("/restaurants/{restaurantId}/payment-methods")
-public class RestaurantPaymentMethodController {
+public class RestaurantByPaymentMethodController {
 
 	private final RestaurantService restaurantService;
 	private final RestaurantPaymentMethodService restaurantPaymentMethodService;

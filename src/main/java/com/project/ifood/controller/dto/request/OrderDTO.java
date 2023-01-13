@@ -2,12 +2,14 @@ package com.project.ifood.controller.dto.request;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import com.project.ifood.controller.dto.input.CustomerInput;
 import com.project.ifood.controller.dto.input.PaymentMethodInput;
 import com.project.ifood.controller.dto.input.RestaurantInput;
+import com.project.ifood.controller.dto.resume.OrderItemResume;
 import com.project.ifood.domain.model.Address;
 
 import lombok.AllArgsConstructor;
@@ -39,5 +41,6 @@ public class OrderDTO {
 	@Valid
 	private CustomerInput customer;
 	
-	//private List<Ord>
+	@Valid
+	private List<OrderItemResume> items;
 }
