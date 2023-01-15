@@ -1,9 +1,9 @@
 create table order_item (
 	id bigint auto_increment not null,
-	unitPrice numeric(19,2) not null,
-	priceTotal numeric(19,2) not null,
-	quantity bigint not null,
-	observation varchar(200) not null,
+	unit_price numeric(19,2) null,
+	price_total numeric(19,2) null,
+	quantity bigint null,
+	observation varchar(200) null,
 	order_id bigint not null,
 	product_id bigint not null,
 	

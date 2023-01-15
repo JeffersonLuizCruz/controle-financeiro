@@ -54,7 +54,7 @@ public class Order implements Serializable{
 	private OffsetDateTime cancellationAt;
 	private OffsetDateTime deliveryAt;
 	
-	@ManyToOne//(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	private PaymentMethod paymentMethod;
 	

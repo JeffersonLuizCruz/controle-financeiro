@@ -41,14 +41,9 @@ public class OrderServiceImpl implements OrderService{
 	public Order save(Order order) {
     	PaymentMethod paymentMethodEntity = paymentMethodService.findById(order.getPaymentMethod().getId());
     	Restaurant restaurantEntity = restaurantService.findById(order.getRestaurant().getId());
-    	Customer customerEntity = customerService.findById(order.getCustomer().getId());
     	
     	if(!restaurantEntity.getPaymentMethods().contains(paymentMethodEntity)) {
     		throw new BadRequestExcertpionService("Restaurante não tem esse tipo de pagamento.");
-    	}
-    	
-    	if(!restaurantEntity.getOwner().contains(customerEntity)) {
-    		throw new BadRequestExcertpionService("Você não tem pedido no restaurante: " + restaurantEntity.getName());
     	}
     	
     	order.getItems().stream().forEach(item -> {
@@ -57,7 +52,7 @@ public class OrderServiceImpl implements OrderService{
     	
     	order.setPaymentMethod(paymentMethodEntity);
     	order.setRestaurant(restaurantEntity);
-    	order.setCustomer(customerEntity);
+    	order.setCustomer(Customer.builder().id(1L).build());
     	
 		return orderRepository.save(order);
 	}

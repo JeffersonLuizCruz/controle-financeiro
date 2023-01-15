@@ -38,19 +38,9 @@ public class RestaurantByProductController {
 
 	@PostMapping
 	public ResponseEntity<ProductResponseDTO> save(@PathVariable Long restaurantId, @RequestBody @Valid ProductResume productResume){
-		Product productEntity = saveRestaurantByProduct(restaurantId, productResume);
+		Product productEntity = restaurantByProductService.saveRestaurantByProduct(restaurantId, productResume);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(productEntity));
-	}
-
-	private Product saveRestaurantByProduct(Long restaurantId, ProductResume productResume) {
-		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
-		
-		Product modelProduct = productMapper.toModel(productResume);
-		modelProduct.setRestaurant(restaurantEntity);
-		
-		Product productEntity = productService.save(modelProduct);
-		return productEntity;
 	}
 	
 	@PutMapping("/{productId}")
