@@ -4,7 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-import com.project.ifood.controller.dto.input.ProductInput;
+import com.project.ifood.controller.dto.input.ProductInputById;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +20,5 @@ public class OrderItemResume {
 
 	@Valid
 	@NotNull
-	private ProductInput product;
+	private ProductInputById product;
 }

@@ -6,10 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor @NoArgsConstructor @Data
-public class KitchenIdInput {
+@NoArgsConstructor @AllArgsConstructor @Data
+public class CityInputById {
 	
-    @NotNull(message = "Id da Cozinha é obrigatório!")
-    private Long id;
-    
+	@NotNull(message = "Cidade obrigatório")
+	private Long id;
+
 }

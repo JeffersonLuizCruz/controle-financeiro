@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
-import com.project.ifood.controller.dto.input.KitchenIdInput;
+import com.project.ifood.controller.dto.input.KitchenInputById;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class RestaurantDTO {
     private Boolean isOpen;
     
     @NotNull(message = "A inserção da Cozinha(object='kitchen') é obrigatório!")
-    private KitchenIdInput kitchen;
+    private KitchenInputById kitchen;
     
 
     @NotNull(message = "A inserção de Endereco(object='address') é obrigatório!")

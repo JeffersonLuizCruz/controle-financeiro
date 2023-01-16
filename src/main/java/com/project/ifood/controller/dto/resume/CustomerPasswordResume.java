@@ -1,4 +1,4 @@
-package com.project.ifood.controller.dto.input;
+package com.project.ifood.controller.dto.resume;
 
 import javax.validation.constraints.NotBlank;
 
@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class CustomerPasswordInput {
+public class CustomerPasswordResume {
 
 	@NotBlank(message = "Senha atual obrigatório!")
 	private String currentPassword;

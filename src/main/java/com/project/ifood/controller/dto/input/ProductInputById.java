@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class ProductInput {
+public class ProductInputById {
 
 	@NotNull(message = "Produto é obrigatório!")
 	private Long id;

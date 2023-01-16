@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor @Data
-public class RestaurantInput {
+public class CustomerInputById {
 
-	@NotNull(message = "Restaurante é obrigatório!")
+	@NotNull(message = "Usuário obrigatório!")
 	public Long id;
 }

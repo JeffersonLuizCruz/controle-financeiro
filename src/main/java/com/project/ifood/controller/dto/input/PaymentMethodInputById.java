@@ -7,9 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class CityIdInput {
-	
-	@NotNull(message = "Cidade obrigatório")
-	private Long id;
+public class PaymentMethodInputById {
 
+	@NotNull(message = "Tipo de pagamento é obrigatório!")
+	public Long id;
 }

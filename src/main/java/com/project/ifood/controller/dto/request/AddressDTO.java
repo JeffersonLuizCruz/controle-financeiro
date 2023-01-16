@@ -4,7 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.project.ifood.controller.dto.input.CityIdInput;
+import com.project.ifood.controller.dto.input.CityInputById;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +26,5 @@ public class AddressDTO {
 	
     @Valid
     @NotNull(message = "A inserção da Cidade(object='city') é obrigatório!")
-	private CityIdInput city;
+	private CityInputById city;
 }

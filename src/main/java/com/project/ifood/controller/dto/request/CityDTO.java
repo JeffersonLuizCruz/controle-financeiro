@@ -4,7 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.project.ifood.controller.dto.input.StateIdInput;
+import com.project.ifood.controller.dto.input.StateIdInputById;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +19,5 @@ public class CityDTO{
 
     @Valid
     @NotNull(message = "A inserção do Estado(object='state') é obrigatório!")
-    private StateIdInput state;
+    private StateIdInputById state;
 }
