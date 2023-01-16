@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.controller.dto.request.KitchenDTO;
+import com.project.ifood.controller.dto.response.KitchenResponseDTO;
 import com.project.ifood.controller.mapper.KitchenMapper;
 import com.project.ifood.domain.model.Kitchen;
 import com.project.ifood.domain.service.KitchenService;
@@ -30,18 +32,24 @@ public class KitchenController {
 	
 
 	@PostMapping
-	public ResponseEntity<Kitchen> save(@RequestBody Kitchen kitchen) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(kitchenService.save(kitchen));
+	public ResponseEntity<KitchenResponseDTO> save(@RequestBody KitchenDTO dto) {
+		Kitchen modelKitchen = kitchenMapper.toModel(dto);
+		Kitchen kitchenEntity = kitchenService.save(modelKitchen);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(kitchenMapper.toDTO(kitchenEntity));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Kitchen> update(@PathVariable Long id, @RequestBody Kitchen kitchen){
-		return ResponseEntity.ok(kitchenService.update(id, kitchen));
+	public ResponseEntity<KitchenResponseDTO> update(@PathVariable Long id, @RequestBody KitchenDTO dto){
+		Kitchen modelKitchen = kitchenMapper.toModel(dto);
+		Kitchen kitchenEntity = kitchenService.update(id, modelKitchen);
+		
+		return ResponseEntity.ok(kitchenMapper.toDTO(kitchenEntity));
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<KitchenDTO>> findAll(){
-		List<KitchenDTO> listKichenDTO = kitchenService.findAll().stream()
+	public ResponseEntity<List<KitchenResponseDTO>> findAll(){
+		List<KitchenResponseDTO> listKichenDTO = kitchenService.findAll().stream()
 		.map(kitchen -> kitchenMapper.toDTO(kitchen))
 		.collect(Collectors.toList());
 		
@@ -49,13 +57,14 @@ public class KitchenController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Kitchen> findById(@PathVariable Long id){
-		return ResponseEntity.ok(kitchenService.findById(id));
+	public ResponseEntity<KitchenResponseDTO> findById(@PathVariable Long id){
+		Kitchen kitchenEntity = kitchenService.findById(id);
+		
+		return ResponseEntity.ok(kitchenMapper.toDTO(kitchenEntity));
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
+	@DeleteMapping("/{id}") @ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void deleteById(@PathVariable Long id){
 		kitchenService.deleteById(id);
-		return ResponseEntity.noContent().build();
 	}
 }
