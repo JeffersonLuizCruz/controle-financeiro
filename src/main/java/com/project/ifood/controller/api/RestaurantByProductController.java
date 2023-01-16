@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.ifood.controller.dto.request.ProductDTO;
 import com.project.ifood.controller.dto.response.ProductResponseDTO;
-import com.project.ifood.controller.dto.resume.ProductResume;
 import com.project.ifood.controller.mapper.ProductMapper;
 import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.Restaurant;
@@ -37,17 +37,17 @@ public class RestaurantByProductController {
 	private final RestaurantByProductService restaurantByProductService;
 
 	@PostMapping
-	public ResponseEntity<ProductResponseDTO> save(@PathVariable Long restaurantId, @RequestBody @Valid ProductResume productResume){
-		Product productEntity = restaurantByProductService.saveRestaurantByProduct(restaurantId, productResume);
+	public ResponseEntity<ProductResponseDTO> save(@PathVariable Long restaurantId, @RequestBody @Valid ProductDTO dto){
+		Product productEntity = restaurantByProductService.saveRestaurantByProduct(restaurantId, dto);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(productEntity));
 	}
 	
 	@PutMapping("/{productId}")
-	public ResponseEntity<ProductResponseDTO> update(@PathVariable Long restaurantId,@PathVariable Long productId, @RequestBody @Valid ProductResume productResume){
+	public ResponseEntity<ProductResponseDTO> update(@PathVariable Long restaurantId,@PathVariable Long productId, @RequestBody @Valid ProductDTO dto){
 		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
 
-		Product modelProduct = productMapper.toModel(productResume);
+		Product modelProduct = productMapper.toModel(dto);
 		modelProduct.setRestaurant(restaurantEntity);
 		
 		Product productEntity = productService.update(productId, modelProduct);

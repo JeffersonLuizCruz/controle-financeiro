@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.controller.dto.request.GroupDTO;
@@ -51,7 +52,7 @@ public class GroupController {
 		return ResponseEntity.ok(groupService.findById(id));
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{id}") @ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void deleteById(@PathVariable Long id) {
 		groupService.deleteById(id);
 	}

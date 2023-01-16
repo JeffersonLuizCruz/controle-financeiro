@@ -1,12 +1,9 @@
 package com.project.ifood.domain.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 
+import com.project.ifood.controller.dto.request.ProductDTO;
 import com.project.ifood.controller.dto.response.ProductResponseDTO;
-import com.project.ifood.controller.dto.resume.ProductResume;
 import com.project.ifood.controller.mapper.ProductMapper;
 import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.Restaurant;
@@ -26,10 +23,10 @@ public class RestaurantByProductServiceImpl implements RestaurantByProductServic
 	private final ProductMapper productMapper;
 
 	@Override
-	public Product saveRestaurantByProduct(Long restaurantId, ProductResume productResume) {
+	public Product saveRestaurantByProduct(Long restaurantId, ProductDTO dto) {
 		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
 
-		Product modelProduct = productMapper.toModel(productResume);
+		Product modelProduct = productMapper.toModel(dto);
 		modelProduct.setRestaurant(restaurantEntity);
 
 		Product productEntity = productService.save(modelProduct);
@@ -40,14 +37,14 @@ public class RestaurantByProductServiceImpl implements RestaurantByProductServic
 	public ProductResponseDTO verifyIfExistRestaurantByProduct(Long restaurantId, Long productId) {
 		Restaurant restaurant = restaurantService.checkIfRestaurantExists(restaurantId);
 
-		List<ProductResponseDTO> listProductDTO = restaurant.getProducts().stream()
-				.map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
-
-		ProductResponseDTO productDTO = listProductDTO.stream().filter(p -> p.getId() == productId).findFirst()
-				.orElseThrow(() -> new ConstraintViolationService(
+		ProductResponseDTO productResponse = restaurant.getProducts().stream()
+				.map(product -> productMapper.toDTO(product))
+				.filter(p -> p.getId() == productId)
+				.findFirst().orElseThrow(() -> new ConstraintViolationService(
 						String.format("Não existe um cadastro de produto com código %d para o restaurante de código %d",
 								productId, restaurantId)));
-		return productDTO;
+
+		return productResponse;
 	}
 
 }
