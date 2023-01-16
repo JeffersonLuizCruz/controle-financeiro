@@ -110,7 +110,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 	public void isOpen(Long id) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
 		restaurantEntity.setIsOpen(true);
-		restaurantRepository.save(restaurantEntity);	
+		//restaurantRepository.save(restaurantEntity);	
 	}
 
 	@Transactional
@@ -118,7 +118,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 	public void isClosed(Long id) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
 		restaurantEntity.setIsOpen(false);
-		restaurantRepository.save(restaurantEntity);	
+		//restaurantRepository.save(restaurantEntity);	
 	}
 
 	@Transactional
