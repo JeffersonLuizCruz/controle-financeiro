@@ -89,11 +89,12 @@ public class RestaurantServiceImpl implements RestaurantService{
 				new NotFoundExceptionService(String.format(NOT_FOUND_MESSAGE, id)));
 	}
 
+	@Transactional
 	@Override
 	public void isActive(Long id) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
 		restaurantEntity.setIsActive(true);
-		restaurantRepository.save(restaurantEntity);	
+		//restaurantRepository.save(restaurantEntity);	
 	}
 
 	@Transactional
@@ -101,9 +102,10 @@ public class RestaurantServiceImpl implements RestaurantService{
 	public void isInactive(Long id) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
 		restaurantEntity.setIsActive(false);
-		restaurantRepository.save(restaurantEntity);		
+		//restaurantRepository.save(restaurantEntity);		
 	}
-
+	
+	@Transactional
 	@Override
 	public void isOpen(Long id) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
@@ -111,6 +113,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 		restaurantRepository.save(restaurantEntity);	
 	}
 
+	@Transactional
 	@Override
 	public void isClosed(Long id) {
 		Restaurant restaurantEntity = checkIfRestaurantExists(id);
