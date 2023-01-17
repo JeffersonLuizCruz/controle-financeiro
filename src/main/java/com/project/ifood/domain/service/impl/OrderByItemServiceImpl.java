@@ -15,7 +15,7 @@ import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 import lombok.RequiredArgsConstructor;
 
 @Service @RequiredArgsConstructor
-public class OrderItemServiceImpl implements OrderItemService{
+public class OrderByItemServiceImpl implements OrderItemService{
 
 	private final OrderItemRepository orderItemRepository;
 	

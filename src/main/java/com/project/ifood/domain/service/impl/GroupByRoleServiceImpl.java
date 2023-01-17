@@ -12,7 +12,7 @@ import com.project.ifood.domain.service.RoleService;
 import lombok.RequiredArgsConstructor;
 
 @Service @RequiredArgsConstructor
-public class GroupRoleServiceImpl implements GroupRoleService{
+public class GroupByRoleServiceImpl implements GroupRoleService{
 
 	private final GroupService groupService;
 	private final RoleService roleService;
