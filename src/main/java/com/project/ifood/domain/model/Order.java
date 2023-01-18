@@ -68,4 +68,14 @@ public class Order implements Serializable{
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderItem> items = new ArrayList<>();
+	
+	public void calculateTotalPrice() {
+		items.forEach(OrderItem::calculateTotalPrice);
+		
+		this.subtotal = items.stream()
+				.map(item -> item.getPriceTotal())
+				.reduce(BigDecimal.ZERO,BigDecimal::add);
+		
+		this.totalAmount = this.subtotal.add(freightRate);
+	}
 }

@@ -10,6 +10,7 @@ import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.service.ProductService;
 import com.project.ifood.domain.service.RestaurantByProductService;
 import com.project.ifood.domain.service.RestaurantService;
+import com.project.ifood.domain.service.exception.BadRequestExcertpionService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,12 +36,12 @@ public class RestaurantByProductServiceImpl implements RestaurantByProductServic
 
 	@Override
 	public ProductResponseDTO verifyIfExistRestaurantByProduct(Long restaurantId, Long productId) {
-		Restaurant restaurant = restaurantService.checkIfRestaurantExists(restaurantId);
+		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
 
-		ProductResponseDTO productResponse = restaurant.getProducts().stream()
+		ProductResponseDTO productResponse = restaurantEntity.getProducts().stream()
 				.map(product -> productMapper.toDTO(product))
 				.filter(p -> p.getId() == productId)
-				.findFirst().orElseThrow(() -> new ConstraintViolationService(
+				.findFirst().orElseThrow(() -> new BadRequestExcertpionService(
 						String.format("Não existe um cadastro de produto com código %d para o restaurante de código %d",
 								productId, restaurantId)));
 

@@ -23,12 +23,13 @@ public class OrderDTO {
 	
 	@Valid
 	@NotNull(message = "Edereço obrigatório")
-	private AddressDTO address;
+	private AddressDTO deliveryAddress;
 	
 	@Valid
 	@NotNull(message = "Restaurante não pode ser nulo")
 	private RestaurantInputById restaurant;
 	
+	@Valid
 	@Size(min = 1)
 	@NotNull(message = "Item do pedido não pode ser nulo")
 	private List<OrderItemResume> items;

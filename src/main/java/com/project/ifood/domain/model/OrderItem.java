@@ -35,7 +35,7 @@ public class OrderItem {
 	@JoinColumn(nullable = false)
 	private Product product;
 
-	public void calcularPrecoTotal() {
+	public void calculateTotalPrice() {
 		BigDecimal unitPrice = this.getUnitPrice();
 		Integer quantity = this.getQuantity();
 
