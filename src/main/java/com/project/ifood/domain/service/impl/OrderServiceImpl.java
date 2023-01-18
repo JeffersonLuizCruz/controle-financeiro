@@ -15,7 +15,6 @@ import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.Restaurant;
 import com.project.ifood.domain.repositoy.OrderRepository;
 import com.project.ifood.domain.service.CityService;
-import com.project.ifood.domain.service.CustomerService;
 import com.project.ifood.domain.service.OrderService;
 import com.project.ifood.domain.service.PaymentMethodService;
 import com.project.ifood.domain.service.ProductService;
@@ -33,7 +32,6 @@ public class OrderServiceImpl implements OrderService{
 	private final OrderRepository orderRepository;
 	private final PaymentMethodService paymentMethodService;
 	private final RestaurantService restaurantService;
-	private final CustomerService customerService;
 	private final RestaurantByProductService restaurantByProductService;
 	private final CityService cityService;
 	private final ProductService productService;
@@ -78,15 +76,8 @@ public class OrderServiceImpl implements OrderService{
     @Transactional
 	@Override
 	public Order update(Long id, Order order) {
-    	checkIfOrderExists(id);
-    	PaymentMethod paymentMethodEntity = paymentMethodService.checkIfPaymentMethodExists(order.getPaymentMethod().getId());
-    	Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(order.getRestaurant().getId());
-    	Customer customerEntity = customerService.checkIfCustomerExists(order.getCustomer().getId());
     	
-    	order.setId(id);
-    	order.setPaymentMethod(paymentMethodEntity);
-    	order.setRestaurant(restaurantEntity);
-    	order.setCustomer(customerEntity);
+    	//TODO - falta implementar
     	
 		return orderRepository.save(order);
 	}
