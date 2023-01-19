@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.project.ifood.domain.enums.OrderStatus;
+import com.project.ifood.domain.service.exception.BadRequestExcertpionService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -77,5 +78,37 @@ public class Order implements Serializable{
 				.reduce(BigDecimal.ZERO,BigDecimal::add);
 		
 		this.totalAmount = this.subtotal.add(freightRate);
+	}
+	
+	
+	public void create() {
+		setStatus(OrderStatus.CREATED);
+		setCreateAt(OffsetDateTime.now());
+	}
+	
+	public void confirm() {
+		setStatus(OrderStatus.CONFIRMED);
+		setConfirmationAt(OffsetDateTime.now());
+	}
+	
+	public void delivery() {
+		setStatus(OrderStatus.DELIVERED);
+		setDeliveryAt(OffsetDateTime.now());
+	}
+	
+	public void cancel() {
+		setStatus(OrderStatus.CANCELLED);
+		setCancellationAt(OffsetDateTime.now());
+	}
+	
+	private void setStatus(OrderStatus newStatus) {
+		
+		if((getStatus().cannotChangeTo(newStatus))) {
+			throw new BadRequestExcertpionService(
+					String.format("Status do pedido %d não pode ser alterado de %s para %s",
+							this.id, getStatus().getDescription(), newStatus.getDescription()));
+		}
+		
+		this.status = newStatus;
 	}
 }

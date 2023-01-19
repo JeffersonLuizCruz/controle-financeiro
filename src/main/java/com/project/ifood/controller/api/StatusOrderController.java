@@ -17,9 +17,25 @@ public class StatusOrderController {
 	
 	private final StatusOrderImpl statusOrder;
 	
+	
+	@PutMapping("/create") @ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void statusCreate(@PathVariable Long orderId) {
+		statusOrder.cancel(orderId);
+	}
+	
 	@PutMapping("/confirm") @ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void statusConfirm(@PathVariable Long orderId) {
 		statusOrder.confirm(orderId);
+	}
+	
+	@PutMapping("/deliver") @ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void statusDeliver(@PathVariable Long orderId) {
+		statusOrder.delivery(orderId);
+	}
+	
+	@PutMapping("/cancel") @ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void statusCancel(@PathVariable Long orderId) {
+		statusOrder.cancel(orderId);
 	}
 
 }
