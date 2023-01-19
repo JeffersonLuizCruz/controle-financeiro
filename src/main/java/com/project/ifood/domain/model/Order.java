@@ -107,7 +107,7 @@ public class Order implements Serializable{
 			throw new BadRequestExcertpionService(
 					String.format("Status do pedido %d não pode ser alterado de %s para %s",
 							this.id, getStatus().getDescription(), newStatus.getDescription()));
-		}
+		}	
 		
 		this.status = newStatus;
 	}

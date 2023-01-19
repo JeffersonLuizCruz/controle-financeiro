@@ -14,26 +14,26 @@ public class StatusOrderImpl {
 	private final OrderService orderService;
 	
 	@Transactional
-	public void created(Long orderId) {
-		Order orderEntity = orderService.findById(orderId);
+	public void created(String codeUUID) {
+		Order orderEntity = orderService.findById(codeUUID);
 		orderEntity.create();
 	}
 	
 	@Transactional
-	public void confirm(Long orderId) {
-		Order orderEntity = orderService.findById(orderId);
+	public void confirm(String codeUUID) {
+		Order orderEntity = orderService.findById(codeUUID);
 		orderEntity.confirm();
 	}
 	
 	@Transactional
-	public void delivery(Long orderId) {
-		Order orderEntity = orderService.findById(orderId);
+	public void delivery(String codeUUID) {
+		Order orderEntity = orderService.findById(codeUUID);
 		orderEntity.delivery();
 	}
 	
 	@Transactional
-	public void cancel(Long orderId) {
-		Order orderEntity = orderService.findById(orderId);
+	public void cancel(String codeUUID) {
+		Order orderEntity = orderService.findById(codeUUID);
 		orderEntity.cancel();
 	}
 

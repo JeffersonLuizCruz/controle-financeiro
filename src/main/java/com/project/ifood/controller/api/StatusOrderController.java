@@ -12,30 +12,30 @@ import com.project.ifood.domain.service.impl.StatusOrderImpl;
 import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
-@RequestMapping("/orders/{orderId}")
+@RequestMapping(value = "/orders/{codeUUID}")
 public class StatusOrderController {
 	
 	private final StatusOrderImpl statusOrder;
 	
 	
 	@PutMapping("/create") @ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void statusCreate(@PathVariable Long orderId) {
-		statusOrder.cancel(orderId);
+	public void statusCreate(@PathVariable String codeUUID) {
+		statusOrder.cancel(codeUUID);
 	}
 	
 	@PutMapping("/confirm") @ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void statusConfirm(@PathVariable Long orderId) {
-		statusOrder.confirm(orderId);
+	public void statusConfirm(@PathVariable String codeUUID) {
+		statusOrder.confirm(codeUUID);
 	}
 	
 	@PutMapping("/deliver") @ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void statusDeliver(@PathVariable Long orderId) {
-		statusOrder.delivery(orderId);
+	public void statusDeliver(@PathVariable String codeUUID) {
+		statusOrder.delivery(codeUUID);
 	}
 	
 	@PutMapping("/cancel") @ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void statusCancel(@PathVariable Long orderId) {
-		statusOrder.cancel(orderId);
+	public void statusCancel(@PathVariable String codeUUID) {
+		statusOrder.cancel(codeUUID);
 	}
 
 }

@@ -7,9 +7,9 @@ import com.project.ifood.domain.model.Order;
 public interface OrderService {
 
 	Order save(Order order);
-	Order update(Long id, Order order);
+	Order update(String codeUUID, Order order);
 	List<Order> findAll();
-	Order findById(Long id);
-	void deleteById(Long id);
-	Order checkIfOrderExists(Long id);
+	Order findById(String codeUUID);
+	void deleteById(String codeUUID);
+	Order checkIfOrderExists(String codeUUID);
 }

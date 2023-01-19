@@ -36,8 +36,8 @@ public class OrderServiceImpl implements OrderService{
 	private final CityService cityService;
 	private final ProductService productService;
 	
-    private final String CONSTRAINT_VALIDATION_MESSAGE = "Pedido de código '%d' não pode ser removida, pois está em uso";
-    private final String NOT_FOUND_MESSAGE = "Pedido de código '%d' não encontrado.";
+    private final String CONSTRAINT_VALIDATION_MESSAGE = "Pedido de código '%s' não pode ser removida, pois está em uso";
+    private final String NOT_FOUND_MESSAGE = "Pedido de código '%s' não encontrado.";
     
     @Transactional
 	@Override
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Transactional
 	@Override
-	public Order update(Long id, Order order) {
+	public Order update(String codeUUID, Order order) {
     	
     	//TODO - falta implementar
     	
@@ -88,26 +88,26 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public Order findById(Long id) {
-		return checkIfOrderExists(id);
+	public Order findById(String codeUUID) {
+		return checkIfOrderExists(codeUUID);
 	}
 
 	@Transactional
 	@Override
-	public void deleteById(Long id) {
+	public void deleteById(String codeUUID) {
 		try {
-			Order orderEntity = checkIfOrderExists(id);
+			Order orderEntity = checkIfOrderExists(codeUUID);
 			orderRepository.delete(orderEntity);
 			orderRepository.flush();
 		}catch (DataIntegrityViolationException | ConstraintViolationException e){
-			throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, id));
+			throw new ConstraintViolationService(String.format(CONSTRAINT_VALIDATION_MESSAGE, codeUUID));
 		}
 		
 	}
 
 	@Override
-	public Order checkIfOrderExists(Long id) {
-        return orderRepository.findById(id).orElseThrow(() ->
+	public Order checkIfOrderExists(String id) {
+        return orderRepository.findByCode(id).orElseThrow(() ->
         new NotFoundExceptionService(String.format(NOT_FOUND_MESSAGE, id)));
 	}
 

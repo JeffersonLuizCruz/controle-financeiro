@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor @Data
 public class OrderResponseDTO {
 
-	private Long id;
 	private String code;
 	private BigDecimal subtotal;
 	private BigDecimal freightRate;

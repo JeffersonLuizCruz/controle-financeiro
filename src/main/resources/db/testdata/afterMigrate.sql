@@ -103,29 +103,29 @@ INSERT INTO product (id, description, is_active, name, price, restaurant_id) val
 INSERT INTO tb_order
 (id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
 status, create_at, confirmation_at, cancellation_at, delivery_at, payment_method_id, restaurant_id, user_client_id)
-VALUES(1, '123456', 300, 20, 320, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 1, 1, 1);
+VALUES(1, 'eadc47f6-9834-11ed-912b-00090faa0001', 300, 20, 320, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 1, 1, 1);
 
 INSERT INTO tb_order
 (id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
 status, create_at, confirmation_at, cancellation_at, delivery_at, payment_method_id, restaurant_id, user_client_id)
-VALUES(2, '123451', 100.00, 10.00, 110.00, '', '', '', '', '', null, 'CREATED', '2018-01-07 16:11:26', null, null, null, 2, 2, 2);
+VALUES(2, 'eadc47f6-9834-11ed-912b-00090faa0002', 100.00, 10.00, 110.00, '', '', '', '', '', null, 'CREATED', '2018-01-07 16:11:26', null, null, null, 2, 2, 2);
 
 INSERT INTO tb_order
 (id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
 status, create_at, confirmation_at, cancellation_at, delivery_at, payment_method_id, restaurant_id, user_client_id)
-VALUES(3, '123454', 200.00, 25.00, 225.00, '', '', '', '', '', null, 'CONFIRMED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 3, 3, 3);
+VALUES(3, 'eadc47f6-9834-11ed-912b-00090faa0003', 200.00, 25.00, 225.00, '', '', '', '', '', null, 'CONFIRMED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 3, 3, 3);
 
 INSERT INTO tb_order
 (id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
 status, create_at, confirmation_at, cancellation_at, delivery_at, payment_method_id, restaurant_id, user_client_id)
-VALUES(4, '123456', 400.00, 25.00, 425.00, '', '', '', '', '', null, 'CANCELLED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, 1, 2, 1);
+VALUES(4, 'eadc47f6-9834-11ed-912b-00090faa0004', 400.00, 25.00, 425.00, '', '', '', '', '', null, 'CANCELLED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, 1, 2, 1);
 
 INSERT INTO tb_order
 (id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
 status, create_at, confirmation_at, cancellation_at, delivery_at, payment_method_id, restaurant_id, user_client_id)
-VALUES(5, '123456', 300.00, 20.00, 320.00, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 2, 2, 1);
+VALUES(5, 'eadc47f6-9834-11ed-912b-00090faa0005', 300.00, 20.00, 320.00, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 2, 2, 1);
 
 INSERT INTO tb_order
 (id, code, subtotal, freight_rate, total_amount, address_cep, address_coplement, address_district, address_number, address_street, address_city_id,
 status, create_at, confirmation_at, cancellation_at, delivery_at, payment_method_id, restaurant_id, user_client_id)
-VALUES(6, '123456', 300, 20, 320, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 2, 3, 1);
+VALUES(6, 'eadc47f6-9834-11ed-912b-00090faa0006', 300, 20, 320, '', '', '', '', '', null, 'DELIVERED', '2018-01-07 16:11:26', '2018-01-07 16:11:26', null, '2018-01-07 16:11:26', 2, 3, 1);

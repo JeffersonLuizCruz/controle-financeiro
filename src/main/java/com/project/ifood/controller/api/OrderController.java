@@ -39,10 +39,10 @@ public class OrderController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(orderMapper.toDTO(orderEntity));
 	}
 	
-	@PostMapping("/{id}")
-	public ResponseEntity<OrderResponseDTO> save(@PathVariable Long id, @RequestBody @Valid OrderDTO dto){
+	@PostMapping("/{codeUUID}")
+	public ResponseEntity<OrderResponseDTO> save(@PathVariable String codeUUID, @RequestBody @Valid OrderDTO dto){
 		Order modelOrder = orderMapper.toModel(dto);
-		Order orderEntity = orderService.update(id, modelOrder);
+		Order orderEntity = orderService.update(codeUUID, modelOrder);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(orderMapper.toDTO(orderEntity));
 	}
@@ -57,15 +57,15 @@ public class OrderController {
 		return ResponseEntity.ok(listOrderDTO);
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<OrderResponseDTO> findById(@PathVariable Long id){
-		Order orderEntity = orderService.findById(id);
+	@GetMapping("/{codeUUID}")
+	public ResponseEntity<OrderResponseDTO> findById(@PathVariable String codeUUID){
+		Order orderEntity = orderService.findById(codeUUID);
 		
 		return ResponseEntity.ok(orderMapper.toDTO(orderEntity));
 	}
 
-	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable Long id) {
-		orderService.deleteById(id);
+	@DeleteMapping("/{codeUUID}")
+	public void deleteById(@PathVariable String codeUUID) {
+		orderService.deleteById(codeUUID);
 	}
 }
