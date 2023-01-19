@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,6 +40,11 @@ public class Order implements Serializable{
 	private Long id;
 	
 	private String code;
+	
+	@PrePersist
+	private void setCode() {
+		setCode(UUID.randomUUID().toString());
+	}
 	
 	private BigDecimal subtotal;
 	private BigDecimal freightRate;
@@ -111,4 +118,5 @@ public class Order implements Serializable{
 		
 		this.status = newStatus;
 	}
+
 }
