@@ -7,11 +7,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.project.ifood.domain.model.OrderItem;
-import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.repositoy.OrderItemRepository;
 import com.project.ifood.domain.service.OrderItemService;
-import com.project.ifood.domain.service.OrderService;
-import com.project.ifood.domain.service.ProductService;
 import com.project.ifood.domain.service.exception.ConstraintViolationService;
 import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 
@@ -21,8 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class OrderItemServiceImpl implements OrderItemService{
 
 	private final OrderItemRepository orderItemRepository;
-	private final OrderService orderService;
-	private final ProductService productService;
 	
 	
     private final String CONSTRAINT_VALIDATION_MESSAGE = "Item do Pedido de código '%d' não pode ser removida, pois está em uso";

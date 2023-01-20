@@ -11,7 +11,6 @@ import com.project.ifood.domain.service.ProductService;
 import com.project.ifood.domain.service.RestaurantByProductService;
 import com.project.ifood.domain.service.RestaurantService;
 import com.project.ifood.domain.service.exception.BadRequestExcertpionService;
-import com.project.ifood.domain.service.exception.ConstraintViolationService;
 
 import lombok.RequiredArgsConstructor;
 

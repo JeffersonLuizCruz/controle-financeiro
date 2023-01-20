@@ -28,9 +28,7 @@ import com.project.ifood.domain.service.exception.BadRequestExcertpionService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Data
 @Entity @Table(name = "tb_order")
