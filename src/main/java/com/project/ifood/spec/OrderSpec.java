@@ -20,6 +20,14 @@ public class OrderSpec {
 				predicate.add(builder.equal(root.get("id"), filter.getId()));
 			}
 			
+			if(filter.getDateBegin() != null) {
+				predicate.add(builder.greaterThanOrEqualTo(root.get("createAt"), filter.getDateBegin()));
+			}
+			
+			if(filter.getDateEnd() != null) {
+				predicate.add(builder.lessThanOrEqualTo(root.get("createAt"), filter.getDateEnd()));
+			}
+			
 			return builder.and(predicate.toArray(new Predicate[0]));
 		};
 	}

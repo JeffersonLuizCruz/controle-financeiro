@@ -24,6 +24,7 @@ public class OrderResponseDTO {
 	private Address deliveryAddress;
 	private String status;
 	
+	private OffsetDateTime createAt;
 	private OffsetDateTime confirmationAt;
 	private OffsetDateTime cancellationAt;
 	private OffsetDateTime deliveryAt;

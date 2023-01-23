@@ -15,9 +15,9 @@ public class FilterOrder {
 	
 	private Long id;
 	
-	@DateTimeFormat(iso = ISO.DATE)
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime dateBegin;
 	
-	@DateTimeFormat(iso = ISO.DATE)
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime dateEnd;
 }
