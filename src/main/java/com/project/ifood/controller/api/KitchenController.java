@@ -3,6 +3,9 @@ package com.project.ifood.controller.api;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +22,7 @@ import com.project.ifood.controller.dto.request.KitchenDTO;
 import com.project.ifood.controller.dto.response.KitchenResponseDTO;
 import com.project.ifood.controller.mapper.KitchenMapper;
 import com.project.ifood.domain.model.Kitchen;
+import com.project.ifood.domain.repositoy.KitchenRepository;
 import com.project.ifood.domain.service.KitchenService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +33,7 @@ public class KitchenController {
 	
 	private final KitchenService kitchenService;
 	private final KitchenMapper kitchenMapper;
+	private final KitchenRepository kitchenRepository;
 	
 
 	@PostMapping
@@ -48,12 +53,16 @@ public class KitchenController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<KitchenResponseDTO>> findAll(){
-		List<KitchenResponseDTO> listKichenDTO = kitchenService.findAll().stream()
-		.map(kitchen -> kitchenMapper.toDTO(kitchen))
-		.collect(Collectors.toList());
+	public ResponseEntity<Page<KitchenResponseDTO>> findAll(Pageable page) {
+//		List<KitchenResponseDTO> listKichenDTO = kitchenRepository.findAll(page).getContent().stream()
+//				.map(kitchen -> kitchenMapper.toDTO(kitchen)).collect(Collectors.toList());
+		Page<Kitchen> pageListKitchen = kitchenRepository.findAll(page);
 		
-		return ResponseEntity.ok(listKichenDTO);
+		List<KitchenResponseDTO> listKichenDTO = pageListKitchen.getContent().stream()
+				.map(kitchen -> kitchenMapper.toDTO(kitchen)).collect(Collectors.toList());
+
+		Page<KitchenResponseDTO> pageKitchenDTO = new PageImpl<>(listKichenDTO, page, pageListKitchen.getTotalElements() );
+		return ResponseEntity.ok(pageKitchenDTO);
 	}
 
 	@GetMapping("/{id}")

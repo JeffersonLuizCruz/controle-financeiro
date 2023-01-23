@@ -53,11 +53,6 @@ public class OrderController {
 	
 	@GetMapping
 	public ResponseEntity<List<OrderResponseDTO>> findAll(FilterOrder filter){
-//		List<OrderResponseDTO> listOrderDTO = orderService.findAll()
-//		.stream()
-//		.map(order -> orderMapper.toDTO(order))
-//		.collect(Collectors.toList());
-		
 		List<OrderResponseDTO> listOrderDTO = orderRepository.findAll(OrderSpec.filterOder(filter))	
 				.stream()
 				.map(order -> orderMapper.toDTO(order))
