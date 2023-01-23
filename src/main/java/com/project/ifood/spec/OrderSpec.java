@@ -14,6 +14,10 @@ public class OrderSpec {
 	public static Specification<Order> filterOder(FilterOrder filter){
 		return (root, query, builder) -> {
 			
+			root.fetch("restaurant").fetch("kitchen");
+			root.fetch("customer");
+			root.fetch("paymentMethod");
+			
 			var predicate = new ArrayList<Predicate>();
 			
 			if(filter.getId() != null) {
