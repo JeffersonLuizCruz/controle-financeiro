@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,13 +55,17 @@ public class OrderController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OrderResponseDTO>> findAll(FilterOrder filter){
-		List<OrderResponseDTO> listOrderDTO = orderRepository.findAll(OrderSpec.filterOder(filter))	
+	public ResponseEntity<Page<OrderResponseDTO>> findAll(FilterOrder filter, Pageable page){
+		Page<Order> pageOrder = orderRepository.findAll(OrderSpec.filterOder(filter), page);
+		
+		List<OrderResponseDTO> listOrderDTO = pageOrder.getContent()	
 				.stream()
 				.map(order -> orderMapper.toDTO(order))
 				.collect(Collectors.toList());
 		
-		return ResponseEntity.ok(listOrderDTO);
+		Page<OrderResponseDTO> responseOrderPage = new PageImpl<>(listOrderDTO, page, pageOrder.getTotalElements());
+		
+		return ResponseEntity.ok(responseOrderPage);
 	}
 	
 	@GetMapping("/{codeUUID}")
