@@ -19,7 +19,10 @@ import com.project.ifood.controller.dto.request.OrderDTO;
 import com.project.ifood.controller.dto.response.OrderResponseDTO;
 import com.project.ifood.controller.mapper.OrderMapper;
 import com.project.ifood.domain.model.Order;
+import com.project.ifood.domain.repositoy.OrderRepository;
+import com.project.ifood.domain.repositoy.filter.FilterOrder;
 import com.project.ifood.domain.service.OrderService;
+import com.project.ifood.spec.OrderSpec;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +32,7 @@ public class OrderController {
 
 	private final OrderMapper orderMapper;
 	private final OrderService orderService;
+	private final OrderRepository orderRepository;
 	
 	
 	@PostMapping
@@ -40,7 +44,7 @@ public class OrderController {
 	}
 	
 	@PostMapping("/{codeUUID}")
-	public ResponseEntity<OrderResponseDTO> save(@PathVariable String codeUUID, @RequestBody @Valid OrderDTO dto){
+	public ResponseEntity<OrderResponseDTO> update(@PathVariable String codeUUID, @RequestBody @Valid OrderDTO dto){
 		Order modelOrder = orderMapper.toModel(dto);
 		Order orderEntity = orderService.update(codeUUID, modelOrder);
 		
@@ -48,11 +52,16 @@ public class OrderController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<OrderResponseDTO>> findAll(){
-		List<OrderResponseDTO> listOrderDTO = orderService.findAll()
-		.stream()
-		.map(order -> orderMapper.toDTO(order))
-		.collect(Collectors.toList());
+	public ResponseEntity<List<OrderResponseDTO>> findAll(FilterOrder filter){
+//		List<OrderResponseDTO> listOrderDTO = orderService.findAll()
+//		.stream()
+//		.map(order -> orderMapper.toDTO(order))
+//		.collect(Collectors.toList());
+		
+		List<OrderResponseDTO> listOrderDTO = orderRepository.findAll(OrderSpec.filterOder(filter))	
+				.stream()
+				.map(order -> orderMapper.toDTO(order))
+				.collect(Collectors.toList());
 		
 		return ResponseEntity.ok(listOrderDTO);
 	}
