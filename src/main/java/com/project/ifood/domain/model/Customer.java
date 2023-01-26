@@ -47,5 +47,6 @@ public class Customer implements Serializable{
 	@ManyToMany
 	@JoinTable(name = "customer_group", joinColumns = @JoinColumn(name = "customer_id"),
 			inverseJoinColumns = @JoinColumn(name = "groups_id"))
+	@Builder.Default
 	private Set<Group> groups = new HashSet<>();
 }
