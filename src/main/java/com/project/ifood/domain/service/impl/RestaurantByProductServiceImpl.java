@@ -37,10 +37,12 @@ public class RestaurantByProductServiceImpl implements RestaurantByProductServic
 	public ProductResponseDTO verifyIfExistRestaurantByProduct(Long restaurantId, Long productId) {
 		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
 
-		ProductResponseDTO productResponse = restaurantEntity.getProducts().stream()
+		ProductResponseDTO productResponse = restaurantEntity.getProducts()
+				.stream()
 				.map(product -> productMapper.toDTO(product))
 				.filter(p -> p.getId() == productId)
-				.findFirst().orElseThrow(() -> new BadRequestExcertpionService(
+				.findFirst()
+				.orElseThrow(() -> new BadRequestExcertpionService(
 						String.format("Não existe um cadastro de produto com código %d para o restaurante de código %d",
 								productId, restaurantId)));
 

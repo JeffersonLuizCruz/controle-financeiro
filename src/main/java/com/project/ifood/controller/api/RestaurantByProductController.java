@@ -60,11 +60,11 @@ public class RestaurantByProductController {
 	public ResponseEntity<List<ProductResponseDTO>> findByProductsAll(@PathVariable Long restaurantId) {
 
 		Restaurant restaurant = restaurantService.checkIfRestaurantExists(restaurantId);
-		List<Product> listProductEntity = productRepository.findByRestaurant(restaurant);
 		
-		List<ProductResponseDTO> listProductDTO = listProductEntity.stream()
-		.map(product -> productMapper.toDTO(product))
-		.collect(Collectors.toList());
+		List<ProductResponseDTO> listProductDTO = productRepository
+				.findByRestaurant(restaurant).stream()
+				.map(product -> productMapper.toDTO(product))
+				.collect(Collectors.toList());;
 		
 		return ResponseEntity.ok(listProductDTO);
 	}
