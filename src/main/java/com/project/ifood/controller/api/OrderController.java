@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.ifood.controller.dto.request.OrderDTO;
 import com.project.ifood.controller.dto.response.OrderResponseDTO;
 import com.project.ifood.controller.mapper.OrderMapper;
-import com.project.ifood.domain.filter.FilterOrder;
+import com.project.ifood.domain.filter.OrderFilter;
 import com.project.ifood.domain.model.Order;
 import com.project.ifood.domain.repositoy.OrderRepository;
 import com.project.ifood.domain.service.OrderService;
@@ -55,7 +55,7 @@ public class OrderController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<Page<OrderResponseDTO>> findAll(FilterOrder filter, Pageable page){
+	public ResponseEntity<Page<OrderResponseDTO>> findAll(OrderFilter filter, Pageable page){
 		Page<Order> pageOrder = orderRepository.findAll(OrderSpec.filterOder(filter), page);
 		
 		List<OrderResponseDTO> listOrderDTO = pageOrder.getContent()	

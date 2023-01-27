@@ -2,7 +2,7 @@ create table tb_order (
 	id bigint auto_increment not null,
 	code varchar(20) null,
 	subtotal numeric(19,2) null,
-	freight_rate numeric(19,2) null,
+	freight_rate numeric(19,2) not null,
 	total_amount numeric(19,2) null,
 	address_cep varchar(15) null,
 	address_coplement varchar(150) null,

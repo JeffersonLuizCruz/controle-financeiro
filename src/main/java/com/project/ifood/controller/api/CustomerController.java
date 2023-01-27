@@ -72,10 +72,9 @@ public class CustomerController {
 		customerService.deleteById(id);		
 	}
 	
-	// TODO implementação de serviço faltando
-	@PutMapping("/{id}/senha")
+	@PutMapping("/{id}/password")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void alterarSenha(@PathVariable Long id, @RequestBody @Valid CustomerPasswordResume password) {
+	public void editPassword(@PathVariable Long id, @RequestBody @Valid CustomerPasswordResume password) {
 		customerService.updatePassword(id, password.getCurrentPassword(), password.getCurrentPassword());
 	}
 }

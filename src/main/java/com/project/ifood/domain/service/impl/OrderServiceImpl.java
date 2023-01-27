@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService{
     	order.setPaymentMethod(paymentMethodEntity);
     	order.setRestaurant(restaurantEntity);
     	order.setCustomer(Customer.builder().id(1L).build());
-    	order.setFreightRate(restaurantEntity.getFreightRate()); //TODO: bugix definir FreightRate para not null no banco
+    	order.setFreightRate(restaurantEntity.getFreightRate());
     	
     	order.getItems().forEach(item -> {	
     		Product productEntity = productService.findById(item.getProduct().getId());
@@ -76,8 +76,6 @@ public class OrderServiceImpl implements OrderService{
     @Transactional
 	@Override
 	public Order update(String codeUUID, Order order) {
-    	
-    	//TODO - falta implementar
     	
 		return orderRepository.save(order);
 	}

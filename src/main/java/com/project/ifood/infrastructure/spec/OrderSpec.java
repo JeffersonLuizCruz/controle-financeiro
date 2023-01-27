@@ -6,12 +6,12 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.project.ifood.domain.filter.FilterOrder;
+import com.project.ifood.domain.filter.OrderFilter;
 import com.project.ifood.domain.model.Order;
 
 public class OrderSpec {
 
-	public static Specification<Order> filterOder(FilterOrder filter){
+	public static Specification<Order> filterOder(OrderFilter filter){
 		return (root, query, builder) -> {
 			if(Order.class.equals(query.getResultType())) {
 				

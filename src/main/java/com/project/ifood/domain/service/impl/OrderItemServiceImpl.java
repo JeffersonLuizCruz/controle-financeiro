@@ -33,13 +33,13 @@ public class OrderItemServiceImpl implements OrderItemService{
 
 	@Override
 	public OrderItem update(Long id, OrderItem orderItem) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<OrderItem> findAll() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

@@ -1,4 +1,4 @@
-package com.project.ifood.domain.filter;
+package com.project.ifood.infrastructure.projection.filter;
 
 import java.time.OffsetDateTime;
 
@@ -10,14 +10,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor @Data
-public class FilterOrder {
-
+public class DailySalesFilter {
 	
-	private Long id;
-	
+	private Long restaurantId;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime dateBegin;
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime dateEnd;
+
 }
