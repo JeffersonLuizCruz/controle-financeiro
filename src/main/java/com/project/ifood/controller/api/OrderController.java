@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.ifood.controller.dto.request.OrderDTO;
 import com.project.ifood.controller.dto.response.OrderResponseDTO;
 import com.project.ifood.controller.mapper.OrderMapper;
+import com.project.ifood.domain.filter.FilterOrder;
 import com.project.ifood.domain.model.Order;
 import com.project.ifood.domain.repositoy.OrderRepository;
-import com.project.ifood.domain.repositoy.filter.FilterOrder;
 import com.project.ifood.domain.service.OrderService;
-import com.project.ifood.spec.OrderSpec;
+import com.project.ifood.infrastructure.spec.OrderSpec;
 
 import lombok.RequiredArgsConstructor;
 

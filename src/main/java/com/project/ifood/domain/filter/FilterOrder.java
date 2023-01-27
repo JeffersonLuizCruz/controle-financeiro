@@ -1,4 +1,4 @@
-package com.project.ifood.domain.repositoy.filter;
+package com.project.ifood.domain.filter;
 
 import java.time.OffsetDateTime;
 

@@ -1,4 +1,4 @@
-package com.project.ifood.util.jackson;
+package com.project.ifood.infrastructure.jackson;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.project.ifood.spec;
+package com.project.ifood.infrastructure.spec;
 
 import java.util.ArrayList;
 
@@ -6,8 +6,8 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.project.ifood.domain.filter.FilterOrder;
 import com.project.ifood.domain.model.Order;
-import com.project.ifood.domain.repositoy.filter.FilterOrder;
 
 public class OrderSpec {
 
