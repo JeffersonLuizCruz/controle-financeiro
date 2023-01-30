@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor @Data
 public class CityInputById {
 	
-	@NotNull(message = "Cidade obrigatório")
+	@NotNull(message = "Cidade obrigatório!")
 	private Long id;
 
 }
