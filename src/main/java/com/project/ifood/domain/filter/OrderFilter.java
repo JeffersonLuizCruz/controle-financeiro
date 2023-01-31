@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor @Data
 public class OrderFilter {
 
-	
 	private Long id;
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)

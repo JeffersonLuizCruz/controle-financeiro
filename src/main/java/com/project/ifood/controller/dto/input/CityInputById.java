@@ -11,5 +11,4 @@ public class CityInputById {
 	
 	@NotNull(message = "Cidade obrigatório!")
 	private Long id;
-
 }

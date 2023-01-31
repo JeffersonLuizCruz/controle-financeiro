@@ -12,7 +12,7 @@ import com.project.ifood.domain.model.Order;
 public class OrderSpec {
 
 	public static Specification<Order> filterOder(OrderFilter filter){
-		return (root, query, builder) -> {
+		return (root, query, cb) -> {
 			if(Order.class.equals(query.getResultType())) {
 				
 				root.fetch("restaurant").fetch("kitchen");
@@ -23,18 +23,22 @@ public class OrderSpec {
 			var predicate = new ArrayList<Predicate>();
 			
 			if(filter.getId() != null) {
-				predicate.add(builder.equal(root.get("id"), filter.getId()));
+				predicate.add(cb.equal(root.get("id"), filter.getId()));
 			}
 			
 			if(filter.getDateBegin() != null) {
-				predicate.add(builder.greaterThanOrEqualTo(root.get("createAt"), filter.getDateBegin()));
+				predicate.add(cb.greaterThanOrEqualTo(root.get("createAt"), filter.getDateBegin()));
 			}
 			
 			if(filter.getDateEnd() != null) {
-				predicate.add(builder.lessThanOrEqualTo(root.get("createAt"), filter.getDateEnd()));
+				predicate.add(cb.lessThanOrEqualTo(root.get("createAt"), filter.getDateEnd()));
 			}
 			
-			return builder.and(predicate.toArray(new Predicate[0]));
+			return cb.and(predicate.toArray(new Predicate[0]));
 		};
+	}
+	
+	public static Specification<Order> createAtBetween(Long min, Long max) {
+		return(root, query, cb) -> cb.between(root.get("id"), min, max);
 	}
 }
