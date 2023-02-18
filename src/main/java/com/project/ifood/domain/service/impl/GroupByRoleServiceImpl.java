@@ -25,7 +25,7 @@ public class GroupByRoleServiceImpl implements GroupRoleService{
 		
 		/**
 		 * Não foi realizado um update explicito do jpa ainda assim foi feito o upadate. Isso porque
-		 * a injeção de pedencia groupService e roleService junto com a anotação '@Transactional'
+		 * a injeção de dependência groupService e roleService junto com a anotação '@Transactional'
 		 * está dentro do contexto do jpa.
 		 * */
 		

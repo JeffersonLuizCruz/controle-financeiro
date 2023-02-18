@@ -17,7 +17,7 @@ import com.project.ifood.controller.dto.response.GroupResponseDTO;
 import com.project.ifood.controller.mapper.GroupMapper;
 import com.project.ifood.domain.model.Customer;
 import com.project.ifood.domain.service.CustomerService;
-import com.project.ifood.domain.service.GroupRoleService;
+import com.project.ifood.domain.service.GroupCustomerService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/customers/{customerId}/groups")
 public class GroupByCustomerController {
 
-	private final GroupRoleService groupRoleService;
+	private final GroupCustomerService groupCustomerService;
 	
 	private final CustomerService customerService;
 	private final GroupMapper groupMapper;
@@ -45,11 +45,11 @@ public class GroupByCustomerController {
 	
 	@DeleteMapping("/{groupId}") @ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void disassociateRoles(@PathVariable Long customerId, @PathVariable Long groupId) {
-		groupRoleService.disassociateRole(groupId, customerId);
+		groupCustomerService.disassociate(groupId, customerId);
 	}
 	
 	@PutMapping("/{groupId}") @ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void associateRoles(@PathVariable Long customerId,@PathVariable Long groupId) {
-		groupRoleService.associateRole(groupId, customerId);
+		groupCustomerService.associate(groupId, customerId);
 	}
 }

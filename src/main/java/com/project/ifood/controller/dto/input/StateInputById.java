@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor @Data
-public class StateIdInputById {
+public class StateInputById {
 
     @NotNull(message = "Id do Estado é obrigatório!")
     private Long id;
