@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.domain.model.Group;
 import com.project.ifood.domain.model.Role;
-import com.project.ifood.domain.service.GroupRoleService;
+import com.project.ifood.domain.service.GroupByRoleService;
 import com.project.ifood.domain.service.GroupService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,23 +23,23 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/groups/{groupId}/roles")
 public class GroupByRoleController {
 	
-	private final GroupRoleService groupRoleService;
+	private final GroupByRoleService groupByRoleService;
 	private final GroupService groupService;
 	
 	@GetMapping
-	public ResponseEntity<Set<Role>> findByRoleAll(@PathVariable Long groupId){
+	public ResponseEntity<Set<Role>> findAllByRole(@PathVariable Long groupId){
 		Group group = groupService.checkIfGroupExists(groupId);
 		return ResponseEntity.ok(group.getRoles());
 	}
 	
 	@DeleteMapping("/{roleId}") @ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void disassociateRole(@PathVariable Long groupId, @PathVariable Long roleId){
-		groupRoleService.disassociateRole(groupId, roleId);
+		groupByRoleService.disassociate(groupId, roleId);
 	}
 	
 	@PutMapping("/{roleId}") @ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void associateRole(@PathVariable Long groupId, @PathVariable Long roleId){
-		groupRoleService.associateRole(groupId, roleId);
+		groupByRoleService.associate(groupId, roleId);
 	}
 
 }

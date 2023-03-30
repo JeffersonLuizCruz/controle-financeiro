@@ -31,7 +31,7 @@ public class GroupByCustomerController {
 	private final GroupMapper groupMapper;
 	
 	@GetMapping
-	public ResponseEntity<List<GroupResponseDTO>> findByGroupAll(@PathVariable Long customerId){
+	public ResponseEntity<List<GroupResponseDTO>> findAllByGroup(@PathVariable Long customerId){
 		Customer customer = customerService.checkIfCustomerExists(customerId);
 		
 		List<GroupResponseDTO> dtoResponse = customer

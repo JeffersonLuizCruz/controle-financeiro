@@ -5,21 +5,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.ifood.domain.model.Group;
 import com.project.ifood.domain.model.Role;
-import com.project.ifood.domain.service.GroupRoleService;
+import com.project.ifood.domain.service.GroupByRoleService;
 import com.project.ifood.domain.service.GroupService;
 import com.project.ifood.domain.service.RoleService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service @RequiredArgsConstructor
-public class GroupByRoleServiceImpl implements GroupRoleService{
+public class GroupByRoleServiceImpl implements GroupByRoleService{
 
 	private final GroupService groupService;
 	private final RoleService roleService;
 	
 	@Transactional
 	@Override
-	public void disassociateRole(Long groupId, Long roleId) {
+	public void disassociate(Long groupId, Long roleId) {
 		Group groupEntity = groupService.checkIfGroupExists(groupId);
 		Role roleEntity = roleService.checkIfRoleExists(roleId);
 		
@@ -35,7 +35,7 @@ public class GroupByRoleServiceImpl implements GroupRoleService{
 
 	@Transactional
 	@Override
-	public void associateRole(Long groupId, Long roleId) {
+	public void associate(Long groupId, Long roleId) {
 		Group groupEntity = groupService.checkIfGroupExists(groupId);
 		Role roleEntity = roleService.checkIfRoleExists(roleId);
 		
