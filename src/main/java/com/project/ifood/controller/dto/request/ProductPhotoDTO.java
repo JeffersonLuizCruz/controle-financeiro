@@ -2,8 +2,10 @@ package com.project.ifood.controller.dto.request;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.ifood.infrastructure.validation.FileContentType;
 import com.project.ifood.infrastructure.validation.FileSize;
 import com.sun.istack.NotNull;
 
@@ -15,7 +17,8 @@ import lombok.NoArgsConstructor;
 public class ProductPhotoDTO {
 
 	@NotNull
-	@FileSize(max = "50KB")
+	@FileSize(max = "50KB") // Anotation Personalizada
+	@FileContentType(allowed = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE }) // Anotation Personalizada
 	private MultipartFile file;
 	
 	@NotBlank(message = "Nome obrigatório.")
