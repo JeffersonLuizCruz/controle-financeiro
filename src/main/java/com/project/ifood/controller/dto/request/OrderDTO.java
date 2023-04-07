@@ -22,7 +22,7 @@ public class OrderDTO {
 	private PaymentMethodInputById paymentMethod;
 	
 	@Valid
-	@NotNull(message = "Edereço obrigatório")
+	@NotNull(message = "Endereço obrigatório")
 	private AddressDTO deliveryAddress;
 	
 	@Valid
