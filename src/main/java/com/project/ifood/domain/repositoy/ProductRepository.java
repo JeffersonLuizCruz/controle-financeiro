@@ -19,6 +19,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	@Query("FROM Product WHERE restaurant.id = :restaurantId AND id = :productId")
 	Optional<Product> findByIdProduct(@Param("restaurantId") Long restaurantId,@Param("productId") Long productId);
 	
+	@Query("FROM Product p JOIN FETCH p.restaurant WHERE p.id = :productId")
+	Optional<Product> findByIdLazy(@Param("productId") Long productId);
+	
 	@Transactional(readOnly = true) @Modifying
 	@Query(value = "delete from restaurant_payment_methods where restaurants_id = :restaurantId and payment_methods_id = :productId", nativeQuery = true)
 	void deleteByProduct(@Param("restaurantId") Long restaurantId, @Param("productId") Long productId);

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class ProductPhotoDTO {
 
 	@NotNull
-	@FileSize(max = "50KB") // Anotation Personalizada
+	@FileSize(max = "100KB") // Anotation Personalizada
 	@FileContentType(allowed = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE }) // Anotation Personalizada
 	private MultipartFile file;
 	
