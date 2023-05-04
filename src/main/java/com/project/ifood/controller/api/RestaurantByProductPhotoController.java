@@ -1,6 +1,7 @@
 package com.project.ifood.controller.api;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -9,7 +10,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,7 +23,6 @@ import com.project.ifood.domain.model.ProductPhoto;
 import com.project.ifood.domain.repositoy.ProductRepository;
 import com.project.ifood.domain.service.ProductPhotoService;
 import com.project.ifood.domain.service.RestaurantByProductService;
-import com.project.ifood.domain.service.exception.ConstraintViolationService;
 
 @RestController
 @RequestMapping("/restaurants/{restaurantId}/products/{productId}/photo")
@@ -47,13 +46,15 @@ public class RestaurantByProductPhotoController {
 		
 		try {
 			productPhotoService.save(pp);
-			Path path = Path.of("C:/Users/jlcruz/Desktop/" + ppDto.getFile().getOriginalFilename());
-			Files.copy(ppDto.getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-		} catch (DataIntegrityViolationException e) {
-			throw new ConstraintViolationService("Produto cadastrado com esse id: " + product.getId());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Salva o arquivo temporariamente
+			Path tempFilePath = Files.createTempFile("product-photo-", ".tmp");
+			ppDto.getFile().transferTo(tempFilePath.toFile());
+			Path finalFilePath = Path.of("C:/Users/jlcruz/Desktop/Teste/" + ppDto.getFile().getOriginalFilename());
+			Files.move(tempFilePath, finalFilePath, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException | UncheckedIOException e) {
+			throw new RuntimeException("Alerta: arquivo removido");
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao mover o arquivo: " + e.getMessage());
 		}
 		
 	}
