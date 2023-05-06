@@ -5,7 +5,6 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,11 +19,11 @@ public class FileStorageServiceImpl implements FileStorageService{
 	private Path path;
 	
 	@Override
-	public void storeFile(ProductPhotoRequest ppr) {
+	public void storeFile(ProductPhotoRequest ppr, String originalFilename) {
 		try {
 			Path tempFilePath = Files.createTempFile("product-photo-", ".tmp");
 			ppr.getFile().transferTo(tempFilePath.toFile());
-			Path finalFilePath = path.resolve(UUID.randomUUID() + "_" + ppr.getFile().getOriginalFilename());
+			Path finalFilePath = path.resolve(originalFilename);
 			Files.move(tempFilePath, finalFilePath, StandardCopyOption.REPLACE_EXISTING);
 			
 		} catch (IOException | UncheckedIOException e) {

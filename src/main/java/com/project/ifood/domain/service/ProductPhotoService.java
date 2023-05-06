@@ -4,5 +4,5 @@ import com.project.ifood.domain.model.ProductPhoto;
 
 public interface ProductPhotoService {
 
-	void save(ProductPhoto productPhoto);
+	ProductPhoto save(ProductPhoto productPhoto);
 }

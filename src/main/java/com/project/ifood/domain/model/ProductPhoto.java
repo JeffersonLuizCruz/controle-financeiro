@@ -11,14 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Getter @Setter
+@Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
 @Entity
 public class ProductPhoto implements Serializable{
@@ -41,7 +44,7 @@ public class ProductPhoto implements Serializable{
 	@Column(name = "size_path")
 	private String size;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY) @JsonIgnore
 	@JoinColumn(unique = true, nullable = false)
 	private Product product;
 	

@@ -1,6 +1,7 @@
 package com.project.ifood.controller.api;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -30,18 +31,21 @@ public class RestaurantByProductPhotoController {
 	@Autowired private FileStorageService fileStorageService;
 	
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public void updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId, @Valid ProductPhotoRequest ppr) throws SQLIntegrityConstraintViolationException {
+	public ProductPhoto updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId, @Valid ProductPhotoRequest ppr) throws SQLIntegrityConstraintViolationException {
 		ProductResponseDTO productDto = restaurantByProductService.verifyIfExistRestaurantByProduct(restaurantId, productId);
 		Product product = productRepository.findByIdLazy(productDto.getId()).get();
 		
 		ProductPhoto pp = new ProductPhoto();
 		pp.setContentType(ppr.getFile().getContentType());
 		pp.setDescription(ppr.getDescription());
-		pp.setFileName(ppr.getFile().getOriginalFilename());
+		pp.setFileName(UUID.randomUUID() + "_" + ppr.getFile().getOriginalFilename());
 		pp.setSize(String.valueOf(ppr.getFile().getSize()));
 		pp.setProduct(product);
 		
-		fileStorageService.storeFile(ppr);
-		productPhotoService.save(pp);
+		pp = productPhotoService.save(pp);
+		fileStorageService.storeFile(ppr, pp.getFileName());
+		
+		return pp;
+
 	}
 }

@@ -4,6 +4,6 @@ import com.project.ifood.controller.dto.request.ProductPhotoRequest;
 
 public interface FileStorageService {
 
-	void storeFile(ProductPhotoRequest productPhotoRequest);
+	void storeFile(ProductPhotoRequest productPhotoRequest, String originalFilename);
 	
 }
