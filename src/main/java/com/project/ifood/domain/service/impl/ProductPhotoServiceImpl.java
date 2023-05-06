@@ -20,7 +20,7 @@ public class ProductPhotoServiceImpl implements ProductPhotoService{
 	@Override
 	public void save(ProductPhoto productPhoto) {
 		Long productId = productPhoto.getProduct().getId();
-		Long restaurantId = productPhoto.getResraurantId();
+		Long restaurantId = productPhoto.getRestaurantId();
 		
 		Optional<ProductPhoto> productExist = productPhotoRepository.findByProductAndRestaurant(productId, restaurantId);
 		if(productExist.isPresent()) {

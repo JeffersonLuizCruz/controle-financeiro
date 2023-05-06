@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-public class ProductPhotoDTO {
+public class ProductPhotoRequest {
 
 	@NotNull
 	@FileSize(max = "100KB") // Anotation Personalizada

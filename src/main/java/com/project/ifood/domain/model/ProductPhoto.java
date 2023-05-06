@@ -45,7 +45,7 @@ public class ProductPhoto implements Serializable{
 	@JoinColumn(unique = true, nullable = false)
 	private Product product;
 	
-	public Long getResraurantId() {
+	public Long getRestaurantId() {
 		if(getProduct() != null) {
 			return getProduct().getRestaurant().getId();
 		}
