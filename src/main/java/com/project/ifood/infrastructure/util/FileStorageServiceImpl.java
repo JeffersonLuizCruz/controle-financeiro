@@ -1,6 +1,7 @@
 package com.project.ifood.infrastructure.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 
 import com.project.ifood.controller.dto.request.ProductPhotoRequest;
 import com.project.ifood.infrastructure.service.FileStorageService;
@@ -31,6 +33,30 @@ public class FileStorageServiceImpl implements FileStorageService{
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao mover o arquivo: " + e.getMessage());
 		}
+	}
+
+	@Override
+	public void storage(InputStream inputStream, String originalFilename) {
+	    Path tempFilePath = null;
+	    try {
+	        tempFilePath = Files.createTempFile("product-photo-", ".tmp");
+	        FileCopyUtils.copy(inputStream, Files.newOutputStream(tempFilePath));
+	        Files.move(tempFilePath, this.path.resolve(originalFilename));
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } 
+	}
+
+
+	@Override
+	public void remover(String originalFilename) {
+		try {
+			Files.deleteIfExists(path.resolve(originalFilename));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
