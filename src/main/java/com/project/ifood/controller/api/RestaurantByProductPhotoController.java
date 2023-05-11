@@ -1,12 +1,14 @@
 package com.project.ifood.controller.api;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,8 +51,17 @@ public class RestaurantByProductPhotoController {
 
 	}
 	
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductPhoto> findByProductAndRestaurant(@PathVariable Long productId, @PathVariable Long restaurantId){
 		return ResponseEntity.ok(productPhotoService.findByProductAndRestaurant(productId, restaurantId));
+	}
+	
+	@GetMapping(produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<InputStreamResource> findByProductAndRestaurantFile(@PathVariable Long productId, @PathVariable Long restaurantId){
+		ProductPhoto pp = productPhotoService.findByProductAndRestaurant(productId, restaurantId);
+		InputStream file = fileStorageService.getFile(pp.getFileName());
+		return ResponseEntity.ok()
+				.contentType(MediaType.IMAGE_JPEG)
+				.body(new InputStreamResource(file));
 	}
 }

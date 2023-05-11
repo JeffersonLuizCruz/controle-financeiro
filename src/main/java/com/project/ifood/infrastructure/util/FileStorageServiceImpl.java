@@ -44,4 +44,18 @@ public class FileStorageServiceImpl implements FileStorageService{
 		
 	}
 
+
+	@Override
+	public InputStream getFile(String originalFilename) {
+		try {
+			Path path = this.path.resolve(originalFilename);
+			return Files.newInputStream(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
 }
