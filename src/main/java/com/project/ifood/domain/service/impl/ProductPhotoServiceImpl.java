@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.project.ifood.domain.model.ProductPhoto;
 import com.project.ifood.domain.repositoy.ProductPhotoRepository;
 import com.project.ifood.domain.service.ProductPhotoService;
+import com.project.ifood.domain.service.exception.NotFoundExceptionService;
 import com.project.ifood.infrastructure.service.FileStorageService;
 
 @Service
@@ -33,6 +34,12 @@ public class ProductPhotoServiceImpl implements ProductPhotoService{
 		ProductPhoto save = productPhotoRepository.saveAndFlush(productPhoto);
 		fileStorageService.remover(originalFilenameExist);
 		return save;
+	}
+
+	@Override
+	public ProductPhoto findByProductAndRestaurant(Long productId, Long restaurantId) {
+		Optional<ProductPhoto> productExist = productPhotoRepository.findByProductAndRestaurant(productId, restaurantId);
+		return productExist.orElseThrow(() -> new NotFoundExceptionService("Foto não existe"));
 	}
 
 }

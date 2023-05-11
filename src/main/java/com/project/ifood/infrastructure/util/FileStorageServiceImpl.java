@@ -5,13 +5,11 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
-import com.project.ifood.controller.dto.request.ProductPhotoRequest;
 import com.project.ifood.infrastructure.service.FileStorageService;
 
 @Service
@@ -19,21 +17,6 @@ public class FileStorageServiceImpl implements FileStorageService{
 
 	@Value("${file.storage.photo}")
 	private Path path;
-	
-	@Override
-	public void storeFile(ProductPhotoRequest ppr, String originalFilename) {
-		try {
-			Path tempFilePath = Files.createTempFile("product-photo-", ".tmp");
-			ppr.getFile().transferTo(tempFilePath.toFile());
-			Path finalFilePath = path.resolve(originalFilename);
-			Files.move(tempFilePath, finalFilePath, StandardCopyOption.REPLACE_EXISTING);
-			
-		} catch (IOException | UncheckedIOException e) {
-			throw new RuntimeException("Alerta: arquivo removido");
-		} catch (Exception e) {
-			throw new RuntimeException("Erro ao mover o arquivo: " + e.getMessage());
-		}
-	}
 
 	@Override
 	public void storage(InputStream inputStream, String originalFilename) {
@@ -42,9 +25,11 @@ public class FileStorageServiceImpl implements FileStorageService{
 	        tempFilePath = Files.createTempFile("product-photo-", ".tmp");
 	        FileCopyUtils.copy(inputStream, Files.newOutputStream(tempFilePath));
 	        Files.move(tempFilePath, this.path.resolve(originalFilename));
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    } 
+	    } catch (IOException | UncheckedIOException e) {
+			throw new RuntimeException("Alerta: arquivo removido");
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao mover o arquivo: " + e.getMessage());
+		}
 	}
 
 

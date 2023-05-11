@@ -8,16 +8,16 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.controller.dto.request.ProductPhotoRequest;
-import com.project.ifood.controller.dto.response.ProductResponseDTO;
 import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.ProductPhoto;
-import com.project.ifood.domain.repositoy.ProductRepository;
 import com.project.ifood.domain.service.ProductPhotoService;
 import com.project.ifood.domain.service.RestaurantByProductService;
 import com.project.ifood.infrastructure.service.FileStorageService;
@@ -32,7 +32,7 @@ public class RestaurantByProductPhotoController {
 	@Autowired private FileStorageService fileStorageService;
 	
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ProductPhoto updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId, @Valid ProductPhotoRequest ppr) throws SQLIntegrityConstraintViolationException, IOException {
+	public ResponseEntity<ProductPhoto> updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId, @Valid ProductPhotoRequest ppr) throws SQLIntegrityConstraintViolationException, IOException {
 		Product productEntity = restaurantByProductService.verifyIfExistRestaurantByProduct(restaurantId, productId);
 		//Product product = productRepository.findByIdLazy(productEntity.getId()).get();
 		
@@ -45,7 +45,12 @@ public class RestaurantByProductPhotoController {
 		
 		pp = productPhotoService.save(pp);
 		fileStorageService.storage(ppr.getFile().getInputStream(), pp.getFileName());
-		return pp;
+		return ResponseEntity.ok(pp);
 
+	}
+	
+	@GetMapping
+	public ResponseEntity<ProductPhoto> findByProductAndRestaurant(@PathVariable Long productId, @PathVariable Long restaurantId){
+		return ResponseEntity.ok(productPhotoService.findByProductAndRestaurant(productId, restaurantId));
 	}
 }
