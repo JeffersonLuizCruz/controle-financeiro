@@ -82,9 +82,8 @@ public class RestaurantByProductController {
 		 *	 
 		 * */
 		
-		ProductResponseDTO productDTO = restaurantByProductService.verifyIfExistRestaurantByProduct(restaurantId, productId);
-		
-		return ResponseEntity.ok(productDTO);
+		Product product = restaurantByProductService.verifyIfExistRestaurantByProduct(restaurantId, productId);
+		return ResponseEntity.ok(productMapper.toDTO(product));
 	}
 	
 	

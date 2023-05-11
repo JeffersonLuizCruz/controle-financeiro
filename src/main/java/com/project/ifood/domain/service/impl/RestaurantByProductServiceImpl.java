@@ -3,7 +3,6 @@ package com.project.ifood.domain.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.project.ifood.controller.dto.request.ProductDTO;
-import com.project.ifood.controller.dto.response.ProductResponseDTO;
 import com.project.ifood.controller.mapper.ProductMapper;
 import com.project.ifood.domain.model.Product;
 import com.project.ifood.domain.model.Restaurant;
@@ -32,21 +31,21 @@ public class RestaurantByProductServiceImpl implements RestaurantByProductServic
 		Product productEntity = productService.save(modelProduct);
 		return productEntity;
 	}
-
+	
 	@Override
-	public ProductResponseDTO verifyIfExistRestaurantByProduct(Long restaurantId, Long productId) {
+	public Product verifyIfExistRestaurantByProduct(Long restaurantId, Long productId) {
 		Restaurant restaurantEntity = restaurantService.checkIfRestaurantExists(restaurantId);
 
-		ProductResponseDTO productResponse = restaurantEntity.getProducts()
-				.stream()
-				.map(product -> productMapper.toDTO(product))
-				.filter(p -> p.getId() == productId)
+		Product product = restaurantEntity
+				.getProducts().stream()
+				.filter(productEntity -> productEntity.getId() == productId)
 				.findFirst()
-				.orElseThrow(() -> new BadRequestExcertpionService(
-						String.format("Não existe um cadastro de produto com código %d para o restaurante de código %d",
-								productId, restaurantId)));
+				.orElseThrow(() -> 
+				new BadRequestExcertpionService(String.format("Não existe um cadastro de produto com código %d para o restaurante de código %d",
+				productId, restaurantId)));
+		
 
-		return productResponse;
+		return product;
 	}
 
 }

@@ -28,20 +28,20 @@ public class RestaurantByProductPhotoController {
 
 	@Autowired private RestaurantByProductService restaurantByProductService;
 	@Autowired private ProductPhotoService productPhotoService;
-	@Autowired private ProductRepository productRepository;
+	//@Autowired private ProductRepository productRepository;
 	@Autowired private FileStorageService fileStorageService;
 	
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ProductPhoto updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId, @Valid ProductPhotoRequest ppr) throws SQLIntegrityConstraintViolationException, IOException {
-		ProductResponseDTO productDto = restaurantByProductService.verifyIfExistRestaurantByProduct(restaurantId, productId);
-		Product product = productRepository.findByIdLazy(productDto.getId()).get();
+		Product productEntity = restaurantByProductService.verifyIfExistRestaurantByProduct(restaurantId, productId);
+		//Product product = productRepository.findByIdLazy(productEntity.getId()).get();
 		
 		ProductPhoto pp = new ProductPhoto();
 		pp.setContentType(ppr.getFile().getContentType());
 		pp.setDescription(ppr.getDescription());
 		pp.setFileName(UUID.randomUUID() + "_" + ppr.getFile().getOriginalFilename());
 		pp.setSize(String.valueOf(ppr.getFile().getSize()));
-		pp.setProduct(product);
+		pp.setProduct(productEntity);
 		
 		pp = productPhotoService.save(pp);
 		fileStorageService.storage(ppr.getFile().getInputStream(), pp.getFileName());

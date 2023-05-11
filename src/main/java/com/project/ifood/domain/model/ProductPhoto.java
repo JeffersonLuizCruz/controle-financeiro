@@ -44,10 +44,12 @@ public class ProductPhoto implements Serializable{
 	@Column(name = "size_path")
 	private String size;
 	
-	@OneToOne(fetch = FetchType.LAZY) @JsonIgnore
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY) 
 	@JoinColumn(unique = true, nullable = false)
 	private Product product;
 	
+	@JsonIgnore
 	public Long getRestaurantId() {
 		if(getProduct() != null) {
 			return getProduct().getRestaurant().getId();
