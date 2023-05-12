@@ -13,6 +13,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,9 +52,8 @@ public class RestaurantByProductPhotoController {
 		pp.setSize(String.valueOf(ppr.getFile().getSize()));
 		pp.setProduct(productEntity);
 
-		pp = productPhotoService.save(pp);
 		fileStorageService.storage(ppr.getFile().getInputStream(), pp.getFileName());
-		return ResponseEntity.ok(pp);
+		return ResponseEntity.ok(productPhotoService.save(pp));
 
 	}
 
@@ -83,6 +83,11 @@ public class RestaurantByProductPhotoController {
 		}
 	}
 
+	@DeleteMapping
+	public void delete(@PathVariable Long productId, @PathVariable Long restaurantId) {
+		productPhotoService.removerByProductAndRestaurant(productId, restaurantId);
+	}
+	
 	private void checkCompatibilityMediaType(MediaType mediaType, List<MediaType> mediaTypes) throws HttpMediaTypeNotAcceptableException {
 		boolean isMatch = mediaTypes.stream().anyMatch(any -> any.isCompatibleWith(mediaType));
 		if(!isMatch) {

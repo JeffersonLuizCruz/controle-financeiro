@@ -42,4 +42,12 @@ public class ProductPhotoServiceImpl implements ProductPhotoService{
 		return productExist.orElseThrow(() -> new NotFoundExceptionService("Foto não existe"));
 	}
 
+	@Override
+	public void removerByProductAndRestaurant(Long productId, Long restaurantId) {
+		ProductPhoto pp = findByProductAndRestaurant(productId, restaurantId);
+		fileStorageService.remover(pp.getFileName());
+		productPhotoRepository.delete(pp);
+		
+	}
+
 }

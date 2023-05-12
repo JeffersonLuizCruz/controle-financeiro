@@ -6,4 +6,5 @@ public interface ProductPhotoService {
 
 	ProductPhoto save(ProductPhoto productPhoto);
 	ProductPhoto findByProductAndRestaurant(Long productId, Long restaurantId);
+	void removerByProductAndRestaurant(Long productId, Long restaurantId);
 }
