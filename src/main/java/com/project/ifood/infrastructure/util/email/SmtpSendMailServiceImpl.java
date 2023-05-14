@@ -1,4 +1,4 @@
-package com.project.ifood.infrastructure.util;
+package com.project.ifood.infrastructure.util.email;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -19,7 +19,7 @@ import freemarker.template.Template;
 
 
 @Service
-public class SendMailServiceImpl implements SendMailService{
+public class SmtpSendMailServiceImpl implements SendMailService{
 
 	@Autowired private JavaMailSender mailSend;
 	@Autowired private EmailProperties emailProperties;
@@ -44,7 +44,7 @@ public class SendMailServiceImpl implements SendMailService{
 		}
 	}
 	
-	private String processEnginerTemplate(Message message) {
+	protected String processEnginerTemplate(Message message) {
 		try {
 			Template template = freemarkerTemplate.getTemplate(message.getBody());
 			return FreeMarkerTemplateUtils.processTemplateIntoString(template, message.getParams());

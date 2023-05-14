@@ -1,4 +1,4 @@
-package com.project.ifood.infrastructure.util;
+package com.project.ifood.infrastructure.util.storage;
 
 import java.io.IOException;
 import java.io.InputStream;
