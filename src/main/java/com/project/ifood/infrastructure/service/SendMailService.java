@@ -1,5 +1,6 @@
 package com.project.ifood.infrastructure.service;
 
+import java.util.Map;
 import java.util.Set;
 
 import lombok.Builder;
@@ -20,5 +21,7 @@ public interface SendMailService {
 		private Set<String> recipients;
 		@NonNull
 		private String body;
+		@Singular
+		private Map<String, Object> params;
 	}
 }

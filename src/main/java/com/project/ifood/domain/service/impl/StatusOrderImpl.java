@@ -30,7 +30,8 @@ public class StatusOrderImpl {
 		Message message = Message.builder()
 		.subject("Pedido " + orderEntity.getCode() + "confirmado com sucesso!")
 		.recipient(orderEntity.getCustomer().getEmail())
-		.body("Pedido confirmado com sucesso. Código do pedido: " + orderEntity.getCode())
+		.body("pedido-confirmado.html")
+		.param("order", orderEntity)
 		.build();
 		
 		sendMailService.send(message);
