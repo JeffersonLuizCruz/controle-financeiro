@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.ifood.domain.model.Order;
 import com.project.ifood.domain.service.OrderService;
+import com.project.ifood.infrastructure.service.SendMailService;
+import com.project.ifood.infrastructure.service.SendMailService.Message;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class StatusOrderImpl {
 	
 	private final OrderService orderService;
+	private final SendMailService sendMailService;
 	
 	@Transactional
 	public void created(String codeUUID) {
@@ -23,6 +26,14 @@ public class StatusOrderImpl {
 	public void confirm(String codeUUID) {
 		Order orderEntity = orderService.findById(codeUUID);
 		orderEntity.confirm();
+		
+		Message message = Message.builder()
+		.subject("Pedido " + orderEntity.getCode() + "confirmado com sucesso!")
+		.recipient(orderEntity.getCustomer().getEmail())
+		.body("Pedido confirmado com sucesso. Código do pedido: " + orderEntity.getCode())
+		.build();
+		
+		sendMailService.send(message);
 	}
 	
 	@Transactional
