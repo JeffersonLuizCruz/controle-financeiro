@@ -22,20 +22,25 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import com.project.ifood.domain.enums.OrderStatus;
+import com.project.ifood.domain.event.OrderConfirmedEvent;
 import com.project.ifood.domain.service.exception.BadRequestExcertpionService;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@NoArgsConstructor @AllArgsConstructor @Data
+@Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper=false)
+@NoArgsConstructor @AllArgsConstructor
 @Entity @Table(name = "tb_order")
-public class Order implements Serializable{
+public class Order extends AbstractAggregateRoot<Order> implements Serializable {
 	private static final long serialVersionUID = -4564893146129034049L;
 
-	@Id
+	@Id @EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -96,6 +101,8 @@ public class Order implements Serializable{
 	public void confirm() {
 		setStatus(OrderStatus.CONFIRMED);
 		setConfirmationAt(OffsetDateTime.now());
+		
+		registerEvent(new OrderConfirmedEvent(this));
 	}
 	
 	public void delivery() {

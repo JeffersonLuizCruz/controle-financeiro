@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.ifood.domain.model.Order;
+import com.project.ifood.domain.repositoy.OrderRepository;
 import com.project.ifood.domain.service.OrderService;
 import com.project.ifood.infrastructure.service.SendMailService;
 import com.project.ifood.infrastructure.service.SendMailService.Message;
@@ -14,7 +15,8 @@ import lombok.RequiredArgsConstructor;
 public class StatusOrderImpl {
 	
 	private final OrderService orderService;
-	private final SendMailService sendMailService;
+	private final SendMailService sendMailService; // Injeção é um @Bean
+	private final OrderRepository orderRepository;
 	
 	@Transactional
 	public void created(String codeUUID) {
@@ -35,6 +37,7 @@ public class StatusOrderImpl {
 		.build();
 		
 		sendMailService.send(message);
+		orderRepository.save(orderEntity);
 	}
 	
 	@Transactional
