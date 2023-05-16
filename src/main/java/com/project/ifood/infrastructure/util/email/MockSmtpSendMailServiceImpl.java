@@ -10,7 +10,7 @@ public class MockSmtpSendMailServiceImpl extends SmtpSendMailServiceImpl{
 	@Override
 	public void send(Message message) {
 		String body = processEnginerTemplate(message);
-		
+		System.out.println("---------------------------------------------------");
 		log.info("[FAKE E-MAIL] Para: {}\n{}", message.getRecipients(), body);
 	}
 	

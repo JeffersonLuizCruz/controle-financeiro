@@ -30,18 +30,23 @@ public class SmtpSendMailServiceImpl implements SendMailService{
 		try {
 			String body = processEnginerTemplate(message);
 			
-			MimeMessage mime = mailSend.createMimeMessage();
-			MimeMessageHelper help = new MimeMessageHelper(mime, "UTF-8");
-			
-			help.setFrom(emailProperties.getSender());
-			help.setSubject(message.getSubject());
-			help.setTo(message.getRecipients().toArray(new String[0]));
-			help.setText(body, true);
+			MimeMessage mime = createMimeMessage(message, body);
 			
 			mailSend.send(mime);
 		} catch (MessagingException e) {
 			throw new EmailException("Alerta: Email não enviado", e);
 		}
+	}
+
+	private MimeMessage createMimeMessage(Message message, String body) throws MessagingException {
+		MimeMessage mime = mailSend.createMimeMessage();
+		MimeMessageHelper help = new MimeMessageHelper(mime, "UTF-8");
+		
+		help.setFrom(emailProperties.getSender());
+		help.setSubject(message.getSubject());
+		help.setTo(message.getRecipients().toArray(new String[0]));
+		help.setText(body, true);
+		return mime;
 	}
 	
 	protected String processEnginerTemplate(Message message) {
