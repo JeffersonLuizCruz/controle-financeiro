@@ -19,6 +19,7 @@ import com.project.ifood.controller.dto.request.StateDTO;
 import com.project.ifood.controller.mapper.StateMapper;
 import com.project.ifood.domain.model.State;
 import com.project.ifood.domain.service.StateService;
+import com.project.ifood.infrastructure.util.http.ResponseUriHelper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +34,7 @@ public class StateController {
 	@PostMapping
 	public ResponseEntity<State> save(@RequestBody @Valid StateDTO dto){
 		State state = stateMapper.toModel(dto);
+		ResponseUriHelper.addUriInResponseHader(state.getId());
 		return ResponseEntity.status(HttpStatus.CREATED).body(stateService.save(state));
 	}
 	
