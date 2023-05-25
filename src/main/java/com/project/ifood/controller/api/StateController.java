@@ -33,7 +33,8 @@ public class StateController {
 
 	@PostMapping
 	public ResponseEntity<State> save(@RequestBody @Valid StateDTO dto){
-		State state = stateMapper.toModel(dto);
+		State stateModel = stateMapper.toModel(dto);
+		State state = stateService.save(stateModel);
 		ResponseUriHelper.addUriInResponseHader(state.getId());
 		return ResponseEntity.status(HttpStatus.CREATED).body(stateService.save(state));
 	}
