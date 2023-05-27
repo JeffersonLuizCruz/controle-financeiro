@@ -1,6 +1,7 @@
 package com.project.ifood.controller.api;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -16,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.controller.dto.request.StateDTO;
+import com.project.ifood.controller.dto.response.StateResponseDTO;
 import com.project.ifood.controller.mapper.StateMapper;
 import com.project.ifood.domain.model.State;
 import com.project.ifood.domain.service.StateService;
 import com.project.ifood.infrastructure.util.http.ResponseUriHelper;
-
+import org.springframework.hateoas.Link;
 import lombok.RequiredArgsConstructor;
 
 @RestController @RequiredArgsConstructor
@@ -46,8 +48,14 @@ public class StateController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<State>> findAll(){
-		return ResponseEntity.ok(stateService.findAll());
+	public ResponseEntity<List<StateResponseDTO>> findAll(){
+		List<StateResponseDTO> listStateResponse = stateService.findAll()
+		.stream()
+		.map(stateMapper::toDTO)
+		.map(state -> state.add(Link.of("http://localhost:8181/estados")))
+		.collect(Collectors.toList());
+
+		return ResponseEntity.ok(listStateResponse);
 	}
 	
 	@GetMapping("/{id}")
