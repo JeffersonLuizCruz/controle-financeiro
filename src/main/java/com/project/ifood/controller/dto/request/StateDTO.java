@@ -2,12 +2,16 @@ package com.project.ifood.controller.dto.request;
 
 import javax.validation.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
-@Data @NoArgsConstructor @AllArgsConstructor
-public class StateDTO {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+public class StateDTO extends RepresentationModel<StateDTO>{
 
 	@NotBlank(message = "Campo nome obrigatório!")
     private String name;

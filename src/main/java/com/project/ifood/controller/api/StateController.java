@@ -59,8 +59,12 @@ public class StateController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<State> findById(@PathVariable Long id){
-		return ResponseEntity.ok(stateService.findById(id));
+	public ResponseEntity<StateResponseDTO> findById(@PathVariable Long id){
+		State stateEntity = stateService.findById(id);
+		StateResponseDTO dto = stateMapper.toDTO(stateEntity);
+		dto.add(Link.of("http://localhost:8181/estados/1"));
+		dto.add(Link.of("http://localhost:8181/estados", "estado"));
+		return ResponseEntity.ok(dto);
 	}
 	
 	@DeleteMapping("/{id}")
