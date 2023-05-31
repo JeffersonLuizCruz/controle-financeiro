@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ifood.controller.dto.request.CityDTO;
+import com.project.ifood.controller.dto.response.CityResponseDTO;
 import com.project.ifood.controller.mapper.CityMapper;
 import com.project.ifood.domain.model.City;
 import com.project.ifood.domain.service.CityService;
@@ -48,8 +51,30 @@ public class CityController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<City> findById(@PathVariable Long id){
-		return ResponseEntity.ok(cityService.findById(id));
+	public ResponseEntity<CityResponseDTO> findById(@PathVariable Long id){
+		City cityEntity = cityService.findById(id);
+		CityResponseDTO cityDto = cityMapper.toDTO(cityEntity);
+		
+		Link linkSelfId = WebMvcLinkBuilder
+				.linkTo(CityController.class)
+				.slash(cityDto.getId())
+				.withSelfRel();
+		cityDto.add(linkSelfId);
+		
+		Link linkRel = WebMvcLinkBuilder
+				.linkTo(CityController.class)
+				.withRel("Cidade");
+		cityDto.add(linkRel);
+		
+		Link linkSelfStateId = WebMvcLinkBuilder
+				.linkTo(StateController.class)
+				.slash(cityDto.getState().getId())
+				.withSelfRel();
+		cityDto.getState().add(linkSelfStateId);
+		
+		// cityDto.getState().add(Link.of("http://localhost:8181/cities/1"));
+		
+		return ResponseEntity.ok(cityDto);
 	}
 	
 	@DeleteMapping("/{id}")
