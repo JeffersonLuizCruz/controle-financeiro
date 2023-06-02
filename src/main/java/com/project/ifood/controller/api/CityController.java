@@ -72,8 +72,6 @@ public class CityController {
 				.withSelfRel();
 		cityDto.getState().add(linkSelfStateId);
 		
-		// cityDto.getState().add(Link.of("http://localhost:8181/cities/1"));
-		
 		return ResponseEntity.ok(cityDto);
 	}
 	
