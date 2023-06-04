@@ -17,6 +17,7 @@ public class StatusOrderController {
 	
 	private final StatusOrderImpl statusOrder;
 	
+	
 	@PutMapping("/create") @ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void statusCreate(@PathVariable String codeUUID) {
 		statusOrder.cancel(codeUUID);
